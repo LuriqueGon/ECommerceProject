@@ -4,7 +4,8 @@
     use MF\Controller\Action;
     use MF\Model\Model;
 
-    class NomeDoController extends Action{
+    class NomeDoController extends Action
+    {
         
     }
 

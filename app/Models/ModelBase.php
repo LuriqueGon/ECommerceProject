@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Models;
-use MF\Model\Model;
+use MF\Model\DAO;
 
-    Class modelBase extends Model{
+    Class modelBase extends DAO
+    {
         
     }
 
