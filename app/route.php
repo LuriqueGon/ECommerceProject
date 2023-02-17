@@ -21,6 +21,31 @@ use MF\Init\Bootstrap;
                 'action' => 'teste'
             );  
             
+            $routes['login'] = array(
+                'route' => '/login',
+                'controller' => 'AuthController',
+                'action' => 'index'
+            );  
+            
+            $routes['forgetPassword'] = array(
+                'route' => '/login/forgetPassword',
+                'controller' => 'AuthController',
+                'action' => 'forgetPassword'
+            );  
+
+            $routes['cart'] = array(
+                'route' => '/cart',
+                'controller' => 'CartController',
+                'action' => 'index'
+            );  
+            
+            $routes['products'] = array(
+                'route' => '/products',
+                'controller' => 'ProductController',
+                'action' => 'index'
+            );  
+            
+            
             
             /*
             $routes['NomeDaRota'] = array(

@@ -9,10 +9,8 @@
 
         public function index()
         {
-
-            $user = Container::getModel('user');
-            $this->view->users = $user->getAll();
-            $this->render('index', 'layout');
+            $this->view->title = "Home";
+            $this->render('index');
             
         }
     }

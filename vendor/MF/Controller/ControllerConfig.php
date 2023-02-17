@@ -41,10 +41,9 @@
         {
             // Bootstrap
             $this->view->bootstrap = array(
-                "css" => "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
+                "css" => "/css/bootstrap.min.css",
                 "js" => array(
-                    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
-                    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                    "http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"
                 )
             );
 
@@ -52,13 +51,20 @@
 
             $this->view->fontAwesome = array(
                 "https://pro.fontawesome.com/releases/v5.10.0/css/all.css",
-                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css",
+                '/css/font-awesome.min.css'
             );
 
             // Jquery
 
             $this->view->jquery = array(
-                "https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                "https://code.jquery.com/jquery.min.js"
+            );
+
+            $this->view->fonts = array(
+                'http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600',
+                'http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300',
+                'http://fonts.googleapis.com/css?family=Raleway:400,100'
             );
 
         }

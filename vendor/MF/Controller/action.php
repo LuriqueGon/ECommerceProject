@@ -48,6 +48,11 @@
             else if(file_exists($thisClass['component']."main/$component".$thisClass['extension']))
             {
                 require_once $thisClass['component']."main/$component".$thisClass['extension'];
+            } 
+
+            else if (file_exists($thisClass['component'] . "app/$component" . $thisClass['extension'])) 
+            {
+                require_once $thisClass['component'] . "app/$component" . $thisClass['extension'];
             }
 
             else if(file_exists($thisClass['component']."url/$component".$thisClass['extension']))

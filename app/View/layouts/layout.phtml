@@ -3,19 +3,32 @@
 <head>
 	<!-- METATAGS -->
 	<?php $this->loadComponent('default') ?>
-
 	<?php $this->loadComponent('bootstrap') ?>
-
 	<?php $this->loadComponent('fontAwesome') ?>
-	
 	<?php $this->loadComponent('jquery') ?>
-	
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<?php $this->loadComponent('fonts') ?>
 
-	<title>Index</title>
+	<link rel="stylesheet" href="/css/owl.carousel.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+	<script src="/js/owl.carousel.min.js" defer></script>
+	<script src="/js/jquery.sticky.js" defer></script>
+	<script src="/js/jquery.easing.1.3.min.js" defer></script>
+	<script src="/js/main.js" defer></script>
+	<script src="/js/bxslider.min.js" defer></script>
+	<script src="/js/script.slider.js" defer></script>
+	<script src="/js/activeItemMenu.js"></script>
+
+	<title><?php echo $this->view->title ?> | ECommerce | </title>
 </head>
 <body>
 	<?php $this->loadComponent('toast')?>
+	<?php $this->loadComponent('header')?>
+
 	<?php $this->content() ?>
+	<?php $this->loadComponent('footer')?>
 </body>
+
+
 </html>
