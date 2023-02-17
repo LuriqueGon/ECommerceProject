@@ -72,10 +72,10 @@ use MF\Controller\ControllerConfig;
 
         public function restrict(){
             if(!isset($_SESSION['auth'])){
-                Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/access');
+                Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/login');
             }
             if(!$_SESSION['auth']){
-                Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/access');
+                Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/login');
             }
         }
     

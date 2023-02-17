@@ -7,6 +7,7 @@
     {
         public function index()
         {
+            $this->restrict();
             $this->view->title = "Pagamento";
             $this->render('pagamento');
         }

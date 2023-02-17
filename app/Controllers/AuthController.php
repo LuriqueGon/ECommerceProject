@@ -37,6 +37,7 @@
         {
             $this->dontRestrict();
             $this->needPOST($_POST);
+
             $values = array(
                 'login' => $_POST['login'],
                 'password' => md5($_POST['senha']),
@@ -69,6 +70,8 @@
         public function register()
         {
 
+            $this->dontRestrict();
+            $this->needPOST($_POST);
         }
 
         
