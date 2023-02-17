@@ -1,0 +1,23 @@
+.toast{
+    padding: 1rem;
+    background-color: #fff;
+    color: black;
+    z-index: 10;
+}
+.border-danger{
+    border: 2px solid rgb(247, 45, 45);
+}
+
+.border-success{
+    border: 2px solid green;
+}
+.text-danger{
+    color: rgb(247, 45, 45);
+}
+.text-success{
+    color: green;
+}
+.toast i{
+    color: #000;
+    opacity: 999;
+}

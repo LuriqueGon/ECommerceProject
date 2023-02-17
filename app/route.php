@@ -9,29 +9,48 @@ use MF\Init\Bootstrap;
         protected function initRoutes()
         {
 
+            // INDEX
             $routes['home'] = array(
                 'route' => '/',
                 'controller' => 'IndexController',
                 'action' => 'index'
             );  
+           
             
-            $routes['teste'] = array(
-                'route' => '/teste',
-                'controller' => 'IndexController',
-                'action' => 'teste'
-            );  
-            
-            $routes['login'] = array(
+            // AUTH
+            $routes['page'] = array(
                 'route' => '/login',
                 'controller' => 'AuthController',
                 'action' => 'index'
+            );  
+
+            $routes['login'] = array(
+                'route' => '/auth/login',
+                'controller' => 'AuthController',
+                'action' => 'login'
+            );  
+
+            $routes['register'] = array(
+                'route' => '/auth/register',
+                'controller' => 'AuthController',
+                'action' => 'register'
             );  
             
             $routes['forgetPassword'] = array(
                 'route' => '/login/forgetPassword',
                 'controller' => 'AuthController',
-                'action' => 'forgetPassword'
+                'action' => 'forgetPasswordPages'
             );  
+
+            $routes['logout'] = array(
+                'route' => '/logout',
+                'controller' => 'AuthController',
+                'action' => 'logout'
+            );  
+
+            
+
+            // CART
 
             $routes['cart'] = array(
                 'route' => '/cart',
@@ -39,11 +58,26 @@ use MF\Init\Bootstrap;
                 'action' => 'index'
             );  
             
+            // PRODUCT
             $routes['products'] = array(
                 'route' => '/products',
                 'controller' => 'ProductController',
                 'action' => 'index'
             );  
+            
+            $routes['productsDetails'] = array(
+                'route' => '/productsDetails',
+                'controller' => 'ProductController',
+                'action' => 'details'
+            );  
+            
+            // PAYMENT
+             $routes['pagamento'] = array(
+                'route' => '/pagamento',
+                'controller' => 'PayController',
+                'action' => 'index'
+            );  
+            
             
             
             

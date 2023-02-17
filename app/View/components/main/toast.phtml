@@ -29,8 +29,8 @@ if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
         }
     </script>
 
-    <div class="toast border-<?php echo $this->view->type ?>" role="alert" id="toast" aria-live="assertive" aria-atomic="true" style=" position: absolute; top: 5rem; right: 8rem; opacity: 1;">
-        <div class="toast-header">
+    <div class="toast border-<?php echo $this->view->type ?>" role="alert" id="toast" aria-live="assertive" aria-atomic="true" style=" position: fixed; top: 5rem; right: 8rem; opacity: 1;width: 33rem;">
+        <div class="toast-header" style="margin-bottom: 1rem;">
             <strong class="me-auto text-<?php echo $this->view->type ?>"><?php echo $this->view->type ?></strong>
             <small class="text-muted"><?php echo $this->view->time ?> seconds ago</small>
             <button type="button" class="btn-close close" data-bs-dismiss="toast" aria-label="Close" onclick="$('#toast').remove()"> <i class="fa fa-times" aria-hidden="true"></i> </button>
