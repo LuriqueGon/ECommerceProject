@@ -1,0 +1,86 @@
+<section class="content-header">
+    <h1> Todos os Usuarios</h1>
+    <ol class="breadcrumb">
+        <li class="active"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">AllUserrs</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>Registro</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Admin?</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->view->users as $key => $value) {?>
+                                <?php if($value['ativo'] == 1){ ?>
+                                    <tr>
+                                <?php }else{?>
+                                    <tr class="disabled" style="color: red;">
+                                <?php }?>
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo $value['desperson'] ?></td>
+                                    <td><?php echo $value['dtregister'] ?></td>
+                                    <td><?php echo $value['desemail'] ?></td>
+                                    <td class="telefone"><?php echo $value['nrphone'] ?></td>
+                                    <td><?php echo $value['inadmin'] == 1 ? "True": "False" ?></td>
+                                    <?php if($value['ativo'] == 1){ ?>
+                                        <td>
+                                            <div class="ico">
+                                                <a href="/admin/users/edit?id=<?php echo $value['iduser']?>">
+                                                    <i class="fa-solid fa-user-pen" ></i>
+                                                </a>
+                                                <a href="/admin/users/delete?id=<?php echo $value['iduser']?>">
+                                                    <i class="fa-solid fa-user-xmark"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    <?php }else{?>
+                                        <td>
+                                            <div class="ico">
+                                                <a href="/admin/users/ativar?id=<?php echo $value['iduser']?>">
+                                                    <i class="fa-solid fa-user-check" id="check"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    <?php }?>
+                                    
+                                </tr>
+                            <?php } ?>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(function() {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true
+        });
+    });
+
+</script>
+</section>

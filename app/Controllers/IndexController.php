@@ -10,14 +10,14 @@
         public function index()
         {
             $this->view->title = "Home";    
-            $admin = false;
+            $this->render('index');
             
-            if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){
-                $this->render('indexAdmin', 'adminLayout');
-            }else{
-                $this->render('index');
-            }
-            
+        }
+
+        public function indexAdmin()
+        {
+            $this->view->title = "Home";    
+            $this->render('indexAdmin', 'adminLayout');
         }
     }
 

@@ -272,3 +272,6 @@ BEGIN
     
 END ;;
 DELIMITER ;
+
+ALTER TABLE `tb_users` ADD `ativo` BOOLEAN NOT NULL DEFAULT TRUE AFTER `dtregister`;
+ALTER TABLE `tb_persons` ADD `perfil` VARCHAR(255) NULL AFTER `nrphone`;

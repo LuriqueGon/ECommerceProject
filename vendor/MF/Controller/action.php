@@ -70,7 +70,7 @@ use MF\Controller\ControllerConfig;
             }
         }
 
-        public function restrict(){
+        protected function restrict(){
             if(!isset($_SESSION['auth'])){
                 Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/login');
             }
@@ -79,9 +79,16 @@ use MF\Controller\ControllerConfig;
             }
         }
     
-        public function dontRestrict(){
+        protected function dontRestrict(){
             if(isset($_SESSION['auth']) && $_SESSION['auth']){
                 Message::setMessage('Você já está logado, caso queira trocar de conta. Clique em sair','danger','/');
+                exit;
+            }
+        }
+
+        protected function inAdmin(){
+            if(!isset($_SESSION['inadmin']) || $_SESSION['inadmin'] == 0){
+                Message::setMessage('Você não tem permissão para acessar essa página.', 'dunger');
                 exit;
             }
         }
@@ -123,7 +130,13 @@ use MF\Controller\ControllerConfig;
             Message::setMessage('Você não tem permissão para acessar a página', 'danger');
         }
 
+        protected function needGET(Array $get){
+            if(isset($get) && !empty($get)) return true;
 
+            Message::setMessage('Você não tem permissão para acessar a página', 'danger');
+        }
+
+        
     }
 
 ?>

@@ -21,3 +21,7 @@
     color: #000;
     opacity: 999;
 }
+.sidebar-menu>li.header {
+    color: white!important;
+    font-weight: bolder!important;
+}

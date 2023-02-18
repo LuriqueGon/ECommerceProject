@@ -15,7 +15,13 @@ use MF\Init\Bootstrap;
                 'controller' => 'IndexController',
                 'action' => 'index'
             );  
-           
+
+            $routes['homeAdmin'] = array(
+                'route' => '/admin',
+                'controller' => 'IndexController',
+                'action' => 'indexAdmin'
+            );  
+            
             
             // AUTH
             $routes['page'] = array(
@@ -72,11 +78,49 @@ use MF\Init\Bootstrap;
             );  
             
             // PAYMENT
-             $routes['pagamento'] = array(
+            $routes['pagamento'] = array(
                 'route' => '/pagamento',
                 'controller' => 'PayController',
                 'action' => 'index'
             );  
+            
+            // USERS
+            $routes['allUsers'] = array(
+                'route' => '/admin/users',
+                'controller' => 'UserController',
+                'action' => 'allUsers'
+            );  
+            
+            $routes['cadastrarUser'] = array(
+                'route' => '/admin/users/create',
+                'controller' => 'UserController',
+                'action' => 'cadastrarUser'
+            );  
+
+            $routes['ativarUser'] = array(
+                'route' => '/admin/users/ativar',
+                'controller' => 'UserController',
+                'action' => 'ativarUser'
+            );  
+            
+            $routes['deletarUser'] = array(
+                'route' => '/admin/users/delete',
+                'controller' => 'UserController',
+                'action' => 'deletarUser'
+            );  
+            
+            $routes['editarUser'] = array(
+                'route' => '/admin/users/edit',
+                'controller' => 'UserController',
+                'action' => 'editarUser'
+            );  
+            
+            $routes['salvarEdition'] = array(
+                'route' => '/admin/users/edit/session',
+                'controller' => 'UserController',
+                'action' => 'salvarEdition'
+            );  
+            
             
             
             

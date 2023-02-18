@@ -6,6 +6,9 @@
                     <ul>
                         <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
                             <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+                            <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
+                                <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
+                            <?php } ?>
                         <?php }else{ ?>
                             <li><a href="/login"><i class="fa fa-close"></i> sair</a></li>
                         <?php } ?>

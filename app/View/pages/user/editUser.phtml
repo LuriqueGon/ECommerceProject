@@ -1,0 +1,95 @@
+<a href="/admin/users" type="button" class="btn btn-success" style="font-size: 2.4rem;margin: 2rem 8rem;padding: 1rem 3rem;text-transform: uppercase;">
+    <i class="fa-solid fa-left-long" style="margin: 0 1rem;font-size: 2rem;"></i>Voltar
+</a>
+<section class="content-header">
+    <h1> Editar Usuario</h1>
+    <ol class="breadcrumb">
+        <li class="active"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">EditUser</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="container">
+        <form action="/admin/users/edit/session" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $this->view->user['desperson']?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $this->view->user['desemail']?>" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="login">login:</label>
+                        <input type="text" class="form-control" id="login" name="login" value="<?php echo $this->view->user['deslogin']?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="tel" class="form-control" id="telefone" name="telefone" value="<?php echo $this->view->user['nrphone']?>" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" style="display: flex;justify-content: center;align-items: center;margin: 4rem 0px;font-size: 2rem;">
+                    <div class="form-group">
+                        <label for="perfil">Foto de perfil:</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="perfil" name="perfil" value="<?php echo './img/perfil/'.$this->view->user['perfil']?>" style="color: transparent!important;">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group form-check"  style="display: flex;justify-content: center;align-items: center;height:150px;width: 100%;">
+                        <?php if($this->view->user['inadmin'] == 1){ ?>
+                            <input type="checkbox" class="form-check-input" id="permissao-admin" name="inAdmin" checked  style="width: 3rem;height: 2rem;margin: 0;">
+                        <?php }else{ ?>
+                            <input type="checkbox" class="form-check-input" id="permissao-admin" name="inAdmin"  style="width: 3rem;height: 2rem;margin: 0;">
+                        <?php } ?>
+                        <label class="form-check-label" for="permissao-admin">Permissão Admin?</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="avatar-container">
+                            <img id="avatar" src="<?php echo empty($this->view->user['perfil']) ? "https://via.placeholder.com/150" : "/img/perfil/".$this->view->user['perfil']?>" alt="Avatar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="<?php echo $_GET['id']?>">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+
+
+</section>
+
+<script>
+    const perfilInput = document.getElementById('perfil');
+    const avatarImg = document.getElementById('avatar');
+
+    perfilInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            avatarImg.src = reader.result;
+            perfilInput.style.color = "black"
+        };
+    });
+</script>

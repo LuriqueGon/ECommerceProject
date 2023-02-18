@@ -1,0 +1,49 @@
+li.boderLiTreeviewMenu {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+    padding: .7rem 0;
+    font-size: 1rem;
+}
+
+.treeview {
+    margin: 1rem 0 !important;
+}
+
+.ico i {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: .4rem;
+    opacity: .55;
+    color: black;
+}
+
+.ico i:hover {
+    opacity: 1;
+}
+
+.ico a:nth-child(1) i:hover {
+    color: blue;
+}
+
+.ico a:nth-child(2) i:hover {
+    color: red;
+}
+
+.ico i#check:hover {
+    color: green;
+}
+
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: auto;
+}
