@@ -40,14 +40,45 @@
 
             $values = array(
                 'login' => $_POST['login'],
-                'password' => md5($_POST['senha']),
+                'password' => md5($_POST['password']),
                 'remember' => isset($_POST['rememberme']) ? $_POST['rememberme'] : false
             );
 
             $user = Container::getModel('user');
             $user = $this->setValueObject($user, $values);
-            $authLogin = $user->login();
-            
+            $this->testLogin($user);
+        }
+       
+        public function register()
+        {
+
+            $this->needPOST($_POST);
+            $_POST['password'] = md5($_POST['password']);
+            $_POST['repassword'] = md5($_POST['repassword']);
+            $_POST['inAdmin'] = (isset($_POST['inAdmin']) && $_POST['inAdmin'] == 'on') ? 'true' : 'false';
+
+            $user = Container::getModel('user');
+            $user = $this->setValueObject($user, $_POST);
+
+            if($user->__get('password') == $user->__get('repassword')){
+
+                if($user->register()){
+
+                    if(!isset($_SESSION['auth']) || !$_SESSION['auth']) $this->testLogin($user);
+                    
+                    else{
+                        Message::setMessage('Conta Criada com sucesso!! <br> Por favor! Efetue login', 'success', '/admin/users');
+                        exit;
+                    }
+
+                }else Message::setMessage('Dados já existentes ou cadastrados', 'danger', 'back');
+
+            }else Message::setMessage('Senhas não coincidem', 'danger', 'back');
+        }
+
+        private function testLogin($object)
+        {
+            $authLogin = $object->login();
             if(empty($authLogin)){
                 Message::setMessage('Usuario e/ou Senha invalidos', 'danger');
                 exit;
@@ -56,22 +87,6 @@
                 $_SESSION = $this->setValueArray($_SESSION, $authLogin, array("despassword"));
                 Message::setMessage('Logado', 'success', '/');
             }
-
-
-
-            
-
-            
-        }
-
-        
-
-       
-        public function register()
-        {
-
-            $this->dontRestrict();
-            $this->needPOST($_POST);
         }
 
         

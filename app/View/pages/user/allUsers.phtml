@@ -41,18 +41,21 @@
                                         <td>
                                             <div class="ico">
                                                 <a href="/admin/users/edit?id=<?php echo $value['iduser']?>">
-                                                    <i class="fa-solid fa-user-pen" ></i>
+                                                    <i class="fa-solid fa-user-pen" ></i> Editar 
                                                 </a>
-                                                <a href="/admin/users/delete?id=<?php echo $value['iduser']?>">
-                                                    <i class="fa-solid fa-user-xmark"></i>
+                                                <a href="/admin/users/desative?id=<?php echo $value['iduser']?>">
+                                                <i class="fa-solid fa-user-large-slash"></i> Desativar
                                                 </a>
                                             </div>
                                         </td>
                                     <?php }else{?>
                                         <td>
                                             <div class="ico">
-                                                <a href="/admin/users/ativar?id=<?php echo $value['iduser']?>">
-                                                    <i class="fa-solid fa-user-check" id="check"></i>
+                                                <a href="/admin/users/ativar?id=<?php echo $value['iduser']?>" id="check">
+                                                    <i class="fa-solid fa-user-check" ></i> Ativar
+                                                </a>
+                                                <a href="#" onclick="deletarItem(<?php echo $value['iduser']?>)" id="delete">
+                                                    <i class="fa-solid fa-user-xmark"></i> Deletar
                                                 </a>
                                             </div>
                                         </td>

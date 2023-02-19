@@ -7,5 +7,72 @@
 </section>
 
 <section class="content">
-Teste
+<div class="container">
+        <form action="/auth/register" method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="login">login:</label>
+                        <input type="text" class="form-control" id="login" name="login" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="tel" class="form-control" id="telefone" name="telefone" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group form-check"  style="height:150px;width: 100%;">
+                        <input type="checkbox" class="form-check-input" id="permissao-admin" name="inAdmin"  style="width: 3rem;height: 2rem;margin: 0;">
+                        <label class="form-check-label" for="permissao-admin">Permissão Admin?</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="repassword">Confirme sua Senha:</label>
+                        <input type="password" class="form-control" id="rerpassword" name="repassword">
+                    </div>
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+
+
 </section>
+
+<script>
+    const perfilInput = document.getElementById('perfil');
+    const avatarImg = document.getElementById('avatar');
+
+    perfilInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            avatarImg.src = reader.result;
+            perfilInput.style.color = "black"
+        };
+    });
+</script>

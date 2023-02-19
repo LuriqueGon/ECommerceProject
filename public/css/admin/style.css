@@ -8,29 +8,34 @@ li.boderLiTreeviewMenu {
     margin: 1rem 0 !important;
 }
 
-.ico i {
+.ico i{
     cursor: pointer;
     font-size: 2rem;
     padding: .4rem;
-    opacity: .55;
+    opacity: .8;
     color: black;
 }
 
-.ico i:hover {
+.ico a:hover {
     opacity: 1;
 }
 
-.ico a:nth-child(1) i:hover {
-    color: blue;
+.ico a:nth-child(1):hover, .ico a:nth-child(1):hover i{
+    color: #B0E0E6		;
 }
 
-.ico a:nth-child(2) i:hover {
-    color: red;
+.ico a:nth-child(2):hover,.ico a:nth-child(2):hover i {
+    color: #200901	;
 }
 
-.ico i#check:hover {
-    color: green;
+.ico a#check:hover,.ico a#check:hover i {
+    color: #00FF7F	;
 }
+
+.ico a#delete:hover,.ico a#delete:hover i {
+    color: #FF4500;
+}
+
 
 .avatar-container {
     display: flex;

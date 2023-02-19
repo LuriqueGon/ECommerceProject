@@ -8,10 +8,11 @@ use MF\Model\DAO;
         protected $id;
         protected $login;
         protected $password;
+        protected $repassword;
         protected $nome;
         protected $email;
         protected $telefone;
-        protected $inAdmin;
+        protected $inAdmin = 0;
         protected $idPerson;
         protected $perfil;
         protected $remember = false;
@@ -19,7 +20,7 @@ use MF\Model\DAO;
 
         public function getAll():array
         {
-            return $this->selectAll('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) ORDER BY desperson');
+            return $this->selectAll('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) ORDER BY tb_users.dtregister DESC');
         }
 
         public function findById():array
@@ -27,20 +28,67 @@ use MF\Model\DAO;
             return $this->select('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) WHERE iduser = ?', array($this->__get('id')));
         }
 
+        public function findByEmail()
+        {
+            return $this->select("SELECT * FROM tb_persons WHERE desemail = ?", array($this->__get('email')));
+        }
+
+        public function findByLogin()
+        {
+            return $this->select("SELECT * FROM tb_users WHERE deslogin = ?", array($this->__get('login')));
+        }
+
+        public function findByTel()
+        {
+            return $this->select("SELECT * FROM tb_persons WHERE nrphone = ?", array($this->__get('telefone')));
+        }
+
+        
+        
+
         public function getIdPerson():int
         {
             return $this->select('SELECT idperson FROM tb_users WHERE iduser = ?', array($this->__get('id')))['idperson'];
         }
+
+        public function getIdPersonByEmail():int
+        {
+            return $this->select('SELECT idperson FROM tb_persons WHERE desemail = ?', array($this->__get('email')))['idperson'];
+        }
+
+        public function getIdPersonById():int
+        {
+            return $this->select('SELECT idperson FROM tb_users WHERE iduser = ?', array($this->__get('id')))['idperson'];
+        }
+
+        
+        
 
         public function activeById():bool
         {
             return $this->rawQuery('UPDATE tb_users SET ativo = 1 WHERE iduser = ?', array($this->__get('id')));
         }
 
-        public function deleteById():bool
+        public function desativeById():bool
         {
             return $this->rawQuery('UPDATE tb_users SET ativo = 0 WHERE iduser = ?', array($this->__get('id')));
         }
+
+        public function deleteById():bool
+        {
+            $this->__set('idPerson', $this->getIdPersonById());
+            $this->rawQuery('DELETE FROM tb_users WHERE idperson = ?', array(
+                $this->__get('idPerson')
+            ));
+            return $this->rawQuery('DELETE FROM tb_persons WHERE idperson = ?', array(
+                $this->__get('idPerson')
+            ));
+            
+            
+
+        }
+
+        
 
         
 
@@ -48,6 +96,53 @@ use MF\Model\DAO;
         {
             return $this->select('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) WHERE deslogin = ? AND despassword = ? AND ativo = 1', array($this->__get('login'),$this->__get('password')));
         }
+
+        public function register():bool
+        {
+            if(!$this->findByEmail()){
+                if(!$this->findByLogin()){
+                    if(!$this->findByTel()){
+                        $this->cadastrarPerson();
+                        $this->__set('idPerson', $this->getIdPersonByEmail());
+                        $this->cadastrarUser();
+
+                        return true;
+                        exit;
+
+                    }
+
+                }
+            }
+
+            return false;
+        }
+
+        private function cadastrarPerson():void
+        {
+            $query = "INSERT INTO tb_persons (desperson, desemail, nrphone) VALUES (?,?,?)";
+            $params = array(
+                $this->__get('nome'),
+                $this->__get('email'),
+                $this->__get('telefone')
+            );
+            $this->query($query, $params);
+
+        }
+
+        private function cadastrarUser():void
+        {
+            $query = "INSERT INTO tb_users (idperson, deslogin, despassword, inadmin) VALUES (?,?,?,?)";
+            $params = array(
+                $this->__get('idPerson'),
+                $this->__get('login'),
+                $this->__get('password'),
+                $this->__get('inAdmin')
+            );
+            $this->query($query, $params);
+
+        }
+
+        
 
         public function edit()
         {

@@ -57,6 +57,18 @@ use MF\Model\Container;
             }
         }
 
+        public function desativarUser()
+        {
+            $this->restrict();
+            $this->inAdmin();
+
+            $user = Container::getModel('user');
+            $user->__set('id', $_GET['id']);
+            if($user->desativeById()){
+                Message::setMessage('desativado com sucesso', 'success', 'back');
+            }
+        }
+
         public function deletarUser()
         {
             $this->restrict();
@@ -65,9 +77,11 @@ use MF\Model\Container;
             $user = Container::getModel('user');
             $user->__set('id', $_GET['id']);
             if($user->deleteById()){
-                Message::setMessage('ativado com sucesso', 'success', 'back');
+                Message::setMessage('Deletado com sucesso', 'success', 'back');
             }
         }
+
+        
 
         public function salvarEdition()
         {

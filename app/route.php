@@ -103,11 +103,19 @@ use MF\Init\Bootstrap;
                 'action' => 'ativarUser'
             );  
             
+            $routes['desativarUser'] = array(
+                'route' => '/admin/users/desative',
+                'controller' => 'UserController',
+                'action' => 'desativarUser'
+            );  
+
             $routes['deletarUser'] = array(
                 'route' => '/admin/users/delete',
                 'controller' => 'UserController',
                 'action' => 'deletarUser'
             );  
+
+            
             
             $routes['editarUser'] = array(
                 'route' => '/admin/users/edit',
