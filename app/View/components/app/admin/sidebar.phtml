@@ -24,20 +24,20 @@
 
         <ul class="sidebar-menu">
             <li class="header text-center">Menu</li>
-            <li class="treeview">
+            <li class="treeview" id="logout">
                 <a href="/">
                     <i class="fa-solid fa-door-closed"></i>
                     <span>Sair do Admin</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="treeview" id="home">
                 <a href="/admin">
                     <i class="fa-solid fa-home"></i>
                     <span>Home</span>
                 </a>
             </li>
             
-            <li class="treeview">
+            <li class="treeview" id="user">
                 <a href="">
                     <i class="fa-solid fa-users"></i>
                     <span>Usuarios</span>
@@ -54,13 +54,40 @@
                     </li>
                     <li class="boderLiTreeviewMenu">
                         <a href="/admin/users/create">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-user-plus"></i>
                             Criar Usuario
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="treeview">
+
+            <li class="treeview" id="categorie">
+                <a href="#">
+                    <i class="fa-solid fa-diagram-project"></i>
+                     
+                    <span>Categorias</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="boderLiTreeviewMenu">
+                        <a href="/admin/categorias">
+                            <i class="fa-solid fa-cart-shopping"></i>      
+                            Todas Categorias
+                        </a>
+                    </li>
+                    <li class="boderLiTreeviewMenu">
+                        <a href="/admin/categoria/create">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            Criar Categoria
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            
+            <li class="treeview" id="">
                 <a href="/logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span>Sair</span>

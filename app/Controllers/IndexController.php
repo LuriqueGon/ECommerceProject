@@ -16,6 +16,8 @@
 
         public function indexAdmin()
         {
+            $this->restrict();
+            $this->inAdmin();
             $this->view->title = "Home";    
             $this->render('indexAdmin', 'adminLayout');
         }

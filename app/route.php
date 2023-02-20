@@ -127,8 +127,6 @@ use MF\Init\Bootstrap;
                 'controller' => 'UserController',
                 'action' => 'deletarUser'
             );  
-
-            
             
             $routes['editarUser'] = array(
                 'route' => '/admin/users/edit',
@@ -141,6 +139,44 @@ use MF\Init\Bootstrap;
                 'controller' => 'UserController',
                 'action' => 'salvarEdition'
             );  
+            
+            // Categorie
+            $routes['allCategorie'] = array(
+                'route' => '/admin/categorias',
+                'controller' => 'CategorieController',
+                'action' => 'index'
+            ); 
+
+            $routes['categoriaCreate'] = array(
+                'route' => '/admin/categoria/create',
+                'controller' => 'CategorieController',
+                'action' => 'loadCreate'
+            );  
+            
+            $routes['criarCategoria'] = array(
+                'route' => '/admin/categoria/criar',
+                'controller' => 'CategorieController',
+                'action' => 'create'
+            );  
+            
+            $routes['editarCategoriaPage'] = array(
+                'route' => '/admin/categoria/edit',
+                'controller' => 'CategorieController',
+                'action' => 'loadUpdate'
+            );  
+            
+            $routes['editarCategoria'] = array(
+                'route' => '/admin/categoria/editar',
+                'controller' => 'CategorieController',
+                'action' => 'update'
+            );  
+            
+            $routes['deletarCategoria'] = array(
+                'route' => '/admin/categoria/delete',
+                'controller' => 'CategorieController',
+                'action' => 'delete'
+            );  
+            
             
             
             

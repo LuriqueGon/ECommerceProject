@@ -93,10 +93,16 @@
 
                 $user->recoveryPassword();
 
+                Mailer::sendMail($results['desemail'], $results['desperson'],"Redefinição de Senha", 
+                    "<h1>Redefinição em ECommerce Store Concluida com sucesso</h1><br><br><p style='color:green;font-size:1.4rem;'>Sua restauração de senha foi realizada com sucesso!!</p>"
+                    
+                )
+                
+                ;
+
                 Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
             }
         }
-
 
         public function logout()
         {
@@ -104,8 +110,7 @@
             $_SESSION = $this->unsetValueArray($_SESSION);
             Message::setMessage('Logout com sucesso', 'success', '/');
         }
-
-        
+       
 
         public function login()
         {

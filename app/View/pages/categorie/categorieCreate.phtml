@@ -1,0 +1,31 @@
+<section class="content-header">
+    <h1>Nova Categoria</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/categorias">Categorias</a></li>
+        <li class="active"><a href="/admin/categoria/create">Cadastrar</a></li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <form role="form" action="/admin/categoria/criar" method="post">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="descategory">Nome da categoria</label>
+                            <input type="text" class="form-control" id="descategory" name="nome" placeholder="Digite o nome da categoria" >
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>$('.treeview#categorie').addClass('active');</script>
+<script>$('#descategory').focus()</script>

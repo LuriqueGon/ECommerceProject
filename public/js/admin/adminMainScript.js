@@ -19,3 +19,9 @@ const deletarItem = id => {
         location.href = `/admin/users/delete?id=${id}`
     }
 }
+
+const deletarCategoria = id => {
+    if(confirm(`Deseja mesmo deletar a Categoria de Id ${id} ??`)){
+        location.href = `/admin/categoria/delete?id=${id}`
+    }
+}

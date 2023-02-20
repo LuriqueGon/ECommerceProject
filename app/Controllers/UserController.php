@@ -24,7 +24,6 @@ use MF\Model\Container;
         {
             $this->restrict();
             $this->inAdmin();
-
             
             $this->view->title = "Cadastrar Usuarios";
             $this->render('createUser', 'adminLayout');
@@ -49,6 +48,7 @@ use MF\Model\Container;
         {
             $this->restrict();
             $this->inAdmin();
+            $this->needGET($_GET);
 
             $user = Container::getModel('user');
             $user->__set('id', $_GET['id']);
@@ -61,6 +61,7 @@ use MF\Model\Container;
         {
             $this->restrict();
             $this->inAdmin();
+            $this->needGET($_GET);
 
             $user = Container::getModel('user');
             $user->__set('id', $_GET['id']);
@@ -73,6 +74,7 @@ use MF\Model\Container;
         {
             $this->restrict();
             $this->inAdmin();
+            $this->needGET($_GET);
 
             $user = Container::getModel('user');
             $user->__set('id', $_GET['id']);
@@ -80,16 +82,15 @@ use MF\Model\Container;
                 Message::setMessage('Deletado com sucesso', 'success', 'back');
             }
         }
-
         
-
         public function salvarEdition()
         {
+            $this->restrict();
+            $this->inAdmin();
+
             $user = Container::getModel('user');
             $user = $this->setValueObject($user, $_POST);
             $user->__set('idPerson', $user->getIdPerson());
-
-            
 
             $file = $_FILES['perfil'];
             $userName = str_replace(' ', '-',$_POST['nome']);
