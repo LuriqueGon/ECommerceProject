@@ -53,6 +53,11 @@ use MF\Init\Bootstrap;
                 'controller' => 'AuthController',
                 'action' => 'forgotReset'
             ); 
+            $routes['resetPassword'] = array(
+                'route' => '/login/forgotPassword/resetPassword',
+                'controller' => 'AuthController',
+                'action' => 'resetPassword'
+            ); 
             
             
 

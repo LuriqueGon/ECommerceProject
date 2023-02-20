@@ -54,11 +54,47 @@
             $this->dontRestrict();
             $this->needGET($_GET);
 
-            $this->view->nome = "Lurique";
+            $user = Container::getModel('user');
+            $user->__set('idDecrypt', $user->decryptCode($_GET['code']));
+            $results = $user->getIdByDecrypt();
+
+            $id = !empty($results)
+                   ? $results['iduser'] 
+                   : Message::setMessage('Link de restauração de Senha invalido!! Tente novamente', 'danger');
+
+            $user->__set('id', $id);
+            
+            $this->view->nome = $results['desperson'];
+            $this->view->id = $user->__get('idDecrypt');
             $this->view->code = $_GET['code'];
 
             $this->view->title = "Redefinir a senha";
             $this->render('forgot-reset', 'noLayout');
+        }
+
+        public function resetPassword()
+        {
+            $this->dontRestrict();
+            $this->needPOST($_POST);
+
+            if(isset($_POST['password'])){
+                if(empty($_POST['password'])) Message::setMessage('Informe uma senha valida', 'danger', 'back');
+
+                $user = Container::getModel('user');
+                $user->__set('idDecrypt', $user->decryptCode($_POST['code']));
+
+                if($user->__get('idDecrypt') != $_POST['idRecovery']) Message::setMessage('O código de redefinição possui algum erro, tente novamente   ', 'danger', 'back');
+
+                $results = $user->getIdByDecrypt();
+
+                if(empty($results)) Message::setMessage('Ocorreu algum erro inesperado, tente novamente', 'danger', 'back');
+                $user->__set('id', $results['iduser']);
+                $user->__set('password', md5($_POST['password']));
+
+                $user->recoveryPassword();
+
+                Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
+            }
         }
 
 
