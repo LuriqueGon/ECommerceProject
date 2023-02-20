@@ -2,7 +2,7 @@
     "vendor-name" : "Ecommerce Twister",
     "require":{
         "php":">=7.0",
-        "phpmailer/phpmailer": "^6.7"
+        "phpmailer/phpmailer": "6.7.1"
     },
     "author":[
         {

@@ -42,11 +42,19 @@ use MF\Init\Bootstrap;
                 'action' => 'register'
             );  
             
-            $routes['forgetPassword'] = array(
-                'route' => '/login/forgetPassword',
+            $routes['forgotPassword'] = array(
+                'route' => '/login/forgotPassword',
                 'controller' => 'AuthController',
-                'action' => 'forgetPasswordPages'
-            );  
+                'action' => 'forgotPasswordPages'
+            ); 
+            
+            $routes['forgotReset'] = array(
+                'route' => '/login/forgotPassword/reset',
+                'controller' => 'AuthController',
+                'action' => 'forgotReset'
+            ); 
+            
+            
 
             $routes['logout'] = array(
                 'route' => '/logout',
