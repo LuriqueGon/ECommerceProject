@@ -4,6 +4,8 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
+                        <li id="categorias" onclick="openCategoryMenu()"><a href="#"><i class="fa-solid fa-ellipsis-vertical"></i> Categorias</a></li>
+                        
                         <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
                             <li><a href="#"><i class="fa fa-user"></i> Minha Conta</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
@@ -77,10 +79,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="itemMenu">
                     <li class="active" id="home"><a href="#">Home</a></li>
-                    <li id="prod"><a href="/products">Produtos</a></li>
+                    <li id="prod"><a href="/produtos">Produtos</a></li>
                     <li id="cart"><a href="/cart">Carrinho</a></li>
                 </ul>
             </div>
         </div>
     </div>
-</div> <!-- End mainmenu area -->
+</div> 

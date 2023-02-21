@@ -79,7 +79,13 @@ use MF\Init\Bootstrap;
             
             // PRODUCT
             $routes['products'] = array(
-                'route' => '/products',
+                'route' => '/produtos',
+                'controller' => 'ProductController',
+                'action' => 'index'
+            );  
+            
+            $routes['loadCategory'] = array(
+                'route' => '/produtos',
                 'controller' => 'ProductController',
                 'action' => 'index'
             );  
@@ -176,6 +182,7 @@ use MF\Init\Bootstrap;
                 'controller' => 'CategorieController',
                 'action' => 'delete'
             );  
+            
             
             
             

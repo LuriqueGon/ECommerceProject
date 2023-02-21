@@ -1,0 +1,10 @@
+<?php
+
+use MF\Model\Container;
+
+$categoria = Container::getModel('categorie');
+$categorias = $categoria->getAll();
+
+foreach ($categorias as $row) {?>
+    <li><a href="/produtos?categoria=<?php echo $row['idcategory'] ?>"><?php echo $row['descategory'] ?></a></li>
+<?php }?>

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/responsive.css">
     <link rel="stylesheet" href="/css/toast.css">
+    <link rel="stylesheet" href="/css/category.css">
 
 	<script src="/js/owl.carousel.min.js" defer></script>
 	<script src="/js/jquery.sticky.js" defer></script>
@@ -19,14 +20,17 @@
 	<script src="/js/bxslider.min.js" defer></script>
 	<script src="/js/script.slider.js" defer></script>
 	<script src="/js/activeItemMenu.js"></script>
+	<script src="/js/openCategoryMenu.js" defer></script>
 
 	<title><?php echo $this->view->title ?> | ECommerce | </title>
 </head>
 <body>
 	<?php $this->loadComponent('toast')?>
+	<?php $this->loadComponent('categoryMenu')?>
 	<?php $this->loadComponent('header')?>
-
+	
 	<?php $this->content() ?>
+
 	<?php $this->loadComponent('footer')?>
 </body>
 

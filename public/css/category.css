@@ -1,0 +1,59 @@
+.modalItem.active{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 800;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.noScroll{
+    overflow: hidden;
+}
+.categoryMenu{
+    position: fixed;
+    left: -500rem;
+    transition: all .8s;
+}
+.categoryMenu.open{
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 35rem;
+    height: 100vh;
+    z-index: 1000;
+    overflow: auto;
+    transition: all .3s;
+}
+.categoryMenu.open h1{
+    margin: 3rem 0;
+    font-size: 4.4rem;
+    text-align: center;
+    letter-spacing: .25rem;
+    width: 100%;
+}
+.categoryMenu.open .closeMenu{
+    display: inline;
+    font-size: 3rem;
+    position: absolute;
+    top: 4.5%;
+    right: 5%;
+    font-weight: bolder;
+    text-shadow: 0.1rem 0.2rem 0.3rem black;
+    opacity: .6;
+    cursor: pointer;
+}
+.categoryMenu.open .closeMenu:hover{
+    opacity: 1;
+    color: red;
+}
+.categoryMenu.open ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.categoryMenu.open ul li{
+    font-size: 2rem;
+    border-bottom: 2px solid #00000032;
+    padding: 1rem 0 1rem 2rem;
+}

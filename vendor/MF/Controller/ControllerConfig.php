@@ -2,6 +2,8 @@
 
     namespace MF\Controller;
 
+use MF\Model\Container;
+
     abstract class ControllerConfig 
     {
 
@@ -13,11 +15,6 @@
             $this->fixUrls();
             $this->getAll();
             session_start();
-            $this->view->phpMailer['name'] = "Contato E-Commerce";
-            $this->view->phpMailer['port'] = 587;
-            $this->view->phpMailer['smtpAuth'] = true;
-            $this->view->phpMailer['smtpSecure'] = "tls";
-            $this->view->phpMailer['emailCopy'] = "gamenizados@gmail.com";
         }
 
         protected function getAll()
@@ -73,22 +70,6 @@
             );
 
         }
-
-        private function constructConsts(){
-            // PHPMAILER
-
-            $this->view->phpMailer['emailHost'] = "smtp.gmail.com";
-            $this->view->phpMailer['emailSiteAdmin'] = "gamenizados@gmail.com";
-            $this->view->phpMailer['user'] = "";
-            $this->view->phpMailer['name'] = "Contato E-Commerce";
-            $this->view->phpMailer['password'] = "hfkmjxeiqxyywgsf";
-            $this->view->phpMailer['port'] = 587;
-            $this->view->phpMailer['smtpAuth'] = true;
-            $this->view->phpMailer['smtpSecure'] = "tls";
-            $this->view->phpMailer['emailCopy'] = "gamenizados@gmail.com";
-        }
-        
-        
     }
 
 ?>
