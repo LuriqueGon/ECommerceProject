@@ -1,0 +1,111 @@
+<section class="content-header">
+    <h1><?php echo $this->view->pageTitle ?> Produto</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/produtos">Categorias</a></li>
+        <li class="active"><a href="<?php echo $this->view->url ?>"><?php echo $this->view->pageTitle ?></a></li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <form role="form" action="<?php echo $this->view->action ?>" method="post" style="padding: 1rem 8rem;" enctype="multipart/form-data">
+                    <div class="box-body">
+                        <input type="hidden" name="id" value="<?php echo $this->view->produto['id'] ?>">
+                        <div class="form-group">
+                            <label for="desproduct">Nome da produto</label>
+                            <input required type="text" class="form-control" id="desproduct" value="<?php echo $this->view->produto['nome'] ?>" name="desproduct" placeholder="Digite o nome do produto">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="vlprice">Preço</label>
+                                    <input required type="number" min="0.01" max="99999.999" minlength="1" class="form-control" id="vlprice" name="vlprice" value="<?php echo $this->view->produto['preco'] ?>" step="0.001" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="vlweight">Peso</label>
+                                    <input required type="number" min="0.01" max="99999.999" minlength="1" class="form-control" id="vlweight" name="vlweight" value="<?php echo $this->view->produto['peso'] ?>" step="0.001" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="vlwidth">Largura</label>
+                                    <input required type="number" min="0.01" max="99999.999" minlength="1" class="form-control" id="vlwidth" name="vlwidth" value="<?php echo $this->view->produto['largura'] ?>" step="0.001" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="vlheight">Altura</label>
+                                    <input required type="number" min="0.01" max="99999.999" minlength="1" class="form-control" id="vlheight" name="vlheight" value="<?php echo $this->view->produto['altura'] ?>" step="0.001" placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="vllength">Comprimento</label>
+                                    <input required type="number" min="0.01" max="99999.999" minlength="1" class="form-control" id="vllength" name="vllength" value="<?php echo $this->view->produto['comprimento'] ?>"  step="0.001" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" id="url" class="form-control" placeholder="Item-Marca-Modelo" value="<?php echo $this->view->produto['url'] ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="desc">Descrição</label>
+                                <textarea class="form-control" name="desc" id="desc" style="resize: none;"><?php echo $this->view->produto['descricao'] ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="photo">Descrição</label>
+                                <input type="file" name="photo" id="photo" class="input-control" accept="image/*" onchange="previewFile()">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <img src="" id="img" style="max-width: 500px;max-height: 500px;">
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success"><?php echo $this->view->pageTitle ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script>
+    function previewFile() {
+        var preview = document.querySelector('#img');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

@@ -34,13 +34,13 @@ DROP TABLE IF EXISTS `db_ecommerce`.`tb_products`;
 
 CREATE TABLE `db_ecommerce`.`tb_products` (
   `idproduct` int(11) NOT NULL AUTO_INCREMENT,
-  `desproduct` varchar(64) NOT NULL,
-  `vlprice` decimal(10,2) NOT NULL,
-  `vlwidth` decimal(10,2) NOT NULL,
-  `vlheight` decimal(10,2) NOT NULL,
-  `vllength` decimal(10,2) NOT NULL,
-  `vlweight` decimal(10,2) NOT NULL,
-  `desurl` varchar(128) NOT NULL,
+  `desproduct` varchar(255) NOT NULL,
+  `vlprice` decimal(10,3) NOT NULL,
+  `vlwidth` decimal(10,3) NOT NULL,
+  `vlheight` decimal(10,3) NOT NULL,
+  `vllength` decimal(10,3) NOT NULL,
+  `vlweight` decimal(10,3) NOT NULL,
+  `desurl` varchar(255) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idproduct`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -71,7 +71,7 @@ CREATE TABLE `db_ecommerce`.`tb_carts` (
   `dessessionid` varchar(64) NOT NULL,
   `iduser` int(11) DEFAULT NULL,
   `idaddress` int(11) DEFAULT NULL,
-  `vlfreight` decimal(10,2) DEFAULT NULL,
+  `vlfreight` decimal(10,3) DEFAULT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idcart`),
   KEY `FK_carts_users_idx` (`iduser`),
@@ -123,7 +123,7 @@ CREATE TABLE `db_ecommerce`.`tb_orders` (
   `idcart` int(11) NOT NULL,
   `iduser` int(11) NOT NULL,
   `idstatus` int(11) NOT NULL,
-  `vltotal` decimal(10,2) NOT NULL,
+  `vltotal` decimal(10,3) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idorder`),
   KEY `FK_orders_carts_idx` (`idcart`),
@@ -275,3 +275,5 @@ DELIMITER ;
 
 ALTER TABLE `tb_users` ADD `ativo` BOOLEAN NOT NULL DEFAULT TRUE AFTER `dtregister`;
 ALTER TABLE `tb_persons` ADD `perfil` VARCHAR(255) NULL AFTER `nrphone`;
+ALTER TABLE `tb_products` ADD `descricao` TEXT AFTER `desurl`;
+ALTER TABLE `tb_products` ADD `photo` VARCHAR(255) NOT NULL AFTER `descricao`;

@@ -11,7 +11,7 @@ use MF\Model\DAO;
 
         public function getAll():array
         {
-            return $this->selectAll("SELECT * FROM tb_categories");
+            return $this->selectAll("SELECT * FROM tb_categories ORDER BY dtregister DESC");
         }
 
         public function getById():array
@@ -34,7 +34,11 @@ use MF\Model\DAO;
 
         public function update()
         {
+            if($this->read())return false;
+
             $this->query('UPDATE tb_categories SET descategory = ? WHERE idcategory = ?', array($this->__get('nome'), $this->__get('id')));
+
+            return true;
         }
 
         public function delete():bool

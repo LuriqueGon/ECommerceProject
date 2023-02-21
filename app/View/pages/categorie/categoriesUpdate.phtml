@@ -1,24 +1,25 @@
 <section class="content-header">
-    <h1>Nova Categoria</h1>
+    <h1><?php echo $this->view->pageTitle ?> Categoria</h1>
     <ol class="breadcrumb">
         <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/admin/categorias">Categorias</a></li>
-        <li class="active"><a href="/admin/categoria/create">Cadastrar</a></li>
+        <li class="active"><a href="<?php echo $this->view->url ?>"><?php echo $this->view->pageTitle ?></a></li>
     </ol>
 </section>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-body">
-                <form role="form" action="/admin/categoria/criar" method="post">
+                <form role="form" action="<?php echo $this->view->action ?>" method="post">
                     <div class="box-body">
+                        <input type="hidden" name="id" value="<?php echo $this->view->categoria['idcategory'] ?>">
                         <div class="form-group">
                             <label for="descategory">Nome da categoria</label>
-                            <input type="text" class="form-control" id="descategory" name="nome" placeholder="Digite o nome da categoria" >
+                            <input type="text" class="form-control" id="descategory" name="nome" value="<?php echo $this->view->categoria['descategory'] ?>" placeholder="Digite o nome da categoria" >
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->view->pageTitle ?></button>
                     </div>
                 </form>
             </div>

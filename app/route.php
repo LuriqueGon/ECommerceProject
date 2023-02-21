@@ -95,6 +95,46 @@ use MF\Init\Bootstrap;
                 'controller' => 'ProductController',
                 'action' => 'details'
             );  
+
+            $routes['createProducts'] = array(
+                'route' => '/admin/produto/create',
+                'controller' => 'ProductController',
+                'action' => 'loadCreate'
+            );  
+
+            $routes['cadastrarProduto'] = array(
+                'route' => '/admin/product/create',
+                'controller' => 'ProductController',
+                'action' => 'create'
+            );  
+
+            $routes['listarProdutos'] = array(
+                'route' => '/admin/produtos',
+                'controller' => 'ProductController',
+                'action' => 'listar'
+            ); 
+
+            $routes['deletarProduto'] = array(
+                'route' => '/admin/produto/delete',
+                'controller' => 'ProductController',
+                'action' => 'delete'
+            );  
+            
+            $routes['editProduct'] = array(
+                'route' => '/admin/produto/edit',
+                'controller' => 'ProductController',
+                'action' => 'loadUpdate'
+            );  
+            
+            $routes['updateProduct'] = array(
+                'route' => '/admin/product/editar',
+                'controller' => 'ProductController',
+                'action' => 'update'
+            );  
+            
+            
+            
+            
             
             // PAYMENT
             $routes['pagamento'] = array(
@@ -129,7 +169,7 @@ use MF\Init\Bootstrap;
             );  
 
             $routes['deletarUser'] = array(
-                'route' => '/admin/users/delete',
+                'route' => '/admin/user/delete',
                 'controller' => 'UserController',
                 'action' => 'deletarUser'
             );  

@@ -14,14 +14,8 @@ const formatTel = () => {
 
 formatTel();
 
-const deletarItem = id => {
-    if(confirm(`Deseja mesmo deletar o Usuario de Id ${id} ??`)){
-        location.href = `/admin/users/delete?id=${id}`
-    }
-}
-
-const deletarCategoria = id => {
-    if(confirm(`Deseja mesmo deletar a Categoria de Id ${id} ??`)){
-        location.href = `/admin/categoria/delete?id=${id}`
+const deletarItem = (item,id) => {
+    if(confirm(`Deseja mesmo deletar o ${item} de Id ${id} ??`)){
+        location.href = `/admin/${item}/delete?id=${id}`
     }
 }

@@ -1,9 +1,9 @@
 <section class="content-header">
     <h1> Todos os Usuarios</h1>
     <ol class="breadcrumb">
-        <li class="active"><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/admin/users">Users</a></li>
-        <li><a href="#">Todos</a></li>
+        <li class="active"><a href="/admin/users">Todos</a></li>
     </ol>
 </section>
 <section class="content">
@@ -54,7 +54,7 @@
                                                 <a href="/admin/users/ativar?id=<?php echo $value['iduser']?>" id="check">
                                                     <i class="fa-solid fa-user-check" ></i> Ativar
                                                 </a>
-                                                <a href="#" onclick="deletarItem(<?php echo $value['iduser']?>)" id="delete">
+                                                <a href="#" onclick="deletarItem('user',<?php echo $value['iduser']?>)" id="delete">
                                                     <i class="fa-solid fa-user-xmark"></i> Deletar
                                                 </a>
                                             </div>

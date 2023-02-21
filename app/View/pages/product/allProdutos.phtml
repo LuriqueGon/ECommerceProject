@@ -1,0 +1,96 @@
+<section class="content-header">
+    <h1> Todos os Produtos</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/produtos">Produtos</a></li>
+        <li class="active"><a href="/admin/produtos">Todos</a></li>
+    </ol>
+</section>
+<section class="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>Preço</th>
+                                <th>Dimensões</th>
+                                <th>Peso</th>
+                                <th>Registro</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->view->produtos as $key => $value) { ?>
+                                <tr>
+                                    <td><?php echo $key + 1 ?></td>
+                                    <td><?php echo $value['desproduct'] ?></td>
+                                    <td>R$ <?php echo number_format($value['vlprice'], 2, ',', '.') ?></td>
+                                    <td><?php echo $value['vlheight'] . " X " . $value['vlwidth'] . " X " . $value['vllength'] ?> cm</td>
+                                    <td><?php echo transformWeightNumber($value['vlweight']) ?></td>
+                                    <td><?php echo $value['dtregister'] ?></td>
+                                    <td>
+                                        <div class="ico">
+                                            <a href="/admin/produto/edit?id=<?php echo $value['idproduct'] ?>">
+                                                <i class="fa-solid fa-user-pen"></i> Editar
+                                            </a>
+                                            <a href="#" onclick="deletarItem('produto',<?php echo $value['idproduct'] ?>)" id="delete">
+                                                <i class="fa-solid fa-user-xmark"></i> Deletar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+
+function transformWeightNumber(Float $num)
+{
+    if (floor($num) == $num) { // verifica se o número é inteiro
+        if($num > 1000){
+            return ($num/1000)."kg";
+        }
+    } else {
+        $num_str = sprintf("%.3f", $num); // converte o número para string mantendo as 3 casas decimais
+        $decimals = substr($num_str, -3); // obtém as 3 últimas posições da string (as casas decimais)
+
+        if ($decimals == "000") { // verifica se as casas decimais são todas 0
+            return (int)$num." g"; // se forem, imprime o número transformado em inteiro
+        } else {
+            return $num." g"; // se não forem, imprime o número sem transformação
+        }
+    }
+}
+
+
+?>
+
+
+<script>
+    $(function() {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true
+        });
+    });
+</script>
+</section>
+<script>
+    $('.treeview#prod').addClass('active');
+</script>

@@ -1,9 +1,9 @@
 <section class="content-header">
     <h1> Todas as Categorias</h1>
     <ol class="breadcrumb">
-        <li class="active"><a href="/admin"><i class="fa fa-dashboard"></i> Categorias</a></li>
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="/admin/categorias">Categorias</a></li>
-        <li><a href="#">Todas</a></li>
+        <li class="active"><a href="/admin/categorias">Todas</a></li>
     </ol>
 </section>
 <section class="content">
@@ -32,7 +32,8 @@
                                             <a href="/admin/categoria/edit?id=<?php echo $value['idcategory']?>">
                                                 <i class="fa-solid fa-user-pen" ></i> Editar 
                                             </a>
-                                            <a href="#" onclick="deletarCategoria(<?php echo $value['idcategory']?>)" id="delete">
+                                            <a href="#" onclick="deletarItem('categoria',
+                                            <?php echo $value['idcategory']?>)" id="delete">
                                                 <i class="fa-solid fa-user-xmark"></i> Deletar
                                             </a>
                                         </div>

@@ -24,8 +24,17 @@
             $this->restrict();
             $this->inAdmin();
 
+            $this->view->categoria = array(
+                'descategory' => "",
+                'idcategory' => ""
+            );
+
+            $this->view->pageTitle = 'Cadastrar';
+            $this->view->url = '/admin/categoria/create';
+            $this->view->action = '/admin/categoria/criar';
+
             $this->view->title = "Criar Categoria";
-            $this->render('categorieCreate', 'adminLayout');
+            $this->render('categoriesUpdate', 'adminLayout');
         }
 
         public function loadUpdate()
@@ -38,8 +47,12 @@
             $categoria->__set('id', $_GET['id']);
             $this->view->categoria = $categoria->getById();
 
+            $this->view->pageTitle = 'Editar';
+            $this->view->url = '#';
+            $this->view->action = '/admin/categoria/editar';
+
             $this->view->title = "Editar Categoria";
-            $this->render('categorieEdit', 'adminLayout');
+            $this->render('categoriesUpdate', 'adminLayout');
         }
 
         public function create()
@@ -47,12 +60,16 @@
             $this->restrict();
             $this->inAdmin();
             $this->needPOST($_POST);
-
-            if(empty($_POST['nome'])) Message::setMessage('Digite um nome válido', 'danger', 'back'); exit;
-
+            
+            var_dump($_POST['nome']);
+            $_POST['nome'] = empty($_POST['nome']) ?
+                             Message::setMessage('Digite um nome válido', 'danger', 'back'):
+                             $_POST['nome'];
+            
+            echo 1;
             $categoria = Container::getModel('Categorie');
             $categoria->__set('nome', $_POST['nome']);
-
+            echo 1;
             if($categoria->create()) {
                 Message::setMessage('Categoria Criada com sucesso', 'success', 'back');
                 exit;
@@ -82,8 +99,12 @@
             $categoria->__set('id', $_POST['id']);
             $categoria->__set('nome', $_POST['nome']);
 
-            $categoria->update();
-            Message::setMessage('Editado com sucesso', 'success', '/admin/categorias');
+            if($categoria->update()){
+                Message::setMessage('Editado com sucesso', 'success', '/admin/categorias');
+
+            }else{
+                Message::setMessage('Categoria Já existente no banco', 'danger', 'back');
+            }
             
         }
 
