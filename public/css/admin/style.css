@@ -11,6 +11,14 @@ input{
     outline: none!important;
     border: 0;
 }
+abrr{
+    text-decoration: none!important;
+}
+abbr[title] {
+    border-bottom: none !important;
+    cursor: default !important;
+    text-decoration: none!important;
+}
 li.boderLiTreeviewMenu {
     border-bottom: 1px solid rgba(255, 255, 255, 0.65);
     padding: .7rem 0;

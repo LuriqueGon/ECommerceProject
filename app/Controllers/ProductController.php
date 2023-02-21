@@ -58,7 +58,8 @@
                 'comprimento' => "",
                 'peso' => "",
                 'url' => "",
-                'descricao' => ""
+                'descricao' => "",
+                'photo' => ""
             );
 
             $this->view->pageTitle = 'Cadastrar';
@@ -88,7 +89,8 @@
                 'comprimento' => $produtoItem['vllength'],
                 'peso' => $produtoItem['vlweight'],
                 'url' => $produtoItem['desurl'],
-                'descricao' => $produtoItem['descricao']
+                'descricao' => $produtoItem['descricao'],
+                'photo' => $produtoItem['photo']
             );
 
             $this->view->pageTitle = 'Editar';
@@ -118,12 +120,22 @@
 
             $produto = Container::getModel('product');
             $produto = $this->setValueObject($produto, $params);
+            $produto->__set('photo', $this->setPhoto($_FILES, $produto));
+            $produto->create();
 
-            $file = $_FILES['photo'];
-            $productName = $produto->__get('id');
-            $path = "./img/produtos";
+            // Message::setMessage('Produto Adicionado com sucesso', 'success', '/admin/produtos');
+        }
+
+        private function setPhoto($files, $produto)
+        {
+            $file = $files['photo'];
+            
+            $productName = !empty($produto->__get('id')) ? $produto->__get('id') : bin2hex(random_bytes(5));
+            $path = "/img/produtos";
+            $pathDir = "./img/produtos";
             $fileName = bin2hex(random_bytes(20)). '.jpg';
-            $photo = $path."/$productName/".$fileName;
+            $photo = $pathDir."/$productName/".$fileName;
+
             
 
             if(!empty($file)){
@@ -133,22 +145,19 @@
 
                     if($file['error'])Message::setMessage($file['error'], 'danger', 'back');
 
-                    if(!is_dir($path))mkdir($path);
+                    if(!is_dir($pathDir))mkdir($pathDir,0777);
 
-                    if(!is_dir($path.'/'.$productName ))mkdir($path.'/'. $productName);
+                    if(!is_dir($pathDir.'/'.$productName ))mkdir($pathDir.'/'. $productName,0777);
 
                     if(move_uploaded_file($file['tmp_name'], $photo)){
 
-                        $produto->__set('photo', "$path/$productName/".$fileName);
+                        return "$path/$productName/$fileName";
 
                     }else Message::setMessage("Uploud do arquivo falhou", 'danger', 'back');
 
                 }else Message::setMessage("Tipo do arquivo invalido, só aceitamos JPG e PNG", 'danger', 'back');
 
             }
-            $produto->create();
-
-            Message::setMessage('Produto Adicionado com sucesso', 'success', '/admin/produtos');
         }
 
         public function update()
@@ -172,37 +181,7 @@
             $produto = Container::getModel('product');
             $produto = $this->setValueObject($produto, $params);
 
-            // PEGAR IMAGEM
-
-
-            $file = $_FILES['photo'];
-            $productName = $produto->__get('id');
-            $path = "./img/produtos";
-            $fileName = bin2hex(random_bytes(20)). '.jpg';
-            $photo = $path."/$productName/".$fileName;
-            
-
-            if(!empty($file)){
-                $file['type'] = explode('/',$file['type'])[1];
-
-                if(in_array($file['type'], ["jpeg","jpg","JPEG","JPG", "png", "PNG", "JFIF", "jfif"])){
-
-                    if($file['error'])Message::setMessage($file['error'], 'danger', 'back');
-
-                    if(!is_dir($path))mkdir($path);
-
-                    if(!is_dir($path.'/'.$productName ))mkdir($path.'/'. $productName);
-
-                    if(move_uploaded_file($file['tmp_name'], $photo)){
-
-                        $produto->__set('photo', "$path/$productName/".$fileName);
-
-                    }else Message::setMessage("Uploud do arquivo falhou", 'danger', 'back');
-
-                }else Message::setMessage("Tipo do arquivo invalido, só aceitamos JPG e PNG", 'danger', 'back');
-
-            }
-
+            $produto->__set('photo', $this->setPhoto($_FILES, $produto));
             $produto->update();
 
             Message::setMessage('Edição Concluida', 'success', '/admin/produtos');
