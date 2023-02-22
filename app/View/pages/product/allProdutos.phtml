@@ -12,10 +12,11 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-dark table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>photo</th>
                                 <th>Nome</th>
                                 <th>Preço</th>
                                 <th>Dimensões</th>
@@ -27,23 +28,26 @@
                         <tbody>
                             <?php foreach ($this->view->produtos as $key => $value) { ?>
                                 <?php
-                                $prodName = (strlen($value['desproduct']) > 60) ? substr($value['desproduct'], 0, 60) . "..." : $value['desproduct'];
+                                    $prodName = (strlen($value['desproduct']) > 60) ? substr($value['desproduct'], 0, 60) . "..." : $value['desproduct'];
+                                    $data = new DateTime($value['dtregister']);
+                                    $data = str_replace('-','/',$data->format('d-m-Y'));
                                 ?>
                                 <tr>
                                     <td><?php echo $key + 1 ?></td>
-
+                                    <td>
+                                        <img src="<?php echo $value['photo']; ?>" style="width: 100px; height: 100px; object-fit: contain;">
+                                    </td>
                                     <td><abbr title="<?php echo $value['desproduct'] ?>"><?php echo $prodName ?></abbr></td>
-
                                     <td>R$ <?php echo number_format($value['vlprice'], 2, ',', '.') ?></td>
                                     <td><?php echo $value['vlheight'] . " X " . $value['vlwidth'] . " X " . $value['vllength'] ?> cm</td>
                                     <td><?php echo transformWeightNumber($value['vlweight']) ?></td>
-                                    <td><?php echo $value['dtregister'] ?></td>
+                                    <td><?php echo $data ?></td>
                                     <td>
-                                        <div class="ico">
-                                            <a href="/admin/produto/edit?id=<?php echo $value['idproduct'] ?>">
+                                        <div class="ico" style="display: flex; flex-direction: column;">
+                                            <a href="/admin/produto/edit?id=<?php echo $value['idproduct'] ?>" style="margin: 1rem 0;">
                                                 <i class="fa-solid fa-user-pen"></i> Editar
                                             </a>
-                                            <a href="#" onclick="deletarItem('produto',<?php echo $value['idproduct'] ?>)" id="delete">
+                                            <a href="#" onclick="deletarItem('produto',<?php echo $value['idproduct'] ?>)" id="delete" style="margin: 1rem 0;">
                                                 <i class="fa-solid fa-user-xmark"></i> Deletar
                                             </a>
                                         </div>
@@ -96,6 +100,5 @@ function transformWeightNumber(Float $num)
     });
 </script>
 </section>
-<script>
-    $('.treeview#prod').addClass('active');
-</script>
+<script>$('.treeview#prod').addClass('active');</script>
+<script>$('.treeview#prod li.1').addClass('active');</script>

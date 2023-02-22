@@ -19,6 +19,8 @@
                 $this->view->category = $result['descategory'];
                 $this->render('produtos');
             }else{
+                $produto = Container::getModel('product');
+                $this->view->produtos = $produto->getAll();
                 $this->view->title = "Listagem de Produtos";
                 $this->render('produtos');
             }
@@ -28,6 +30,12 @@
 
         public function details()
         {
+            if(!isset($_GET['url']) || empty($_GET['url']))Message::setMessage('Informe um url, para acessar os detalhes do produto', 'danger', '/produtos');
+
+            $produto = Container::getModel('product');
+            $produto->__set('url', $_GET['url']);
+            $this->view->produto = $produto->findByUrl();
+
             $this->view->title = "Detalhes dos Produtos";
             $this->render('productsDetails');
         }
@@ -129,6 +137,8 @@
         private function setPhoto($files, $produto)
         {
             $file = $files['photo'];
+
+            var_dump($file);
             
             $productName = !empty($produto->__get('id')) ? $produto->__get('id') : bin2hex(random_bytes(5));
             $path = "/img/produtos";
@@ -138,7 +148,7 @@
 
             
 
-            if(!empty($file)){
+            if(!empty($file['name'])){
                 $file['type'] = explode('/',$file['type'])[1];
 
                 if(in_array($file['type'], ["jpeg","jpg","JPEG","JPG", "png", "PNG", "JFIF", "jfif"])){
@@ -155,7 +165,7 @@
 
                     }else Message::setMessage("Uploud do arquivo falhou", 'danger', 'back');
 
-                }else Message::setMessage("Tipo do arquivo invalido, só aceitamos JPG e PNG", 'danger', 'back');
+                }else return "";
 
             }
         }

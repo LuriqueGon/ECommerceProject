@@ -50,33 +50,34 @@
                 <div class="product-content-right">
                     <div class="product-breadcroumb">
                         <a href="">Home</a>
+                        <a href="/produtos">Produtos</a>
                         <a href="">Category Name</a>
-                        <a href="">Sony Smart TV - 2015</a>
+                        <a href=""><?php echo $this->view->produto['desproduct'] ?></a>
                     </div>
                     
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="product-images">
                                 <div class="product-main-img">
-                                    <img src="img/product-2.jpg" alt="">
+                                    <img src="<?php echo $this->view->produto['photo'] ?>" alt="">
                                 </div>
                                 
-                                <div class="product-gallery">
+                                <!-- <div class="product-gallery">
                                     <img src="img/product-thumb-1.jpg" alt="">
                                     <img src="img/product-thumb-2.jpg" alt="">
                                     <img src="img/product-thumb-3.jpg" alt="">
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         
                         <div class="col-sm-6">
                             <div class="product-inner">
-                                <h2 class="product-name">Sony Smart TV - 2015</h2>
+                                <h2 class="product-name"><?php echo $this->view->produto['desproduct'] ?></h2>
                                 <div class="product-inner-price">
-                                    <ins>$700.00</ins> <del>$100.00</del>
+                                    <ins>R$ <?php echo number_format($this->view->produto['vlprice'],2,',','.') ?></ins>
                                 </div>    
                                 
-                                <form action="" class="cart">
+                                <form action="#" class="cart">
                                     <div class="quantity">
                                         <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                     </div>
@@ -84,23 +85,29 @@
                                 </form>   
                                 
                                 <div class="product-inner-category">
-                                    <p>Category: <a href="">Summer</a>.
+                                    <p>Category: <a href="">#</a>.
                                 </div> 
                                 
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
-                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
-                                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                        <li role="presentation" class="homeItem active" onclick="ativarItem('homeItem')"> 
+                                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                                                Descrição
+                                            </a>
+                                        </li>
+                                        <li role="presentation" class="profile" onclick="ativarItem('profile')">
+                                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                                                Comentarios
+                                            </a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <h2>Product Description</h2>  
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                            <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
+                                        <div role="tabpanel" class="tab-pane fade in active" id="homeItem">
+                                            <h2>Descrição do Produto</h2>  
+                                            <p><?php echo $this->view->produto['descricao'] ?></p>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="profile">
-                                            <h2>Reviews</h2>
+                                        <div role="tabpane2" class="tab-pane fade" id="profile">
+                                            <h2>Comentarios</h2>
                                             <div class="submit-review">
                                                 <p><label for="name">Name</label> <input name="name" type="text"></p>
                                                 <p><label for="email">Email</label> <input name="email" type="email"></p>
@@ -132,5 +139,19 @@
     </div>
 </div>
 <script>
-    activeItem('')
+    const ativarItem = id => {
+        document.querySelectorAll('ul.product-tab li').forEach(li => {
+            li.classList.remove('active')
+        })
+        document.querySelectorAll('div.tab-content div.fade').forEach(li => {
+            li.classList.remove('active')
+        })
+        
+        // console.log(document.querySelector(`#${id}`))
+        // console.log(document.querySelector(`.${id}`))
+        document.querySelector(`#${id}`).classList.add('in')
+        document.querySelector(`#${id}`).classList.add('active')
+        document.querySelector(`.${id}`).classList.add('active')
+    }
 </script>
+<script>activeItem('prod')</script>

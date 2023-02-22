@@ -26,6 +26,12 @@ use MF\Model\DAO;
             return $this->select('SELECT * FROM tb_products WHERE idproduct = ?', array($this->__get('id')));
         }
 
+        public function findByUrl():array
+        {
+            return $this->select('SELECT * FROM tb_products WHERE desurl = ?', array($this->__get('url')));
+        }
+
+        
         public function create():void
         {
             $this->query('INSERT INTO tb_products( desproduct, vlprice, vlwidth, vlheight, vllength, vlweight, desurl, descricao ) VALUES (?,?,?,?,?,?,?,?)', array(

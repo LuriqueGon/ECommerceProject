@@ -9,6 +9,8 @@
 
         public function index()
         {
+            $produto = Container::getModel('product');
+            $this->view->produtos = $produto->getAll();
             $this->view->title = "Home";    
             $this->render('index');
             
