@@ -28,7 +28,7 @@
                         <tbody>
                             <?php foreach ($this->view->produtos as $key => $value) { ?>
                                 <?php
-                                    $prodName = (strlen($value['desproduct']) > 60) ? substr($value['desproduct'], 0, 60) . "..." : $value['desproduct'];
+                                    $prodName = (strlen($value['desproduct']) > 60) ? substr($value['desproduct'], 0, 60) . "..." : $value['desproduct']; 
                                     $data = new DateTime($value['dtregister']);
                                     $data = str_replace('-','/',$data->format('d-m-Y'));
                                 ?>

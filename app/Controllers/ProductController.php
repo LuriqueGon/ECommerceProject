@@ -10,24 +10,40 @@
     {
         public function index()
         {
+            
 
             if(isset($_GET['categoria']) && !empty($_GET['categoria'])){
                 $categoria = Container::getModel('categorie');
                 $categoria->__set('id', $_GET['categoria']);
-                $result = $categoria->getById();
+                $resultCate = $categoria->getById();
 
+                $page = (isset($_GET['page']) ? $_GET['page'] : 1);
                 $produto = Container::getModel('product');
-                $produto->__set('cateId', $_GET['categoria']);
-                $this->view->produtos = $produto->getAll();
 
-                $this->view->title = "Categoria ". $result['descategory'];
-                $this->view->category = $result['descategory'];
+                $produto->__set('cateId', $_GET['categoria']);
+                $result = $produto->getProductsPages(0,$page);
+
+                $this->view->produtos = $result['data'];
+
+                $this->view->pages = $result['pages'];
+                $this->view->pagin = $page;
+                $this->view->title = "Categoria ". $resultCate['descategory'];
+                $this->view->category = $resultCate['descategory'];
+                $this->view->categoria = $resultCate;
                 $this->render('produtos');
 
             }else{
+                $page = (isset($_GET['page']) ? $_GET['page'] : 1);
+
                 $produto = Container::getModel('product');
-                $this->view->produtos = $produto->getAll();
+                $result = $produto->getProductsPages(1,$page);
+
+                $this->view->produtos = $result['data'];
+                $this->view->categoria= "";
+                $this->view->pages = $result['pages'];
+                $this->view->pagin = $page;
                 $this->view->title = "Listagem de Produtos";
+                
                 $this->render('produtos');
             }
 

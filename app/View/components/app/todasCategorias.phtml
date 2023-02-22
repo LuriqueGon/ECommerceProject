@@ -3,7 +3,7 @@
 use MF\Model\Container;
 
 $categoria = Container::getModel('categorie');
-$categorias = $categoria->getAll();
+$categorias = $categoria->getAll(1);
 
 foreach ($categorias as $row) {?>
     <li><a href="/produtos?categoria=<?php echo $row['idcategory'] ?>"><?php echo $row['descategory'] ?></a></li>

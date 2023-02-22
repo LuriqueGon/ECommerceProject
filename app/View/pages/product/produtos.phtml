@@ -5,26 +5,33 @@
     <div class="container">
         <div class="row">
             <?php foreach ($this->view->produtos as $key => $produto) {?>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-shop-product">
-                        <a href="/productsDetails?url=<?php echo $produto['desurl'] ?>">
-                            <div class="product-upper">
-                                <img src="<?php echo $produto['photo'] ?>" style="object-fit: contain; width: 300px; height: 300px;">
-                            </div>
-                        </a>
-                        <h2><a href="/productsDetails?url=<?php echo $produto['desurl'] ?>"><?php echo $produto['desproduct'] ?></a></h2>
-                        <div class="product-carousel-price">
-                            <!-- <ins>$899.00</ins> <del>$999.00</del> -->
-                            <ins>R$<?php echo number_format($produto['vlprice'],2,",",".") ?></ins>
-                        </div>  
-                        
-                        <div class="product-option-shop">
-                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="<?php echo $produto['idproduct'] ?>" rel="nofollow" href="#">Add to cart</a>
-                            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="<?php echo $produto['idproduct'] ?>" rel="nofollow" href="#">Comprar</a>
+                <abbr title="<?php echo $produto['desproduct'] ?>">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="single-shop-product">
+                            <a href="/productsDetails?url=<?php echo $produto['desurl'] ?>">
+                                <div class="product-upper">
+                                    <img src="<?php echo $produto['photo'] ?>" style="object-fit: contain; width: 300px; height: 300px;">
+                                </div>
+                            </a>
+                            <?php $prodName = (strlen($produto['desproduct']) > 45) ? substr($produto['desproduct'], 0, 45) . "..." : $produto['desproduct']; ?>
+                            <h2>
+                                <a href="/productsDetails?url=<?php echo $produto['desurl'] ?>">
+                                    <?php echo $prodName ?>
+                                </a>
+                            </h2>
+                            <div class="product-carousel-price">
+                                <!-- <ins>$899.00</ins> <del>$999.00</del> -->
+                                <ins>R$<?php echo number_format($produto['vlprice'],2,",",".") ?></ins>
+                            </div>  
                             
-                        </div>                       
+                            <div class="product-option-shop">
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="<?php echo $produto['idproduct'] ?>" rel="nofollow" href="#">Add to cart</a>
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="<?php echo $produto['idproduct'] ?>" rel="nofollow" href="#">Comprar</a>
+                                
+                            </div>                       
+                        </div>
                     </div>
-                </div>
+                </abbr>
              <?php } ?>
             
         </div>
@@ -34,21 +41,68 @@
                 <div class="product-pagination text-center">
                     <nav>
                         <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                            <?php if(!empty($thia->view->categoria)){ ?>
+                                <li>
+                                    <?php if($this->view->pagin -1 >= 1){ ?>
+                                        <a href="/produtos?categoria=<?php echo $this->view->categoria['idcategory'] ?>&page=<?php echo $this->view->pagin -1 ?>" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    <?php }else{ ?>
+                                        <a href="#" aria-label="Previous" class="disabled">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    <?php } ?>
+                                </li>
+                                    <?php for($i = 1; $i <= $this->view->pages; $i++){?>
+                                        <?php if($i == $this->view->pagin){ ?>
+                                            <li class="active"><a href=""><?php echo $i ?></a></li>
+                                        <?php }else{?>
+                                            <li><a href="/produtos?categoria=<?php echo $this->view->categoria['idcategory'] ?>&page=<?php echo $i ?>"><?php echo $i ?></a></li>
+                                        <?php }?>
+                                    <?php }?>
+                                <li>
+                                    <?php if($this->view->pagin +1 <= $this->view->pages){ ?>
+                                        <a href="/produtos?categoria=<?php echo $this->view->categoria['idcategory'] ?>&page=<?php echo $this->view->pagin +1 ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    <?php }else{ ?>
+                                        <a href="#" class="disabled" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    <?php } ?>
+                                </li>
+                            <?php }else{?>  
+                                <li>
+                                    <?php if($this->view->pagin -1 >= 1){ ?>
+                                        <a href="/produtos?page=<?php echo $this->view->pagin -1 ?>" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    <?php }else{ ?>
+                                        <a href="#" aria-label="Previous" class="disabled">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    <?php } ?>
+                                </li>
+                                    <?php for($i = 1; $i <= $this->view->pages; $i++){?>
+                                        <?php if($i == $this->view->pagin){ ?>
+                                            <li class="active"><a href=""><?php echo $i ?></a></li>
+                                        <?php }else{?>
+                                            <li><a href="/produtos?page=<?php echo $i ?>"><?php echo $i ?></a></li>
+                                        <?php }?>
+                                    <?php }?>
+                                <li>
+                                    <?php if($this->view->pagin +1 <= $this->view->pages){ ?>
+                                        <a href="/produtos?page=<?php echo $this->view->pagin +1 ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    <?php }else{ ?>
+                                        <a href="#" class="disabled" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    <?php } ?>
+                                </li> 
+                            <?php }?>   
+
                         </ul>
                     </nav>                        
                 </div>

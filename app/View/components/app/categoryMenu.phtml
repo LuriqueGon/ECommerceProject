@@ -1,8 +1,33 @@
-<div class="modalItem"></div>
-<div class="categoryMenu" onclick="openCategoryMenu()">
+<div class="modalItem" onclick="openCategoryMenu()"></div>
+<div class="categoryMenu" >
     <h1>categorias</h1>
-    <div class="closeMenu">X</div>
-    <ul>
+    <div class="closeMenu" onclick="openCategoryMenu()">X</div>
+    <div class="search" style="display: flex; align-items: center;margin:0 2rem 3rem 2rem;">
+        <label for="search-input">Pesquisar</label>
+        <input type="text" id="search-input" class="form-control input-sm" style="border-bottom: 2px solid black; margin-left: 1.4rem;">
+    </div>
+    <ul id="menu-categorias">
         <?php $this->loadComponent('todasCategorias') ?>
     </ul>
 </div>
+
+<script>
+    const searchInput = document.getElementById('search-input');
+    const menuCategorias = document.getElementById('menu-categorias');
+    const categorias = menuCategorias.getElementsByTagName('li');
+
+    searchInput.addEventListener('input', function() {
+        const termoBusca = searchInput.value.toLowerCase();
+
+        for (let i = 0; i < categorias.length; i++) {
+            const categoria = categorias[i];
+            const nomeCategoria = categoria.innerText.toLowerCase();
+
+            if (nomeCategoria.includes(termoBusca)) {
+                categoria.style.display = 'block';
+            } else {
+                categoria.style.display = 'none';
+            }
+        }
+    });
+</script>

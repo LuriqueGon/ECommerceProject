@@ -10,6 +10,18 @@ input[type=number] {
 a{
     text-decoration: none!important;
 }
+ul.pagination li{
+    color: #e67e22!important;
+}
+ul.pagination li.active a{
+    color: blue!important;
+    background-color: transparent!important;
+    border: none!important;
+}
+ul.pagination li a.disabled{
+    color: black!important;
+}
+
 .floatleft { float: left }
 .floatright { float: right }
 .alignleft {

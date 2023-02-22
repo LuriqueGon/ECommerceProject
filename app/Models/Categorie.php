@@ -10,9 +10,10 @@ use MF\Model\DAO;
         protected $registro;
         protected $idProd;
 
-        public function getAll():array
+        public function getAll(Int $order = 0):array
         {
-            return $this->selectAll("SELECT * FROM tb_categories ORDER BY dtregister DESC");
+            if($order === 0)return $this->selectAll("SELECT * FROM tb_categories ORDER BY dtregister DESC");
+            else return $this->selectAll("SELECT * FROM tb_categories ORDER BY descategory ASC");
         }
 
         public function getById():array

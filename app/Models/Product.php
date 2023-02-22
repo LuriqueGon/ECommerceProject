@@ -23,6 +23,37 @@ use MF\Model\DAO;
             return $this->selectAll('SELECT * FROM tb_products ORDER BY dtregister DESC');
         }
 
+        public function getProductsPages($isCatego,Int $page = 1, Int $itemsPerPage = 20)
+        {
+            $start = ($page-1) * $itemsPerPage;
+            if($isCatego == 0){
+                $results = $this->selectAll("
+                    SELECT SQL_CALC_FOUND_ROWS *
+                    FROM tb_products a 
+                    INNER JOIN tb_productscategories b ON a.idproduct = b.idproduct
+                    INNER JOIN tb_categories c ON c.idcategory = b.idcategory
+                    WHERE c.idcategory = ?
+                    LIMIT $start,$itemsPerPage"
+                ,array(
+                    $this->__get('cateId')
+                ));
+            }else{
+                $results = $this->selectAll("
+                    SELECT SQL_CALC_FOUND_ROWS *
+                    FROM tb_products LIMIT $start,$itemsPerPage
+                ");
+            }
+
+            $total = $this->select('SELECT FOUND_ROWS() AS nrtotal')['nrtotal'];
+
+            return array(
+                'data' => $results,
+                'total' => (int)$total,
+                'pages' => ceil($total / $itemsPerPage)
+            );
+
+        }
+
         public function getAllCategoria():array
         {
             return $this->selectAll(
