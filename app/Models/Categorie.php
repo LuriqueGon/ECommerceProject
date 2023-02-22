@@ -8,6 +8,7 @@ use MF\Model\DAO;
         protected $id;
         protected $nome;
         protected $registro;
+        protected $idProd;
 
         public function getAll():array
         {
@@ -46,6 +47,40 @@ use MF\Model\DAO;
             $this->query('DELETE FROM tb_categories WHERE idcategory = ?', array($this->__get('id')));
             return true;
         }
+
+        public function getAllCategoria():array
+        {
+            return $this->selectAll(
+                'SELECT * FROM tb_categories WHERE idcategory NOT IN (
+                    SELECT a.idcategory FROM tb_categories a INNER JOIN tb_productscategories b 
+                    ON a.idcategory = b.idcategory WHERE b.idproduct = ?)', array($this->__get('idProd'))
+                );
+        }
+
+        public function getAllDontCategoria():array
+        {
+            return $this->selectAll(
+                'SELECT * FROM tb_categories WHERE idcategory IN (
+                    SELECT a.idcategory FROM tb_categories a INNER JOIN tb_productscategories b 
+                    ON a.idcategory = b.idcategory WHERE b.idproduct = ?)', array($this->__get('idProd')));
+        }
+        
+        public function addCateInProd()
+        {
+            $this->query('INSERT INTO `tb_productscategories`(idcategory, idproduct) VALUES (?,?)', array(
+                $this->__get('id'),
+                $this->__get('idProd'),
+            ));
+        }
+
+        public function removeCateInProd()
+        {
+            $this->query('DELETE FROM `tb_productscategories` WHERE idcategory = ? AND idproduct = ?', array(
+                $this->__get('id'),
+                $this->__get('idProd'),
+            ));
+        }
+
         
         
     }

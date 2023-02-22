@@ -1,0 +1,107 @@
+<section class="content-header">
+    <h1>Categorias</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/products">Produtos</a></li>
+        <li><a href="/admin/products"><?php echo $this->view->produto['desproduct'] ?></a></li>
+        <li class="active"><a href="/admin/categories">Categorias</a></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Todas as Categorias</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <table class="table table-striped" id="example1">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Id</th>
+                                <th>Categorias</th>
+                                <th style="width: 60px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->view->categoriasProduto as $key => $categoria) { ?>
+                                <tr>
+
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo $categoria['descategory'] ?></td>
+                                    <td>
+                                        <a href="/admin/products/add?idCate=<?php echo $categoria['idcategory'] ?>&idProd=<?php echo $this->view->produto['idproduct'] ?>" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-right"></i> Adicionar</a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Categorias do Produto <?php echo $this->view->produto['desproduct'] ?></h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <table class="table table-striped" id="example2">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">Id</th>
+                                <th>Categorias</th>
+                                <th style="width: 60px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->view->categoriasDontProduto as $key => $categoria) { ?>
+                                <tr>
+                                    <td><?php echo $key+1 ?></td>
+                                    <td><?php echo $categoria['descategory'] ?></td>
+                                    <td>
+                                        <a href="/admin/products/remove?idCate=<?php echo $categoria['idcategory'] ?>&idProd=<?php echo $this->view->produto['idproduct'] ?>" class="btn btn-primary btn-xs pull-right"><i class="fa fa-arrow-left"></i> Remover</a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script>
+    $(function() {
+        $('#example1').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": true
+        });
+        $('#example2').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": false,
+            "autoWidth": true
+        });
+
+    });
+</script>
+</section>
+<script>
+    $('.treeview#prod').addClass('active');
+</script>

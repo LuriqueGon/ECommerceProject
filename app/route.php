@@ -84,7 +84,7 @@ use MF\Init\Bootstrap;
                 'action' => 'index'
             );  
             
-            $routes['loadCategory'] = array(
+            $routes['loadProductsIndex'] = array(
                 'route' => '/produtos',
                 'controller' => 'ProductController',
                 'action' => 'index'
@@ -131,6 +131,24 @@ use MF\Init\Bootstrap;
                 'controller' => 'ProductController',
                 'action' => 'update'
             );  
+
+            $routes['produtoCategoria'] = array(
+                'route' => '/admin/produto/categorias',
+                'controller' => 'ProductController',
+                'action' => 'loadCategoria'
+            ); 
+            
+            $routes['addCateInProd'] = array(
+                'route' => '/admin/products/add',
+                'controller' => 'ProductController',
+                'action' => 'addCateInProd'
+            ); 
+            
+            $routes['removeCateInProd'] = array(
+                'route' => '/admin/products/remove',
+                'controller' => 'ProductController',
+                'action' => 'removeCateInProd'
+            ); 
             
             
             
@@ -198,7 +216,25 @@ use MF\Init\Bootstrap;
                 'controller' => 'CategorieController',
                 'action' => 'loadCreate'
             );  
-            
+
+            $routes['categoriaProdutos'] = array(
+                'route' => '/admin/categoria/produtos',
+                'controller' => 'CategorieController',
+                'action' => 'loadProdutos'
+            );  
+
+            $routes['addProdInCate'] = array(
+                'route' => '/admin/categories/add',
+                'controller' => 'CategorieController',
+                'action' => 'addProdInCate'
+            );  
+
+            $routes['removeProdInCate'] = array(
+                'route' => '/admin/categories/remove',
+                'controller' => 'CategorieController',
+                'action' => 'removeProdInCate'
+            );  
+
             $routes['criarCategoria'] = array(
                 'route' => '/admin/categoria/criar',
                 'controller' => 'CategorieController',

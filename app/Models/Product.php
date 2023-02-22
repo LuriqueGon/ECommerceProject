@@ -15,11 +15,31 @@ use MF\Model\DAO;
         protected $descricao;
         protected $url;
         protected $photo;
+        protected $cateId;
+
 
         public function getAll():array
         {
             return $this->selectAll('SELECT * FROM tb_products ORDER BY dtregister DESC');
         }
+
+        public function getAllCategoria():array
+        {
+            return $this->selectAll(
+                'SELECT * FROM tb_products WHERE idproduct IN (
+                    SELECT a.idproduct FROM tb_products a INNER JOIN tb_productscategories b 
+                    ON a.idproduct = b.idproduct WHERE b.idcategory = ?)', array($this->__get('cateId')));
+        }
+
+        public function getAllDontCategoria():array
+        {
+            return $this->selectAll(
+                'SELECT * FROM tb_products WHERE idproduct NOT IN (
+                    SELECT a.idproduct FROM tb_products a INNER JOIN tb_productscategories b 
+                    ON a.idproduct = b.idproduct WHERE b.idcategory = ?)', array($this->__get('cateId')));
+        }
+
+        
 
         public function findById():array
         {
@@ -117,6 +137,24 @@ use MF\Model\DAO;
         {
             $this->query('DELETE FROM tb_products WHERE idproduct = ?', array($this->__get('id')));
         }
+
+        public function addProdInCate()
+        {
+            $this->query('INSERT INTO `tb_productscategories`(idcategory, idproduct) VALUES (?,?)', array(
+                $this->__get('cateId'),
+                $this->__get('id'),
+            ));
+        }
+
+        public function removeProdInCate()
+        {
+            $this->query('DELETE FROM `tb_productscategories` WHERE idcategory = ? AND idproduct = ?', array(
+                $this->__get('cateId'),
+                $this->__get('id'),
+            ));
+        }
+
+        
     }
 
 

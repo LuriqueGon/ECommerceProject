@@ -55,6 +55,28 @@
             $this->render('categoriesUpdate', 'adminLayout');
         }
 
+        public function loadProdutos()
+        {
+            $this->restrict();
+            $this->inAdmin();
+            $this->needGET($_GET);
+
+            $categoria = Container::getModel('categorie');
+            $categoria->__set('id', $_GET['id']);
+
+            $produto = Container::getModel('product');
+            $produto->__set('cateId', $categoria->__get('id'));
+
+            $this->view->categoria = $categoria->getById();
+            $this->view->produtosCategoria = $produto->getAllCategoria();
+            $this->view->produtosDontCategoria = $produto->getAllDontCategoria();
+
+            $this->view->title = "Produtos da Categoria ".$this->view->categoria['descategory'];
+            $this->render('categoriesProducts', 'adminTable');
+        }
+
+
+
         public function create()
         {
             $this->restrict();
@@ -107,6 +129,40 @@
             }
             
         }
+
+        public function addProdInCate()
+        {
+            $this->restrict();
+            $this->inAdmin();
+
+            if(!isset($_GET['idCate'])|| empty($_GET['idCate'])) Message::setMessage('Informe os valores para adicionar os produtos', 'danger', 'back');
+            if(!isset($_GET['idProd'])|| empty($_GET['idProd'])) Message::setMessage('Informe os valores para adicionar os produtos', 'danger', 'back');
+
+            $produto = Container::getModel('product');
+            $produto->__set('cateId', $_GET['idCate']);
+            $produto->__set('id', $_GET['idProd']);
+            $produto->addProdInCate();
+
+            Message::setMessage('Adicionado com Sucesso', 'success', 'back');
+        }
+
+        public function removeProdInCate()
+        {
+            $this->restrict();
+            $this->inAdmin();
+
+            if(!isset($_GET['idCate'])|| empty($_GET['idCate'])) Message::setMessage('Informe os valores para adicionar os produtos', 'danger', 'back');
+            if(!isset($_GET['idProd'])|| empty($_GET['idProd'])) Message::setMessage('Informe os valores para adicionar os produtos', 'danger', 'back');
+
+            $produto = Container::getModel('product');
+            $produto->__set('cateId', $_GET['idCate']);
+            $produto->__set('id', $_GET['idProd']);
+            $produto->removeProdInCate();
+
+            Message::setMessage('Removido com Sucesso', 'success', 'back');
+        }
+
+        
 
         
     }
