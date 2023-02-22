@@ -146,7 +146,7 @@
                     if(!isset($_SESSION['auth']) || !$_SESSION['auth']) $this->testLogin($user);
                     
                     else{
-                        Message::setMessage('Conta Criada com sucesso!! <br> Por favor! Efetue login', 'success', '/admin/users');
+                        Message::setMessage('Conta Criada com sucesso!! <br> Por favor! Efetue login', 'success', 'back');
                         exit;
                     }
 
@@ -159,7 +159,7 @@
         {
             $authLogin = $object->login();
             if(empty($authLogin)){
-                Message::setMessage('Usuario e/ou Senha invalidos', 'danger');
+                Message::setMessage('Usuario e/ou Senha invalidos', 'danger', 'back');
                 exit;
             }else{
                 $authLogin['auth'] = true;

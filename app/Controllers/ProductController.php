@@ -15,9 +15,15 @@
                 $categoria = Container::getModel('categorie');
                 $categoria->__set('id', $_GET['categoria']);
                 $result = $categoria->getById();
+
+                $produto = Container::getModel('product');
+                $produto->__set('cateId', $_GET['categoria']);
+                $this->view->produtos = $produto->getAll();
+
                 $this->view->title = "Categoria ". $result['descategory'];
                 $this->view->category = $result['descategory'];
                 $this->render('produtos');
+
             }else{
                 $produto = Container::getModel('product');
                 $this->view->produtos = $produto->getAll();
@@ -35,6 +41,14 @@
             $produto = Container::getModel('product');
             $produto->__set('url', $_GET['url']);
             $this->view->produto = $produto->findByUrl();
+
+            $categoria = Container::getModel('categorie');
+            $categoria->__set('idProd', $this->view->produto['idproduct']);
+            $this->view->categoria = $categoria->getAllCategoria();
+
+            $produto->__set('cateId', $this->view->categoria[0]['idcategory']);
+            $produto->__set('id', $this->view->produto['idproduct']);
+            $this->view->produtosCategoria = $produto->getLastFiveOfCategory();
 
             $this->view->title = "Detalhes dos Produtos";
             $this->render('productsDetails');

@@ -12,7 +12,7 @@
                                 <img src="<?php echo $produto['photo'] ?>" style="object-fit: contain; width: 300px; height: 300px;">
                             </div>
                         </a>
-                        <h2><a href="/productsDetails?id=<?php echo $produto['idproduct'] ?>"><?php echo $produto['desproduct'] ?></a></h2>
+                        <h2><a href="/productsDetails?url=<?php echo $produto['desurl'] ?>"><?php echo $produto['desproduct'] ?></a></h2>
                         <div class="product-carousel-price">
                             <!-- <ins>$899.00</ins> <del>$999.00</del> -->
                             <ins>R$<?php echo number_format($produto['vlprice'],2,",",".") ?></ins>

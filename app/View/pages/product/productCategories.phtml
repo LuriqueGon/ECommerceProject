@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($this->view->categoriasProduto as $key => $categoria) { ?>
+                            <?php foreach ($this->view->categoriasDontProduto as $key => $categoria) { ?>
                                 <tr>
 
                                     <td><?php echo $key+1 ?></td>
@@ -61,7 +61,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($this->view->categoriasDontProduto as $key => $categoria) { ?>
+                            <?php foreach ($this->view->categoriasProduto as $key => $categoria) { ?>
                                 <tr>
                                     <td><?php echo $key+1 ?></td>
                                     <td><?php echo $categoria['descategory'] ?></td>

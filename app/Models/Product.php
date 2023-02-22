@@ -128,8 +128,6 @@ use MF\Model\DAO;
                     $this->__get('id')
                 ));
             }
-
-            
             
         }
 
@@ -152,6 +150,16 @@ use MF\Model\DAO;
                 $this->__get('cateId'),
                 $this->__get('id'),
             ));
+        }
+
+        public function getLastFiveOfCategory()
+        {
+            return $this->selectAll('SELECT * FROM tb_products WHERE idproduct IN (
+                SELECT a.idproduct FROM tb_products a INNER JOIN tb_productscategories b 
+                ON a.idproduct = b.idproduct WHERE b.idcategory = ?) AND idproduct != ? LIMIT 5', array(
+                    $this->__get('cateId'),
+                    $this->__get('id')
+                ));
         }
 
         

@@ -51,7 +51,7 @@ use MF\Model\DAO;
         public function getAllCategoria():array
         {
             return $this->selectAll(
-                'SELECT * FROM tb_categories WHERE idcategory NOT IN (
+                'SELECT * FROM tb_categories WHERE idcategory IN (
                     SELECT a.idcategory FROM tb_categories a INNER JOIN tb_productscategories b 
                     ON a.idcategory = b.idcategory WHERE b.idproduct = ?)', array($this->__get('idProd'))
                 );
@@ -60,7 +60,7 @@ use MF\Model\DAO;
         public function getAllDontCategoria():array
         {
             return $this->selectAll(
-                'SELECT * FROM tb_categories WHERE idcategory IN (
+                'SELECT * FROM tb_categories WHERE idcategory NOT IN (
                     SELECT a.idcategory FROM tb_categories a INNER JOIN tb_productscategories b 
                     ON a.idcategory = b.idcategory WHERE b.idproduct = ?)', array($this->__get('idProd')));
         }
