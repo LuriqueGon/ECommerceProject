@@ -150,7 +150,13 @@ use MF\Init\Bootstrap;
                 'action' => 'removeCateInProd'
             ); 
             
-            
+            // COMENT
+
+            $routes['setComent'] = array(
+                'route' => '/setComents',
+                'controller' => 'ComentController',
+                'action' => 'setComent'
+            ); 
             
             
             

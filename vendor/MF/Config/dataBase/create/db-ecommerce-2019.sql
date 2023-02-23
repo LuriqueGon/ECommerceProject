@@ -279,8 +279,8 @@ ALTER TABLE `tb_products` ADD `descricao` TEXT AFTER `desurl`;
 ALTER TABLE `tb_products` ADD `photo` VARCHAR(255) NOT NULL AFTER `descricao`;
 
 CREATE TABLE tb_coments(
-	idcoment INT NOT NUll PRIMARY KEY,
-    idUser INT NOT NULL,
+	  idcoment INT NOT NUll PRIMARY KEY AUTO_INCREMENT,
+    idUser INT NOT NULL ,
     idProduct INT NOT NULL,
     subject TEXT NOT NULL,
     coment TEXT NOT NULL,

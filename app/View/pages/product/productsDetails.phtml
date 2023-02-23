@@ -50,11 +50,11 @@
                                 <div class="product-inner-price">
                                     <ins>R$ <?php echo number_format($this->view->produto['vlprice'], 2, ',', '.') ?></ins>
                                 </div>
-                                <form action="#" class="cart">
+                                <form class="cart" method="POST">
                                     <div class="quantity">
                                         <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                     </div>
-                                    <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                    <button class="add_to_cart_button">Add to cart</button>
                                 </form>
                                 <div class="product-inner-category">
                                     <p>Categorias: </p>
@@ -80,7 +80,7 @@
                                         </li>
                                         <li role="presentation" class="profile" onclick="ativarItem('profile')">
                                             <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                                                Comentarios
+                                                Comentar
                                             </a>
                                         </li>
                                     </ul>
@@ -91,11 +91,11 @@
                                             <p><?php echo $this->view->produto['descricao'] ?></p>
                                         </div>
                                         <div role="tabpane2" class="tab-pane fade" id="profile">
-                                            <h2>Comentarios</h2>
+                                            <h2>Comentar</h2>
                                             <?php if (isset($_SESSION['auth'])) { ?>
                                                 <form class="submit-review" method="POST" action="/setComents">
-                                                    <input type="hidden" name="idProduct">
-                                                    <input type="hidden" name="idUser">
+                                                    <input type="hidden" name="idProduct" value="<?php echo $this->view->produto['idproduct'] ?>">
+                                                    <input type="hidden" name="idUser" value="<?php echo $_SESSION['iduser'] ?>">
                                                     <p>
                                                         <label for="name">Name</label>
                                                         <input name="name" value="<?php echo $_SESSION['desperson'] ?>" readonly type="text">
@@ -107,8 +107,7 @@
                                                     </p>
                                                     <p>
                                                         <label for="subject">Titulo</label>
-
-                                                        <input name="subject" type="text">
+                                                        <input name="subject" type="text" maxlength="60" required>
                                                     </p>
 
                                                     <div class="rating-chooser">
@@ -126,7 +125,7 @@
                                                     </div>
                                                     <p>
                                                         <label for="review">Your review</label>
-                                                        <textarea name="review" id="" cols="30" rows="10" style="resize: vertical;"></textarea>
+                                                        <textarea name="review" id="" cols="30" rows="10" style="resize: vertical;" required></textarea>
                                                     </p>
                                                     <p><input type="submit"></p>
                                                 </form>
@@ -147,7 +146,9 @@
                 <div class="row">
                     <?php foreach ($this->view->coments as $key => $coment) {?>
                         <?php 
-                            $subject = (strlen($coment['subject']) > 23) ? substr($coment['subject'], 0, 23) . "..." : $coment['subject']; 
+                            $subject = (strlen($coment['subject']) > 80) ? substr($coment['subject'], 0, 80) . "..." : $coment['subject']; 
+                            $data = new DateTime($coment['dtregister']);
+                            $data = str_replace('-','/',$data->format('d-m-Y H:i'));
                         ?>
                         <div class="single-coment col-md-5 offset-col-md-1">
                             <div class="coment-header-top">
@@ -156,11 +157,14 @@
                             </div>
                             <div class="coment-header-bottom">
                                 <div class="rating">
-                                    <i class="fa fa-star selected"></i>
-                                    <i class="fa fa-star selected"></i>
-                                    <i class="fa fa-star selected"></i>
-                                    <i class="fa fa-star selected"></i>
-                                    <i class="fa fa-star"></i>
+                                    <?php for($i=1;$i<=5;$i++){?>
+                                        <?php if($i <= $coment['rating']){?>
+                                            <i class="fa fa-star selected"></i>
+                                        <?php }else{?>
+                                            <i class="fa fa-star"></i>
+                                        <?php }?>
+                                    <?php }?>
+                                    <span class="rating"><?php echo $coment['rating']?> de 5</span>
                                 </div>
                                 <div class="subject">
                                     <abbr title="<?php echo $coment['subject'] ?>">
@@ -173,16 +177,16 @@
                             </div>
                             <div class="coment-footer-top">
                                 <span class="ico">
-                                    <i class="fa-solid fa-thumbs-up"></i>
+                                    <a href="/like?idComent=<?php echo $coment['idcoment']?>&iduser=<?php echo $coment['idcoment']?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
                                     <?php echo (empty($coment['like'])) ? 0 : $coment['like']?>
                                 </span>
                                 <span class="ico">
-                                    <i class="fa-solid fa-thumbs-down"></i>
+                                    <a href="/unlike?idComent=<?php echo $coment['idcoment']?>&iduser=<?php echo $coment['idcoment']?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
                                     <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike']?>
                                 </span>
                             </div>
                             <div class="coment-footer-bottom">
-                                Comentario feito <?php echo str_replace('-',' / ', $coment['dtregister']) ?>
+                                Comentario feito <?php echo $data ?>
                             </div>
                             
                         </div>

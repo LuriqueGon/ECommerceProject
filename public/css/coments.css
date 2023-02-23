@@ -45,6 +45,8 @@ abbr, abbr[title]{
     padding: 1rem 4rem;
     border-top: 1px solid #00000055;
     border-bottom: 1px solid #00000055;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 .single-coment .coment-header-bottom .rating{
     margin-right: 4rem;
@@ -55,6 +57,11 @@ abbr, abbr[title]{
 .single-coment .coment-header-bottom .rating i.selected{
     color: gold;
 }
+.single-coment .coment-header-bottom .subject{
+    font-size: 1.6rem;
+    font-weight: bolder;
+    margin-bottom: 2rem;
+}
 .single-coment .coment-body p{
     margin-top: 3rem;
     padding: 2rem;
@@ -62,7 +69,6 @@ abbr, abbr[title]{
     text-align: justify;
     font-family: arial;
     font-size: 1.3rem;
-    /* border-top: 1px solid #00000055; */
 }
 .single-coment .coment-footer-top{
     text-align: center;
