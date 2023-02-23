@@ -66,6 +66,10 @@
             $produto->__set('id', $this->view->produto['idproduct']);
             $this->view->produtosCategoria = $produto->getLastFiveOfCategory();
 
+            $coment = Container::getModel('coment');
+            $coment->__set('idProd', $this->view->produto['idproduct']);
+            $this->view->coments = $coment->getComent();
+
             $this->view->title = "Detalhes dos Produtos";
             $this->render('productsDetails');
         }

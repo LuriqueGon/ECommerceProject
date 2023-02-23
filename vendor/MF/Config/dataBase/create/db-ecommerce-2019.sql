@@ -277,3 +277,28 @@ ALTER TABLE `tb_users` ADD `ativo` BOOLEAN NOT NULL DEFAULT TRUE AFTER `dtregist
 ALTER TABLE `tb_persons` ADD `perfil` VARCHAR(255) NULL AFTER `nrphone`;
 ALTER TABLE `tb_products` ADD `descricao` TEXT AFTER `desurl`;
 ALTER TABLE `tb_products` ADD `photo` VARCHAR(255) NOT NULL AFTER `descricao`;
+
+CREATE TABLE tb_coments(
+	idcoment INT NOT NUll PRIMARY KEY,
+    idUser INT NOT NULL,
+    idProduct INT NOT NULL,
+    subject TEXT NOT NULL,
+    coment TEXT NOT NULL,
+    rating INT NOT NULL,
+    dtregister TIMESTAMP DEFAULT CURRENT_TIMESTAMP       
+);
+
+ALTER TABLE tb_coments ADD CONSTRAINT idUser FOREIGN KEY ( idUser ) REFERENCES tb_user(idUser);
+ALTER TABLE tb_coments ADD CONSTRAINT idProduct FOREIGN KEY ( idProduct ) REFERENCES tb_products(idProduct);
+
+ALTER TABLE `tb_coments` ADD `like` INT NULL DEFAULT NULL AFTER `idProduct`;
+ALTER TABLE `tb_coments` ADD `unlike` INT NULL DEFAULT NULL AFTER `like`;
+
+CREATE TABLE tb_comentsfeedback(
+	idcoment INT NOT NULL,
+    idUser INT NOT NULL,
+    feedback BOOLEAN NOT NULL
+);
+
+ALTER TABLE tb_comentsfeedback ADD CONSTRAINT idUser FOREIGN KEY ( idUser ) REFERENCES tb_user(idUser);
+ALTER TABLE tb_comentsfeedback ADD CONSTRAINT idcoment FOREIGN KEY ( idcoment ) REFERENCES tb_coments(idcoment);

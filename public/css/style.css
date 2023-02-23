@@ -21,6 +21,16 @@ ul.pagination li.active a{
 ul.pagination li a.disabled{
     color: black!important;
 }
+ul#stars{
+    list-style: none;
+    display: flex;
+}
+li.selected i{
+    color: gold;
+}
+.star:hover {
+  color: gold;
+}
 
 .floatleft { float: left }
 .floatright { float: right }

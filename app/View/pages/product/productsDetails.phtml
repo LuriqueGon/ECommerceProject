@@ -11,18 +11,18 @@
                         <input type="submit" value="Buscar">
                     </form>
                 </div>
-                
+
                 <div class="single-sidebar">
-                    <h2 class="sidebar-title">Produtos</h2>
-                    <?php foreach ($this->view->produtosCategoria as $key => $produto) {?>
+                    <h2 class="sidebar-title">Outros de <?php echo $this->view->categoria['0']['descategory'] ?></h2>
+                    <?php foreach ($this->view->produtosCategoria as $key => $produto) { ?>
                         <div class="thubmnail-recent">
                             <img src="<?php echo $produto['photo'] ?>" class="recent-thumb" alt="">
                             <h2><a href="/productsDetails?url=<?php echo $produto['desurl'] ?>" target="_blank"><?php echo $produto['desproduct'] ?></a></h2>
                             <div class="product-sidebar-price">
-                                <ins>R$ <?php echo number_format($produto['vlprice'],2,',','.') ?></ins>
+                                <ins>R$ <?php echo number_format($produto['vlprice'], 2, ',', '.') ?></ins>
                             </div>
                         </div>
-                    <?php }?>
+                    <?php } ?>
                 </div>
 
             </div>
@@ -44,29 +44,18 @@
                                 <div class="product-main-img">
                                     <img src="<?php echo $this->view->produto['photo'] ?>" alt="">
                                 </div>
-
-                                <!-- <div class="product-gallery">
-                                    <img src="img/product-thumb-1.jpg" alt="">
-                                    <img src="img/product-thumb-2.jpg" alt="">
-                                    <img src="img/product-thumb-3.jpg" alt="">
-                                </div> -->
                             </div>
-                        </div>
-
-                        <div class="col-sm-6">
                             <div class="product-inner">
                                 <h2 class="product-name"><?php echo $this->view->produto['desproduct'] ?></h2>
                                 <div class="product-inner-price">
                                     <ins>R$ <?php echo number_format($this->view->produto['vlprice'], 2, ',', '.') ?></ins>
                                 </div>
-
                                 <form action="#" class="cart">
                                     <div class="quantity">
                                         <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                     </div>
                                     <button class="add_to_cart_button" type="submit">Add to cart</button>
                                 </form>
-
                                 <div class="product-inner-category">
                                     <p>Categorias: </p>
                                     <ol type="I">
@@ -77,7 +66,11 @@
                                         <?php } ?>
                                     </ol>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="col-sm-6">
+                            <div class="product-inner">
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="homeItem active" onclick="ativarItem('homeItem')">
@@ -91,6 +84,7 @@
                                             </a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="homeItem">
                                             <h2>Descrição do Produto</h2>
@@ -98,23 +92,46 @@
                                         </div>
                                         <div role="tabpane2" class="tab-pane fade" id="profile">
                                             <h2>Comentarios</h2>
-                                            <div class="submit-review">
-                                                <p><label for="name">Name</label> <input name="name" type="text"></p>
-                                                <p><label for="email">Email</label> <input name="email" type="email"></p>
-                                                <div class="rating-chooser">
-                                                    <p>Your rating</p>
+                                            <?php if (isset($_SESSION['auth'])) { ?>
+                                                <form class="submit-review" method="POST" action="/setComents">
+                                                    <input type="hidden" name="idProduct">
+                                                    <input type="hidden" name="idUser">
+                                                    <p>
+                                                        <label for="name">Name</label>
+                                                        <input name="name" value="<?php echo $_SESSION['desperson'] ?>" readonly type="text">
+                                                    </p>
+                                                    <p>
+                                                        <label for="email">Email</label>
 
-                                                    <div class="rating-wrap-post">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <input name="email" value="<?php echo $_SESSION['desemail'] ?>" readonly type="email">
+                                                    </p>
+                                                    <p>
+                                                        <label for="subject">Titulo</label>
+
+                                                        <input name="subject" type="text">
+                                                    </p>
+
+                                                    <div class="rating-chooser">
+                                                        <p>Your rating</p>
+
+                                                        <ul class="rating-wrap-post" id="stars">
+                                                            <li class="star 1" id="1" data-value="1"><i class="fa fa-star"></i></li>
+                                                            <li class="star 2" id="2" data-value="2"><i class="fa fa-star"></i></li>
+                                                            <li class="star 3" id="3" data-value="3"><i class="fa fa-star"></i></li>
+                                                            <li class="star 4" id="4" data-value="4"><i class="fa fa-star"></i></li>
+                                                            <li class="star 5" id="5" data-value="5"><i class="fa fa-star"></i></li>
+                                                            <span id="rating"></span>
+                                                            <input type="hidden" name="rating" id="nota" value="0">
+                                                        </ul>
                                                     </div>
-                                                </div>
-                                                <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                <p><input type="submit" value="Submit"></p>
-                                            </div>
+                                                    <p>
+                                                        <label for="review">Your review</label>
+                                                        <textarea name="review" id="" cols="30" rows="10" style="resize: vertical;"></textarea>
+                                                    </p>
+                                                    <p><input type="submit"></p>
+                                                </form>
+                                            <?php } ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -122,9 +139,56 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
                 </div>
             </div>
+            <div class="container-coments">
+                <h1>Comentarios</h1>
+                <div class="row">
+                    <?php foreach ($this->view->coments as $key => $coment) {?>
+                        <?php 
+                            $subject = (strlen($coment['subject']) > 23) ? substr($coment['subject'], 0, 23) . "..." : $coment['subject']; 
+                        ?>
+                        <div class="single-coment col-md-5 offset-col-md-1">
+                            <div class="coment-header-top">
+                                <img src="/img/perfil/<?php echo $coment['perfil'] ?>">
+                                <span><?php echo $coment['desperson'] ?></span>
+                            </div>
+                            <div class="coment-header-bottom">
+                                <div class="rating">
+                                    <i class="fa fa-star selected"></i>
+                                    <i class="fa fa-star selected"></i>
+                                    <i class="fa fa-star selected"></i>
+                                    <i class="fa fa-star selected"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="subject">
+                                    <abbr title="<?php echo $coment['subject'] ?>">
+                                        <?php echo $subject ?>
+                                    </abbr>
+                                </div>
+                            </div>
+                            <div class="coment-body">
+                                <p><?php echo $coment['coment'] ?></p>
+                            </div>
+                            <div class="coment-footer-top">
+                                <span class="ico">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                    <?php echo (empty($coment['like'])) ? 0 : $coment['like']?>
+                                </span>
+                                <span class="ico">
+                                    <i class="fa-solid fa-thumbs-down"></i>
+                                    <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike']?>
+                                </span>
+                            </div>
+                            <div class="coment-footer-bottom">
+                                Comentario feito <?php echo str_replace('-',' / ', $coment['dtregister']) ?>
+                            </div>
+                            
+                        </div>
+                    <?php } ?>
+
+                </div>
         </div>
     </div>
 </div>
@@ -143,6 +207,31 @@
         document.querySelector(`#${id}`).classList.add('active')
         document.querySelector(`.${id}`).classList.add('active')
     }
+
+    const stars = document.querySelectorAll('.star');
+    const rating = document.querySelector('#rating');
+    const nota = document.querySelector('#nota');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            stars.forEach(s => s.classList.remove('selected'));
+            let idx = star.getAttribute('data-value')
+
+            for (let i = 0; i < idx; i++) {
+                document.querySelectorAll('#stars li')[i].classList.add('selected')
+            }
+
+            // star.classList.add('selected');
+            const ratingValue = parseFloat(star.getAttribute('data-value'));
+            if (ratingValue % 1 !== 0) {
+                rating.textContent = ratingValue.toFixed(1);
+                nota.value = ratingValue.toFixed(1);
+            } else {
+                rating.textContent = ratingValue;
+                nota.value = ratingValue;
+            }
+        });
+    });
 </script>
 <script>
     activeItem('prod')
