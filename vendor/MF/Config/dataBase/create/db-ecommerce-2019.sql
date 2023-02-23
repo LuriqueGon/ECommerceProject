@@ -290,6 +290,7 @@ CREATE TABLE tb_coments(
 
 ALTER TABLE tb_coments ADD CONSTRAINT idUser FOREIGN KEY ( idUser ) REFERENCES tb_user(idUser);
 ALTER TABLE tb_coments ADD CONSTRAINT idProduct FOREIGN KEY ( idProduct ) REFERENCES tb_products(idProduct);
+ALTER TABLE `tb_comentsfeedback` ADD `id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `tb_coments` ADD `like` INT NULL DEFAULT NULL AFTER `idProduct`;
 ALTER TABLE `tb_coments` ADD `unlike` INT NULL DEFAULT NULL AFTER `like`;

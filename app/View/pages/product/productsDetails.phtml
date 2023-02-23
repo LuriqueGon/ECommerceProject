@@ -1,242 +1,26 @@
 <?php $this->loadComponent('title') ?>
+
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
+    
     <div class="container">
         <div class="row">
+
             <div class="col-md-4">
-                <div class="single-sidebar">
-                    <h2 class="sidebar-title">Buscar Produtos</h2>
-                    <form action="">
-                        <input type="text" placeholder="Buscar produtos...">
-                        <input type="submit" value="Buscar">
-                    </form>
-                </div>
-
-                <div class="single-sidebar">
-                    <h2 class="sidebar-title">Outros de <?php echo $this->view->categoria['0']['descategory'] ?></h2>
-                    <?php foreach ($this->view->produtosCategoria as $key => $produto) { ?>
-                        <div class="thubmnail-recent">
-                            <img src="<?php echo $produto['photo'] ?>" class="recent-thumb" alt="">
-                            <h2><a href="/productsDetails?url=<?php echo $produto['desurl'] ?>" target="_blank"><?php echo $produto['desproduct'] ?></a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>R$ <?php echo number_format($produto['vlprice'], 2, ',', '.') ?></ins>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-
+                 <?php $this->loadComponent('othersProducts') ?>
             </div>
 
             <div class="col-md-8">
                 <div class="product-content-right">
-                    <div class="product-breadcroumb">
-                        <a href="/">Home</a>
-                        <a href="/produtos">Produtos</a>
-                        <a href="/produtos?categoria=<?php echo $this->view->categoria[0]['idcategory'] ?>">
-                            <?php echo $this->view->categoria[0]['descategory'] ?>
-                        </a>
-                        <a href=""><?php echo $this->view->produto['desproduct'] ?></a>
-                    </div>
+                    <?php $this->loadComponent('broadMenu') ?>
 
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="product-images">
-                                <div class="product-main-img">
-                                    <img src="<?php echo $this->view->produto['photo'] ?>" alt="">
-                                </div>
-                            </div>
-                            <div class="product-inner">
-                                <h2 class="product-name"><?php echo $this->view->produto['desproduct'] ?></h2>
-                                <div class="product-inner-price">
-                                    <ins>R$ <?php echo number_format($this->view->produto['vlprice'], 2, ',', '.') ?></ins>
-                                </div>
-                                <form class="cart" method="POST">
-                                    <div class="quantity">
-                                        <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-                                    </div>
-                                    <button class="add_to_cart_button">Add to cart</button>
-                                </form>
-                                <div class="product-inner-category">
-                                    <p>Categorias: </p>
-                                    <ol type="I">
-                                        <?php foreach ($this->view->categoria as $key => $categoria) { ?>
-                                            <a href="/produtos?categoria=<?php echo $categoria['idcategory'] ?>" target="_blank">
-                                                <li><?php echo $categoria['descategory'] ?></li>
-                                            </a>
-                                        <?php } ?>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="product-inner">
-                                <div role="tabpanel">
-                                    <ul class="product-tab" role="tablist">
-                                        <li role="presentation" class="homeItem active" onclick="ativarItem('homeItem')">
-                                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
-                                                Descrição
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="profile" onclick="ativarItem('profile')">
-                                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                                                Comentar
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade in active" id="homeItem">
-                                            <h2>Descrição do Produto</h2>
-                                            <p><?php echo $this->view->produto['descricao'] ?></p>
-                                        </div>
-                                        <div role="tabpane2" class="tab-pane fade" id="profile">
-                                            <h2>Comentar</h2>
-                                            <?php if (isset($_SESSION['auth'])) { ?>
-                                                <form class="submit-review" method="POST" action="/setComents">
-                                                    <input type="hidden" name="idProduct" value="<?php echo $this->view->produto['idproduct'] ?>">
-                                                    <input type="hidden" name="idUser" value="<?php echo $_SESSION['iduser'] ?>">
-                                                    <p>
-                                                        <label for="name">Name</label>
-                                                        <input name="name" value="<?php echo $_SESSION['desperson'] ?>" readonly type="text">
-                                                    </p>
-                                                    <p>
-                                                        <label for="email">Email</label>
-
-                                                        <input name="email" value="<?php echo $_SESSION['desemail'] ?>" readonly type="email">
-                                                    </p>
-                                                    <p>
-                                                        <label for="subject">Titulo</label>
-                                                        <input name="subject" type="text" maxlength="60" required>
-                                                    </p>
-
-                                                    <div class="rating-chooser">
-                                                        <p>Your rating</p>
-
-                                                        <ul class="rating-wrap-post" id="stars">
-                                                            <li class="star 1" id="1" data-value="1"><i class="fa fa-star"></i></li>
-                                                            <li class="star 2" id="2" data-value="2"><i class="fa fa-star"></i></li>
-                                                            <li class="star 3" id="3" data-value="3"><i class="fa fa-star"></i></li>
-                                                            <li class="star 4" id="4" data-value="4"><i class="fa fa-star"></i></li>
-                                                            <li class="star 5" id="5" data-value="5"><i class="fa fa-star"></i></li>
-                                                            <span id="rating"></span>
-                                                            <input type="hidden" name="rating" id="nota" value="0">
-                                                        </ul>
-                                                    </div>
-                                                    <p>
-                                                        <label for="review">Your review</label>
-                                                        <textarea name="review" id="" cols="30" rows="10" style="resize: vertical;" required></textarea>
-                                                    </p>
-                                                    <p><input type="submit"></p>
-                                                </form>
-                                            <?php } ?>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <div class="col-sm-6"> <?php $this->loadComponent('mainProduct')?></div>
+                        <div class="col-sm-6"> <?php $this->loadComponent('productDetails') ?></div>
                     </div>
                 </div>
-                </div>
             </div>
-            <div class="container-coments">
-                <h1>Comentarios</h1>
-                <div class="row">
-                    <?php foreach ($this->view->coments as $key => $coment) {?>
-                        <?php 
-                            $subject = (strlen($coment['subject']) > 80) ? substr($coment['subject'], 0, 80) . "..." : $coment['subject']; 
-                            $data = new DateTime($coment['dtregister']);
-                            $data = str_replace('-','/',$data->format('d-m-Y H:i'));
-                        ?>
-                        <div class="single-coment col-md-5 offset-col-md-1">
-                            <div class="coment-header-top">
-                                <img src="/img/perfil/<?php echo $coment['perfil'] ?>">
-                                <span><?php echo $coment['desperson'] ?></span>
-                            </div>
-                            <div class="coment-header-bottom">
-                                <div class="rating">
-                                    <?php for($i=1;$i<=5;$i++){?>
-                                        <?php if($i <= $coment['rating']){?>
-                                            <i class="fa fa-star selected"></i>
-                                        <?php }else{?>
-                                            <i class="fa fa-star"></i>
-                                        <?php }?>
-                                    <?php }?>
-                                    <span class="rating"><?php echo $coment['rating']?> de 5</span>
-                                </div>
-                                <div class="subject">
-                                    <abbr title="<?php echo $coment['subject'] ?>">
-                                        <?php echo $subject ?>
-                                    </abbr>
-                                </div>
-                            </div>
-                            <div class="coment-body">
-                                <p><?php echo $coment['coment'] ?></p>
-                            </div>
-                            <div class="coment-footer-top">
-                                <span class="ico">
-                                    <a href="/like?idComent=<?php echo $coment['idcoment']?>&iduser=<?php echo $coment['idcoment']?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
-                                    <?php echo (empty($coment['like'])) ? 0 : $coment['like']?>
-                                </span>
-                                <span class="ico">
-                                    <a href="/unlike?idComent=<?php echo $coment['idcoment']?>&iduser=<?php echo $coment['idcoment']?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
-                                    <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike']?>
-                                </span>
-                            </div>
-                            <div class="coment-footer-bottom">
-                                Comentario feito <?php echo $data ?>
-                            </div>
-                            
-                        </div>
-                    <?php } ?>
-
-                </div>
         </div>
+        <?php $this->loadComponent('coments') ?>
     </div>
 </div>
-<script>
-    const ativarItem = id => {
-        document.querySelectorAll('ul.product-tab li').forEach(li => {
-            li.classList.remove('active')
-        })
-        document.querySelectorAll('div.tab-content div.fade').forEach(li => {
-            li.classList.remove('active')
-        })
-
-        // console.log(document.querySelector(`#${id}`))
-        // console.log(document.querySelector(`.${id}`))
-        document.querySelector(`#${id}`).classList.add('in')
-        document.querySelector(`#${id}`).classList.add('active')
-        document.querySelector(`.${id}`).classList.add('active')
-    }
-
-    const stars = document.querySelectorAll('.star');
-    const rating = document.querySelector('#rating');
-    const nota = document.querySelector('#nota');
-
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            stars.forEach(s => s.classList.remove('selected'));
-            let idx = star.getAttribute('data-value')
-
-            for (let i = 0; i < idx; i++) {
-                document.querySelectorAll('#stars li')[i].classList.add('selected')
-            }
-
-            // star.classList.add('selected');
-            const ratingValue = parseFloat(star.getAttribute('data-value'));
-            if (ratingValue % 1 !== 0) {
-                rating.textContent = ratingValue.toFixed(1);
-                nota.value = ratingValue.toFixed(1);
-            } else {
-                rating.textContent = ratingValue;
-                nota.value = ratingValue;
-            }
-        });
-    });
-</script>
-<script>
-    activeItem('prod')
-</script>

@@ -11,8 +11,10 @@ use PHPMailer\PHPMailer\Exception;
         {
             
 
-            $email = $mailer == "suport" ? "suporteecommercelurique@gmail.com" : '';
-            $senha = $mailer == "suport" ? "ljhwzoqrkixqfpne" : '';
+            $email = ($mailer == "suport" ? "suporteecommercelurique@gmail.com" : '');
+            $senha = ($mailer == "suport" ? "wlkgfnaurwhpyzkx" : '');
+
+            var_dump($email, $senha);
 
 
             $mail = new PHPMailer(true);

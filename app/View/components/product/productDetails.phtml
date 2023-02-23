@@ -1,0 +1,68 @@
+<div class="product-inner">
+    <div role="tabpanel">
+        <ul class="product-tab" role="tablist">
+            <li role="presentation" class="homeItem active" onclick="ativarItem('homeItem')">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                    Descrição
+                </a>
+            </li>
+            <?php if (isset($_SESSION['iduser'])) { ?>
+                <li role="presentation" class="profile" onclick="ativarItem('profile')">
+                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                        Comentar
+                    </a>
+                </li>
+            <?php } ?>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="homeItem">
+                <h2>Descrição do Produto</h2>
+                <p><?php echo $this->view->produto['descricao'] ?></p>
+            </div>
+            <div role="tabpane2" class="tab-pane fade" id="profile">
+                <h2>Comentar</h2>
+                <?php if (isset($_SESSION['auth'])) { ?>
+                    <form class="submit-review" method="POST" action="/setComents">
+                        <input type="hidden" name="idProduct" value="<?php echo $this->view->produto['idproduct'] ?>">
+                        <input type="hidden" name="idUser" value="<?php echo $_SESSION['iduser'] ?>">
+                        <p>
+                            <label for="name">Name</label>
+                            <input name="name" value="<?php echo $_SESSION['desperson'] ?>" readonly type="text">
+                        </p>
+                        <p>
+                            <label for="email">Email</label>
+
+                            <input name="email" value="<?php echo $_SESSION['desemail'] ?>" readonly type="email">
+                        </p>
+                        <p>
+                            <label for="subject">Titulo</label>
+                            <input name="subject" type="text" maxlength="60" required>
+                        </p>
+
+                        <div class="rating-chooser">
+                            <p>Your rating</p>
+
+                            <ul class="rating-wrap-post" id="stars">
+                                <li class="star 1" id="1" data-value="1"><i class="fa fa-star"></i></li>
+                                <li class="star 2" id="2" data-value="2"><i class="fa fa-star"></i></li>
+                                <li class="star 3" id="3" data-value="3"><i class="fa fa-star"></i></li>
+                                <li class="star 4" id="4" data-value="4"><i class="fa fa-star"></i></li>
+                                <li class="star 5" id="5" data-value="5"><i class="fa fa-star"></i></li>
+                                <span id="rating"></span>
+                                <input type="hidden" name="rating" id="nota" value="0">
+                            </ul>
+                        </div>
+                        <p>
+                            <label for="review">Your review</label>
+                            <textarea name="review" id="" cols="30" rows="10" style="resize: vertical;" required></textarea>
+                        </p>
+                        <p><input type="submit"></p>
+                    </form>
+                <?php } ?>
+
+            </div>
+        </div>
+    </div>
+
+</div>

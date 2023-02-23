@@ -158,6 +158,32 @@ use MF\Init\Bootstrap;
                 'action' => 'setComent'
             ); 
             
+            $routes['like'] = array(
+                'route' => '/like',
+                'controller' => 'ComentController',
+                'action' => 'like'
+            ); 
+
+            $routes['unlike'] = array(
+                'route' => '/unlike',
+                'controller' => 'ComentController',
+                'action' => 'unlike'
+            ); 
+            
+            $routes['desfazerLike'] = array(
+                'route' => '/desfazerLike',
+                'controller' => 'ComentController',
+                'action' => 'desfazer'
+            ); 
+            $routes['desfazerUnlike'] = array(
+                'route' => '/desfazerUnlike',
+                'controller' => 'ComentController',
+                'action' => 'desfazer'
+            ); 
+            
+            
+            
+            
             
             
             // PAYMENT

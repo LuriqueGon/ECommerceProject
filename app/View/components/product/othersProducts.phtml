@@ -1,0 +1,20 @@
+<div class="single-sidebar">
+    <h2 class="sidebar-title">Buscar Produtos</h2>
+    <form action="">
+        <input type="text" placeholder="Buscar produtos...">
+        <input type="submit" value="Buscar">
+    </form>
+</div>
+
+<div class="single-sidebar">
+    <h2 class="sidebar-title">Outros de <?php echo $this->view->categoria['0']['descategory'] ?></h2>
+    <?php foreach ($this->view->produtosCategoria as $key => $produto) { ?>
+        <div class="thubmnail-recent">
+            <img src="<?php echo $produto['photo'] ?>" class="recent-thumb" alt="">
+            <h2><a href="/productsDetails?url=<?php echo $produto['desurl'] ?>" target="_blank"><?php echo $produto['desproduct'] ?></a></h2>
+            <div class="product-sidebar-price">
+                <ins>R$ <?php echo number_format($produto['vlprice'], 2, ',', '.') ?></ins>
+            </div>
+        </div>
+    <?php } ?>
+</div>

@@ -6,17 +6,17 @@
     Class Message extends Model
     {
 
-        public static function setMessage($message, $type, $redirect = "/", $time = 1)
+        public static function setMessage($message, $type, $redirect = "/", $hash = '')
         {
             if(isset($message) && !empty($message))
             {
                 $_SESSION['type'] = $type;
                 $_SESSION['msg'] = $message;
-                $_SESSION['time'] = $time;
+                $_SESSION['time'] = 1;
 
                 if($redirect == "back")
                 {
-                    header('location: '. $_SERVER['HTTP_REFERER']);
+                    header('location: '. $_SERVER['HTTP_REFERER']. $hash);
                 }else
                 {
                     header('location: '. $redirect);

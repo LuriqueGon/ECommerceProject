@@ -33,10 +33,10 @@
                     $user = Container::getModel('user');
                     $user->__set('email', $_POST['email']);
                     if($user->forgot()){
-                        Message::setMessage('Email de Redefinição de Senha Enviado', 'success', '/');
+                        // Message::setMessage('Email de Redefinição de Senha Enviado', 'success', '/');
                         exit;
                     }else{
-                        Message::setMessage('Email de Redefinição invalido', 'danger', 'back');
+                        // Message::setMessage('Email de Redefinição invalido', 'danger', 'back');
                         exit;
                     }
                     
@@ -100,7 +100,7 @@
                 
                 ;
 
-                Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
+                // Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
             }
         }
 

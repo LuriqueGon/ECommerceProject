@@ -5,7 +5,6 @@
 use App\Models\Message;
 use MF\Controller\Action;
 use MF\Model\Container;
-use MF\Model\Model;
 
     class ComentController extends Action
     {
@@ -30,10 +29,51 @@ use MF\Model\Model;
             $coment = $this->setValueObject($coment, $params);
             $coment->setComent();
 
-            Message::setMessage('Comentario feito com sucesso', 'success', 'back');
+            Message::setMessage('Comentario feito com sucesso', 'success', 'back','#coments');
 
             
         }
+
+        public function like()
+        {
+            $this->restrict();
+
+            $coment = Container::getModel('coment');
+            $coment = $coment->__set('id', $_GET['idComent']);
+            $coment = $coment->__set('idUser', $_GET['iduser']);
+            $coment->like();
+
+            Message::setMessage('Você deu Like', 'success','back','#coments');
+        }
+
+        public function unlike()
+        {
+            $this->restrict();
+
+            $coment = Container::getModel('coment');
+            $coment = $coment->__set('id', $_GET['idComent']);
+            $coment = $coment->__set('idUser', $_GET['iduser']);
+            $coment->unlike();
+
+            Message::setMessage('Você deu um Unlike', 'success','back','#coments');
+        }
+
+        
+
+        public function desfazer()
+        {
+            $this->restrict();
+
+            $coment = Container::getModel('coment');
+            $coment = $coment->__set('id', $_GET['idComent']);
+            $coment = $coment->__set('idUser', $_GET['iduser']);
+            $coment->desfazer();
+
+            Message::setMessage('Feedback removido', 'success','back','#coments');
+
+            var_dump($coment);
+        }
+        
     }
 
 ?>
