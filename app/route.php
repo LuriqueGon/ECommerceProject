@@ -76,6 +76,20 @@ use MF\Init\Bootstrap;
                 'controller' => 'CartController',
                 'action' => 'index'
             );  
+
+            $routes['addProduct'] = array(
+                'route' => '/cart/add',
+                'controller' => 'CartController',
+                'action' => 'addProduct'
+            );  
+
+            $routes['removeProduct'] = array(
+                'route' => '/cart/remove',
+                'controller' => 'CartController',
+                'action' => 'removeProduct'
+            );  
+
+            
             
             // PRODUCT
             $routes['products'] = array(
@@ -180,11 +194,6 @@ use MF\Init\Bootstrap;
                 'controller' => 'ComentController',
                 'action' => 'desfazer'
             ); 
-            
-            
-            
-            
-            
             
             // PAYMENT
             $routes['pagamento'] = array(

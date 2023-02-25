@@ -90,7 +90,7 @@
                                     <img src="<?php echo $produto['photo'] ?>" style="object-fit: contain; width: 250px; height: 250px;">
 
                                     <div class="product-hover">
-                                        <a href="#<?php echo $produto['idproduct'] ?>" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                        <a href="/cart/add?idProduct=<?php echo $produto['idproduct'] ?>" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
 
                                         <a href="/productsDetails?url=<?php echo $produto['desurl'] ?>" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>

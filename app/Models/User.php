@@ -22,6 +22,11 @@ use App\Models\Mailer;
         const SECRET = "ECOMMERCEPHP7TXT";
         const SECRET_IV = "ECOMMERCEPHP7TXT_IV";
 
+        public static function checkLogin():bool
+        {
+            if(isset($_SESSION['iduser']) && (int) $_SESSION['iduser'] > 0) return true;
+            else return false;
+        }
 
         public function getAll():array
         {

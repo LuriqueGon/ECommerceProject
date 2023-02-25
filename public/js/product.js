@@ -37,5 +37,3 @@ stars.forEach(star => {
         }
     });
 });
-
-activeItem('prod')

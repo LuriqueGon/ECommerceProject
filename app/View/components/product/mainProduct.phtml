@@ -8,16 +8,9 @@
     <div class="product-inner-price">
         <ins>R$ <?php echo number_format($this->view->produto['vlprice'], 2, ',', '.') ?></ins>
     </div>
-    <?php if (isset($_SESSION['iduser'])) { ?>
-        <form class="cart" method="POST">
-            <div class="quantity">
-                <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-            </div>
-            <button class="add_to_cart_button">Add to cart</button>
-        </form>
-    <?php } else { ?>
-        <h3 class="text-danger">Para comprar faça login</h3>
-    <?php } ?>
+    <form class="cart" method="POST">
+        <a href="/cart/add?idProduct=<?php echo $this->view->produto['idproduct'] ?>" class="add_to_cart_button">Add to cart</a>
+    </form>
     <div class="product-inner-category">
         <p>Categorias: </p>
         <ol type="I">

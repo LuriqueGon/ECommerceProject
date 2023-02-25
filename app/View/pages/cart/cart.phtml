@@ -1,7 +1,10 @@
 <?php $this->loadComponent('title') ?>
+<?php $subtotal = []?>
+<?php $valor = 0?>
+<?php $frete = 0?>
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
-    <div class="container">
+    <div class="container-cart">
         <div class="row">
 
             <div class="col-md-12">
@@ -11,53 +14,60 @@
                             <table cellspacing="0" class="shop_table cart">
                                 <thead>
                                     <tr>
-                                        <th class="product-remove">&nbsp;</th>
-                                        <th class="product-thumbnail">&nbsp;</th>
-                                        <th class="product-name">Produto</th>
-                                        <th class="product-price">Preço</th>
-                                        <th class="product-quantity">Quantidade</th>
-                                        <th class="product-subtotal">Total</th>
+                                        <th class="product-remove"style="width: 20px;">&nbsp;</th>
+                                        <th class="product-thumbnail"style="width: 140px;">&nbsp;</th>
+                                        <th class="product-name" >Produto</th>
+                                        <th class="product-price"style="width: 200px;">Preço</th>
+                                        <th class="product-quantity"style="width: 80px;">Quantidade</th>
+                                        <th class="product-subtotal" style="width: 200px;">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-remove">
-                                            <a title="Remove this item" class="remove" href="#">×</a>
-                                        </td>
+                                    <?php foreach ($this->view->productsCart as $key => $produto) {?>
+                                        <?php $valor += $produto['vlprice']; array_push($subtotal, $valor) ?>
+                                    
+                                        <tr class="cart_item">
+                                            <td class="product-remove">
+                                                <a title="Remove this item" class="remove" href="/cart/remove?idProduct=<?php echo $produto['idproduct']?>&all=true">×</a>
+                                            </td>
 
-                                        <td class="product-thumbnail">
-                                            <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
-                                        </td>
+                                            <td class="product-thumbnail">
+                                                <a href="/productsDetails?url=<?php echo $produto['desurl'] ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<?php echo $produto['photo'] ?>"></a>
+                                            </td>
 
-                                        <td class="product-name">
-                                            <a href="single-product.html">Ship Your Idea</a>
-                                        </td>
+                                            <td class="product-name">
+                                                <a href="/productDetails?url=<?php echo $produto['desurl'] ?>">
+                                                    <?php echo $produto['desproduct'] ?>
+                                                </a>
+                                            </td>
 
-                                        <td class="product-price">
-                                            <span class="amount">R$15.00</span>
-                                        </td>
+                                            <td class="product-price">
+                                                <span class="amount">R$ <?php echo number_format($produto['vlprice'],2,',','.') ?></span>
+                                            </td>
 
-                                        <td class="product-quantity">
-                                            <div class="quantity buttons_added">
-                                                <input type="button" class="minus" value="-">
-                                                <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                <input type="button" class="plus" value="+">
-                                            </div>
-                                        </td>
+                                            <td class="product-quantity">
+                                                <div class="quantity buttons_added">
+                                                    <a href="/cart/remove?idProduct=<?php echo $produto['idproduct'] ?>&all=false" class="minus">-</a>
+                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="<?php echo $produto['quantity'] ?>"readonly style="text-align: center;">
+                                                    <a href="/cart/add?idProduct=<?php echo $produto['idproduct'] ?>" class="plus">+</a>
+                                                </div>
+                                            </td>
 
-                                        <td class="product-subtotal">
-                                            <span class="amount">R$15.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="actions" colspan="6">
-                                            <div class="coupon">
-                                                <label for="coupon_code">Cupom:</label>
-                                                <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
-                                                <input type="submit" value="Aplicar" name="apply_coupon" class="button">
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            <td class="product-subtotal">
+                                                <span class="amount">R$ <?php echo number_format($produto['vlprice'] * $produto['quantity'],2,',','.') ?></span>
+                                            </td>
+                                        </tr>
+                                    <?php }?>
+
+                                        <tr>
+                                            <td class="actions" colspan="6">
+                                                <div class="coupon">
+                                                    <label for="coupon_code">Cupom:</label>
+                                                    <input type="text" placeholder="Coupon code" value="" id="coupon_code" class="input-text" name="coupon_code">
+                                                    <input type="submit" value="Aplicar" name="apply_coupon" class="button">
+                                                </div>
+                                            </td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </form>
@@ -80,12 +90,12 @@
 
                             <div class="cart_totals ">
                                 <h2>Resumo da Compra</h2>
-
+                                
                                 <table cellspacing="0">
                                     <tbody>
                                         <tr class="cart-subtotal">
                                             <th>Subtotal</th>
-                                            <td><span class="amount">R$15,00</span></td>
+                                            <td><span class="amount">R$<?php echo number_format($subtotal[count($subtotal)-1],2,',','.')?></span></td>
                                         </tr>
 
                                         <tr class="shipping">
@@ -95,10 +105,11 @@
 
                                         <tr class="order-total">
                                             <th>Total</th>
-                                            <td><strong><span class="amount">R$15,00</span></strong> </td>
+                                            <td><strong><span class="amount">R$<?php echo number_format($subtotal[count($subtotal)-1] + $frete,2,',','.')?></span></strong> </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                            
                             </div>
 
                         </div>
@@ -111,9 +122,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
-<script>
-    activeItem('cart')
-</script>
+<script>activeItem('cart')</script>
