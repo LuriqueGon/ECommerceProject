@@ -8,8 +8,12 @@
     <div class="product-inner-price">
         <ins>R$ <?php echo number_format($this->view->produto['vlprice'], 2, ',', '.') ?></ins>
     </div>
-    <form class="cart" method="POST">
-        <a href="/cart/add?idProduct=<?php echo $this->view->produto['idproduct'] ?>" class="add_to_cart_button">Add to cart</a>
+    <form class="cart" method="GET" action="/cart/add">
+        <div class="quantity">
+            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+            <input type="hidden" name="idProduct" value="<?php echo $this->view->produto['idproduct'] ?>">
+        </div>
+        <button type="submit" class="add_to_cart_button">Add to cart</button>
     </form>
     <div class="product-inner-category">
         <p>Categorias: </p>

@@ -13,34 +13,10 @@ use MF\Model\Container;
         public function index()
         {
 
-            $cart = Container::getModel('cart');
+            $cart = $this->cart();
             
-            if(isset($_SESSION[Cart::SESSION]) && !empty($_SESSION[Cart::SESSION])){
-                
-                $cart->__set('idCart', $_SESSION[Cart::SESSION]['idCart']);
-                $cartValues = $cart->getCart();
-                
-                $this->view->productsCart = $cart->getAllProducts();
+            $this->view->productsCart = $cart->getAllProducts();
 
-                // var_dump($this->view->productsCart);
-
-            }else{
-
-                $data = array(
-                    'idSession' => session_id(),
-                    'idCart' => isset($cart->getFromSessionId()['idcart'])?$cart->getFromSessionId()['idcart'] :"",
-                );
-
-                if(User::checkLogin())$data['idUser'] = $_SESSION['iduser'];
-
-                $cart = $this->setValueObject($cart, $data);
-                $cart->save();
-                $cart->setToSession();
-                $this->view->productsCart = array();
-                var_dump($_SESSION);
-                var_dump($cart);
-            }
-            
             $this->view->title = "Carrinho";
             $this->render('cart');
             
@@ -50,12 +26,19 @@ use MF\Model\Container;
         {
             if( !isset($_GET['idProduct']) || empty($_GET['idProduct'])) Message::setMessage('Informe o id do produto', 'danger','/cart');
 
+            $cart = $this->cart();
+
             $produto = Container::getModel('product');
             $produto->__set('id', $_GET['idProduct']);
             
             $cart = Container::getModel('cart');
             $cart->__set('idCart', $_SESSION['Cart']['idCart']);
-            $cart->addProduct($produto);    
+
+            if(!empty($_GET['quantity']) && $_GET['quantity'] != 1){
+                for($i = 1; $i<=$_GET['quantity']; $i++){
+                    $cart->addProduct($produto);  
+                }
+            }
             
             Message::setMessage('Produto Adicionado com sucesso', 'success', '/cart');
         }
@@ -76,6 +59,42 @@ use MF\Model\Container;
             $cart->removeProduct($produto, $_GET['all']);    
             
             Message::setMessage('Produto Removido com sucesso', 'success', '/cart');
+        }
+
+
+        private function cart()
+        {
+            $cart = Container::getModel('cart');
+
+            
+            if(isset($_SESSION[Cart::SESSION]) && !empty($_SESSION[Cart::SESSION])){
+                
+                $cart->__set('idSession', session_id());
+                $cart->__set('idCart', $cart->getFromSessionId()['idcart']);
+                // $cartValues = $cart->getCart();
+                
+                return $cart;
+
+
+            }else{
+                $cart->__set('idSession', session_id());
+
+                $data = array(
+                    'idSession' => session_id(),
+                    'idCart' => !empty($cart->getFromSessionId()['idcart']) ? $cart->getFromSessionId()['idcart'] : ""
+                );
+
+                if(User::checkLogin())$data['idUser'] = $_SESSION['iduser'];
+
+                $cart = $this->setValueObject($cart, $data);
+                $cart->save();
+                $cart->__set('idCart', $cart->getFromSessionId()['idcart']);
+                $cart->setToSession();
+                var_dump($_SESSION);
+                var_dump($cart);
+                return $cart;
+            }
+
         }
 
         
