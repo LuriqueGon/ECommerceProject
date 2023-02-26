@@ -22,6 +22,14 @@
         {
             return $this->$attr;
         }
+
+        public function setData($data = array())
+        {
+            foreach ($data as $key => $value) {
+                $this->__set($key, $value);
+            }
+
+        }
         
     }
 

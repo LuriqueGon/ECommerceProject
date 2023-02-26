@@ -24,7 +24,7 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($this->view->productsCart as $key => $produto) {?>
-                                        <?php $valor += $produto['vlprice']; array_push($subtotal, $valor) ?>
+                                        <?php $valor += $produto['total']; array_push($subtotal, $valor) ?>
                                     
                                         <tr class="cart_item">
                                             <td class="product-remove">
@@ -54,7 +54,7 @@
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount">R$ <?php echo number_format($produto['vlprice'] * $produto['quantity'],2,',','.') ?></span>
+                                                <span class="amount">R$ <?php echo number_format($produto['total'],2,',','.') ?></span>
                                             </td>
                                         </tr>
                                     <?php }?>

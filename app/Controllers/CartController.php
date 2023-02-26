@@ -2,18 +2,17 @@
 
     namespace App\Controllers;
 
-use App\Models\Cart;
-use App\Models\User;
-use App\Models\Message;
-use MF\Controller\Action;
-use MF\Model\Container;
+    use App\Models\Message;
+    use MF\Controller\Action;
+    use MF\Model\Container;
 
     class CartController extends Action
     {
         public function index()
         {
-
-            $cart = $this->cart();
+            $cart = Container::getModel('cart');
+            $cart = $cart->getFromSession();
+            var_dump($_SESSION['Cart']);
             
             $this->view->productsCart = $cart->getAllProducts();
 
@@ -26,8 +25,6 @@ use MF\Model\Container;
         {
             if( !isset($_GET['idProduct']) || empty($_GET['idProduct'])) Message::setMessage('Informe o id do produto', 'danger','/cart');
 
-            $cart = $this->cart();
-
             $produto = Container::getModel('product');
             $produto->__set('id', $_GET['idProduct']);
             
@@ -38,6 +35,8 @@ use MF\Model\Container;
                 for($i = 1; $i<=$_GET['quantity']; $i++){
                     $cart->addProduct($produto);  
                 }
+            }else{
+                $cart->addProduct($produto);  
             }
             
             Message::setMessage('Produto Adicionado com sucesso', 'success', '/cart');
@@ -60,44 +59,5 @@ use MF\Model\Container;
             
             Message::setMessage('Produto Removido com sucesso', 'success', '/cart');
         }
-
-
-        private function cart()
-        {
-            $cart = Container::getModel('cart');
-
-            
-            if(isset($_SESSION[Cart::SESSION]) && !empty($_SESSION[Cart::SESSION])){
-                
-                $cart->__set('idSession', session_id());
-                $cart->__set('idCart', $cart->getFromSessionId()['idcart']);
-                // $cartValues = $cart->getCart();
-                
-                return $cart;
-
-
-            }else{
-                $cart->__set('idSession', session_id());
-
-                $data = array(
-                    'idSession' => session_id(),
-                    'idCart' => !empty($cart->getFromSessionId()['idcart']) ? $cart->getFromSessionId()['idcart'] : ""
-                );
-
-                if(User::checkLogin())$data['idUser'] = $_SESSION['iduser'];
-
-                $cart = $this->setValueObject($cart, $data);
-                $cart->save();
-                $cart->__set('idCart', $cart->getFromSessionId()['idcart']);
-                $cart->setToSession();
-                var_dump($_SESSION);
-                var_dump($cart);
-                return $cart;
-            }
-
-        }
-
         
     }
-
-?>
