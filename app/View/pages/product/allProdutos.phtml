@@ -40,7 +40,7 @@
                                     <td><abbr title="<?php echo $value['desproduct'] ?>"><?php echo $prodName ?></abbr></td>
                                     <td>R$ <?php echo number_format($value['vlprice'], 2, ',', '.') ?></td>
                                     <td><?php echo $value['vlheight'] . " X " . $value['vlwidth'] . " X " . $value['vllength'] ?> cm</td>
-                                    <td><?php echo transformWeightNumber($value['vlweight']) ?></td>
+                                    <td><?php echo $this->transformWeightNumber($value['vlweight']) ?></td>
                                     <td><?php echo $data ?></td>
                                     <td>
                                         <div class="ico" style="display: flex; flex-direction: column;">
@@ -68,23 +68,7 @@
 
 <?php
 
-function transformWeightNumber(Float $num)
-{
-    if (floor($num) == $num) { // verifica se o número é inteiro
-        if ($num > 1000) {
-            return ($num / 1000) . "kg";
-        }
-    } else {
-        $num_str = sprintf("%.3f", $num); // converte o número para string mantendo as 3 casas decimais
-        $decimals = substr($num_str, -3); // obtém as 3 últimas posições da string (as casas decimais)
 
-        if ($decimals == "000") { // verifica se as casas decimais são todas 0
-            return (int)$num . " g"; // se forem, imprime o número transformado em inteiro
-        } else {
-            return $num . " g"; // se não forem, imprime o número sem transformação
-        }
-    }
-}
 
 
 ?>

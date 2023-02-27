@@ -136,9 +136,20 @@ use MF\Controller\ControllerConfig;
             Message::setMessage('Você não tem permissão para acessar a página', 'danger');
         }
 
-        
+        protected function transformWeightNumber(Float $peso)
+        {
+            if ($peso < 1) {
+                $peso_formatado = number_format($peso * 1000, 3, "", "");
+                return rtrim($peso_formatado, "0") . " g";
+            } else {
+                $peso_formatado = number_format($peso, 3, ".", "");
+                if (strpos($peso_formatado, ".000") !== false) {
+                    return number_format($peso, 0, ".", "") . " kg";
+                } else {
+                    return rtrim($peso_formatado, "0") . " kg";
+                }
+            }
+        }
 
         
     }
-
-?>

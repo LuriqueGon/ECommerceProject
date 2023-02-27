@@ -2,6 +2,7 @@
 
     namespace App\Controllers;
 
+    use App\Models\Cart;
     use App\Models\Message;
     use MF\Controller\Action;
     use MF\Model\Container;
@@ -10,9 +11,9 @@
     {
         public function index()
         {
-            $cart = Container::getModel('cart');
-            $cart = $cart->getFromSession();
-            var_dump($_SESSION['Cart']);
+            $cart = Cart::getFromSession();
+
+            $this->view->cart = $cart;
             
             $this->view->productsCart = $cart->getAllProducts();
 
@@ -28,8 +29,7 @@
             $produto = Container::getModel('product');
             $produto->__set('id', $_GET['idProduct']);
             
-            $cart = Container::getModel('cart');
-            $cart->__set('idCart', $_SESSION['Cart']['idCart']);
+            $cart = Cart::getFromSession();
 
             if(!empty($_GET['quantity']) && $_GET['quantity'] != 1){
                 for($i = 1; $i<=$_GET['quantity']; $i++){
@@ -50,14 +50,26 @@
             $produto = Container::getModel('product');
             $produto->__set('id', $_GET['idProduct']);
             
-            $cart = Container::getModel('cart');
-            $cart->__set('idCart', $_SESSION['Cart']['idCart']);
+            $cart = Cart::getFromSession();
 
             $_GET['all'] = ($_GET['all'] === "false") ? false : true;
 
-            $cart->removeProduct($produto, $_GET['all']);    
+            $cart->removeProduct($produto, $_GET['all']);  
             
             Message::setMessage('Produto Removido com sucesso', 'success', '/cart');
         }
+
+        public function calcularFrete()
+        {
+            $this->needPOST($_POST);
+
+            $cart = Cart::getFromSession();
+            $cart->__set('zipCode', $_POST['cep']);
+            $result = $cart->setFreight();
+            
+            Message::setMessage('Frete calculado com sucesso', 'success', '/cart');
+        }
+
+        
         
     }

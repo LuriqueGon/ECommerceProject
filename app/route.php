@@ -89,6 +89,13 @@ use MF\Init\Bootstrap;
                 'action' => 'removeProduct'
             );  
 
+            $routes['calcularFrete'] = array(
+                'route' => '/cart/freight',
+                'controller' => 'CartController',
+                'action' => 'calcularFrete'
+            );  
+
+            
             
             
             // PRODUCT

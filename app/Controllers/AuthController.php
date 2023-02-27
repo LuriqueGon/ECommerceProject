@@ -108,6 +108,11 @@
         {
             $this->restrict();
             $_SESSION = $this->unsetValueArray($_SESSION);
+
+            if(isset($_SESSION['Cart'])){
+                $_SESSION = $this->unsetValueArray($_SESSION['Cart']);
+            }
+
             Message::setMessage('Logout com sucesso', 'success', '/');
         }
        

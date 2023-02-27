@@ -19,6 +19,25 @@
             <div role="tabpanel" class="tab-pane fade in active" id="homeItem">
                 <h2>Descrição do Produto</h2>
                 <p><?php echo $this->view->produto['descricao'] ?></p>
+                <br><br>
+                <ul>
+                    <li>
+                        <strong>Peso: </strong>
+                        <?php echo $this->transformWeightNumber($this->view->produto['vlweight'])?>;
+                    </li>
+                    <li>
+                        <strong>Largura: </strong> 
+                         <?php echo number_format($this->view->produto['vlwidth'],2,',','.') ?> cm;
+                        </li>
+                    <li>
+                        <strong>Altura: </strong>  
+                        <?php echo number_format($this->view->produto['vlheight'],2,',','.') ?> cm;
+                    </li>
+                    <li>
+                        <strong>Comprimento: </strong>  
+                        <?php echo number_format($this->view->produto['vllength'],2,',','.') ?> cm.
+                    </li>
+                </ul>
             </div>
             <div role="tabpane2" class="tab-pane fade" id="profile">
                 <h2>Comentar</h2>

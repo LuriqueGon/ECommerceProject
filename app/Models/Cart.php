@@ -14,14 +14,23 @@ use MF\Model\Container;
         protected $freight ;
         protected $nrdays ;
 
-        public function getFromSession()
+        public static function getFromSession():object
         {
             $cart = Container::getModel('cart');
 
             if(isset($_SESSION['Cart']) && (int)$_SESSION['Cart']['idCart'] > 0){
 
                 $cart->__set('idCart', $_SESSION['Cart']['idCart']);
-                $cart->setData($cart->getCart());
+                $result = $cart->getCart();
+                $params = array(
+                    'idCart' => $result['idcart'],
+                    'idSession' => $result['dessessionid'],
+                    'idUser' => $result['iduser'],
+                    'zipCode' => $result['deszipcode'],
+                    'freight' => $result['vlfreight'],
+                    'nrdays' => $result['nrdays'],
+                );
+                $cart->setData($params);
 
             }else{
                 $cart->getFromSessionId();
@@ -35,15 +44,22 @@ use MF\Model\Container;
                     if(User::checkLogin()) $data['idUser'] = $_SESSION['iduser'];
                     $cart->setData($data);
                     $cart->save();
-                    $cart->setToSession($cart);
+                    $cart->__set('idCart', $cart->getIdCart());
                 }
+                
+                $cart->setToSession($cart);
             }
             
             return $cart;
             
         }
 
-        public function getFromSessionId()
+        public function getIdCart()
+        {
+            return $this->select('SELECT idcart FROM tb_carts WHERE dessessionid = ?', array(session_id()))['idcart'];
+        }
+
+        public function getFromSessionId():void
         {
             $result = $this->select('SELECT * FROM tb_carts WHERE dessessionid = ?', array(session_id()));
 
@@ -65,14 +81,14 @@ use MF\Model\Container;
             return $this->select('SELECT * FROM tb_carts WHERE idcart = ?', array($this->__get('idCart')));
         }
 
-        public function setToSession($cart)
+        public function setToSession($cart):void
         {
             $cart = get_object_vars($cart);
             unset($cart['db']);
             $_SESSION['Cart'] = $cart;
         }
 
-        public function save()
+        public function save():void
         {
             $this->selectAll('CALL sp_carts_save(?, ?, ?, ?, ?, ?)', array(
                 $this->__get('idCart'),
@@ -90,6 +106,8 @@ use MF\Model\Container;
                 $this->__get('idCart'),
                 $produto->__get('id')
             ));
+            $this->updateFreight();
+
         }
 
         public function removeProduct(Product $produto, $all = false):void
@@ -105,6 +123,9 @@ use MF\Model\Container;
                     $produto->__get('id')
                 ));
             }
+            $this->updateFreight();
+            
+
             
         }
 
@@ -121,6 +142,78 @@ use MF\Model\Container;
             ));
         }
 
+        public function getProductsTotals()
+        {
+            $results = $this->select('
+                SELECT SUM(vlprice) as vlprice, SUM(vlwidth) as vlwidth, SUM(vlheight) as vlheight, SUM(vllength) as vllength, SUM(vlweight) as vlweight
+                FROM tb_products a
+                INNER JOIN tb_cartsproducts b ON a.idproduct = b.idproduct
+                WHERE b.idcart = ? AND dtremoved IS NULL
+            ', array(
+                $this->__get('idCart')
+            ));
+
+            if(!empty($results)) return $results;
+            else return [];
+        }
+
+
+        public function setFreight()
+        {
+            if(!empty($this->getAllProducts())){
+            
+                $zipCode = str_replace('-','',$this->__get('zipCode'));
+
+                $totals = $this->getProductsTotals();
+
+                if ($totals['vlheight'] < 2) $totals['vlheight'] = 2;
+                if ($totals['vllength'] < 16) $totals['vllength'] = 16;
+                if ($totals['vlwidth'] < 11) $totals['vlwidth'] = 11;
+
+                
+                if(!empty($totals)){
+                    $qs = http_build_query(array(
+                        'nCdEmpresa'=>'',
+                        'sDsSenha'=>'',
+                        'nCdServico'=>'40010',
+                        'sCepOrigem'=>'52050660',
+                        'sCepDestino'=>$zipCode,
+                        'nVlPeso'=>$totals['vlweight'],
+                        'nCdFormato'=>1,
+                        'nVlComprimento'=>$totals['vllength'],
+                        'nVlAltura'=>$totals['vlheight'],
+                        'nVlLargura'=>$totals['vlwidth'],
+                        'nVlDiametro'=>0,
+                        'sCdMaoPropria'=>'S',
+                        'nVlValorDeclarado'=>$totals['vlprice'],
+                        'sCdAvisoRecebimento'=>'S'
+                    ));
+
+                    $xml = simplexml_load_file('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?'.$qs);
+                    $result = $xml->Servicos->cServico;
+
+                    if(!empty($result['MsgErro'])){
+                        Message::setMessage($result->MsgErro, 'danger', '/cart'); 
+                        exit;
+                    }
+
+                    $this->__set('nrdays', $result->PrazoEntrega[0]);
+                    $this->__set('freight', number_format((float)$result->Valor,2,'.',''));
+                    $this->save();
+                    
+                    return $result;
+
+                }else{}
+            }
+        }
+        private function updateFreight()
+        {
+            if(!empty($this->__get('zipCode'))){
+                if(!empty($this->getAllProducts())){
+                    $this->setFreight($this->__get('zipCode'));
+                }
+            }
+        }
         
     }
 
