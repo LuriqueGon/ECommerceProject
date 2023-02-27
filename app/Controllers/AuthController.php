@@ -96,11 +96,9 @@
                 Mailer::sendMail($results['desemail'], $results['desperson'],"Redefinição de Senha", 
                     "<h1>Redefinição em ECommerce Store Concluida com sucesso</h1><br><br><p style='color:green;font-size:1.4rem;'>Sua restauração de senha foi realizada com sucesso!!</p>"
                     
-                )
-                
-                ;
+                );
 
-                // Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
+                Message::setMessage('Recuperação de senha realizada com sucesso', 'success');
             }
         }
 
@@ -169,8 +167,14 @@
             }else{
                 $authLogin['auth'] = true;
                 $_SESSION = $this->setValueArray($_SESSION, $authLogin, array("despassword"));
-                Message::setMessage('Logado', 'success', '/');
+                Message::setMessage('Logado', 'success', !empty($_GET['redirect'])? $_GET['redirect']:'/');
             }
+        }
+
+        public function checkout()
+        {
+            $this->view->title = 'Pagamento';
+            $this->render('checkout');
         }
 
         

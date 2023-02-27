@@ -52,6 +52,12 @@ use App\Models\Mailer;
         {
             return $this->select("SELECT * FROM tb_persons WHERE nrphone = ?", array($this->__get('telefone')));
         }
+        public function getIdByIdPerson()
+        {
+            return $this->select('SELECT a.iduser FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.idperson = ?', array(
+                $this->__get('idPerson')
+            ))['iduser'];
+        }
 
         public function getIdByDecrypt()
         {
@@ -68,9 +74,6 @@ use App\Models\Mailer;
 				DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
 		", array($this->__get('idDecrypt')));
         }
-
-        
-        
 
         public function getIdPerson():int
         {

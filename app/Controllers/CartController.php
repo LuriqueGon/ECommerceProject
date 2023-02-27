@@ -67,7 +67,7 @@
             $cart->__set('zipCode', $_POST['cep']);
             $result = $cart->setFreight();
             
-            Message::setMessage('Frete calculado com sucesso', 'success', '/cart');
+            Message::setMessage('Frete calculado com sucesso', 'success', isset($_GET['redirect'])? '/'.$_GET['redirect']:'/cart');
         }
 
         

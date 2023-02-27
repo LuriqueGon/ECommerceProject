@@ -4,17 +4,12 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <li id="categorias" onclick="openCategoryMenu()"><a href="#"><i class="fa-solid fa-ellipsis-vertical"></i> Categorias</a></li>
-                        <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
-                            <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['desperson'] ?></a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
-                            <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
-                                <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
-                            <?php } ?>
-                            <li><a href="/logout"><i class="fa fa-close"></i> Sair</a></li>
-                        <?php }else{ ?>
-                            <li><a href="/login?redirect=/cart"><i class="fa fa-lock"></i> Login</a></li>
+                        <li><a href="#"><i class="fa-solid fa-bag-shopping"></i>Meus Pedidos</a></li>
+                        <li><a href="#"><i class="fa-solid fa-key"></i>Alterar Senha</a></li>
+                        <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
+                            <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
                         <?php } ?>
+                        <li><a href="/logout"><i class="fa fa-close"></i> Sair</a></li>
                     </ul>
                 </div>
             </div>
@@ -45,6 +40,24 @@
     </div>
 </div>
 
+<div class="site-branding-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="logo">
+                    <h1><a href="/">Home<img src=""></a></h1>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="shopping-item">
+                    <a href="/cart">Carrinho - <span class="cart-amunt">R$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
 <div class="mainmenu-area">
     <div class="container">
         <div class="row">
@@ -58,11 +71,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="itemMenu">
-                    <li id="home"><a href="/">Home</a></li>
+                    <li class="active" id="home"><a href="/">Home</a></li>
                     <li id="prod"><a href="/produtos">Produtos</a></li>
                     <li id="cart"><a href="/cart">Carrinho</a></li>
                 </ul>
             </div>
         </div>
     </div>
-</div> <!-- End mainmenu area -->
+</div> 

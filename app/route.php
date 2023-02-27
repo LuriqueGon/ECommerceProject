@@ -53,20 +53,26 @@ use MF\Init\Bootstrap;
                 'controller' => 'AuthController',
                 'action' => 'forgotReset'
             ); 
+
             $routes['resetPassword'] = array(
                 'route' => '/login/forgotPassword/resetPassword',
                 'controller' => 'AuthController',
                 'action' => 'resetPassword'
             ); 
             
-            
-
             $routes['logout'] = array(
                 'route' => '/logout',
                 'controller' => 'AuthController',
                 'action' => 'logout'
             );  
 
+            // ADDRESS
+
+            $routes['checkout'] = array(
+                'route' => '/checkout',
+                'controller' => 'AddressController',
+                'action' => 'checkout'
+            ); 
             
 
             // CART
@@ -250,7 +256,22 @@ use MF\Init\Bootstrap;
                 'route' => '/admin/users/edit/session',
                 'controller' => 'UserController',
                 'action' => 'salvarEdition'
-            );  
+            ); 
+            
+            $routes['profile'] = array(
+                'route' => '/profile',
+                'controller' => 'UserController',
+                'action' => 'profile'
+            ); 
+            
+            $routes['profileUpdate'] = array(
+                'route' => '/profile/edit',
+                'controller' => 'UserController',
+                'action' => 'profileUpdate'
+            ); 
+            
+            
+            
             
             // Categorie
             $routes['allCategorie'] = array(

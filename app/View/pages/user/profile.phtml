@@ -1,0 +1,27 @@
+
+<?php $this->loadComponent('title') ?>
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">                
+            <div class="col-md-12">
+                <form method="post" action="/profile/edit">
+                    <div class="form-group">
+                    <label for="desperson">Nome completo</label>
+                    <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome aqui" value="<?php echo $_SESSION['desperson'] ?>">
+                    </div>
+                    <div class="form-group">
+                    <label for="desemail">E-mail</label>
+                    <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail aqui" value="<?php echo $_SESSION['desemail'] ?>">
+                    </div>
+                    <div class="form-group">
+                    <label for="nrphone">Telefone</label>
+                    <input type="tel" class="form-control" id="nrphone" name="nrphone" placeholder="Digite o telefone aqui" value="<?php echo $_SESSION['nrphone'] ?>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

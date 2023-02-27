@@ -128,6 +128,36 @@ use MF\Model\Container;
             echo "</pre>";
         }
         
+        public function profile()
+        {
+            $this->restrict();
+
+            $this->view->title = 'Minha Conta';
+            $this->render('profile');
+        }
+
+        public function profileUpdate()
+        {
+            $this->restrict();
+            $this->needPOST($_POST);
+
+            $params = array(
+                'nome'=> $_POST['desperson'],
+                'email'=> $_POST['desemail'],
+                'telefone'=> $_POST['nrphone']
+            );
+
+            $user = Container::getModel('user');
+            $user = $this->setValueObject($user, $params);
+            $user->__set('idPerson', $user->getIdPersonByEmail());
+            $user->__set('id', $user->getIdByIdPerson());
+            $user->edit();
+
+            $result = $user->findById();
+            $_SESSION = $this->setValueArray($_SESSION,$result);
+
+            Message::setMessage('Alterações feitas com sucesso', 'success', '/profile');
+        }
         
         
     }

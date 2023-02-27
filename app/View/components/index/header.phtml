@@ -7,7 +7,7 @@
                         <li id="categorias" onclick="openCategoryMenu()"><a href="#"><i class="fa-solid fa-ellipsis-vertical"></i> Categorias</a></li>
                         
                         <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
-                            <li><a href="#"><i class="fa fa-user"></i> Minha Conta</a></li>
+                            <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['desperson'] ?></a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <li><a href="/cart"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
                             <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
