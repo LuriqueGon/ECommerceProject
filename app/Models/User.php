@@ -28,27 +28,27 @@ use App\Models\Mailer;
             else return false;
         }
 
-        public function getAll():array
+        public function getAll()
         {
             return $this->selectAll('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) ORDER BY tb_users.dtregister DESC');
         }
 
-        public function findById():array
+        public function findById()
         {
             return $this->select('SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = ?', array($this->__get('id')));
         }
 
-        public function findByEmail():array
+        public function findByEmail()
         {
             return $this->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE b.desemail = ?", array($this->__get('email')));
         }
 
-        public function findByLogin():array
+        public function findByLogin()
         {
             return $this->select("SELECT * FROM tb_users WHERE deslogin = ?", array($this->__get('login')));
         }
 
-        public function findByTel():array
+        public function findByTel()
         {
             return $this->select("SELECT * FROM tb_persons WHERE nrphone = ?", array($this->__get('telefone')));
         }
@@ -138,6 +138,29 @@ use App\Models\Mailer;
             }
 
             return false;
+        }
+
+        public function validarDados($type = 'register')
+        {
+            
+            if(empty($this->__get('login')) || strlen($this->__get('login')) < 6) Message::setMessage('Preencha o login corretamente <br> Minimo de 6 caracteres', 'danger', 'back');
+            if(empty($this->__get('password') || strlen($this->__get('password')) < 8)) Message::setMessage('Preencha a Senha corretamente <br> Minimo de 8 caracteres', 'danger', 'back');
+
+            if($type === 'register'){
+
+                if(empty($this->__get('email')) || strlen($this->__get('email')) < 10) Message::setMessage('Preencha o email corretamente', 'danger', 'back');
+
+                if(empty($this->__get('nome')) || strlen($this->__get('nome')) < 3) Message::setMessage('Preencha o Nome corretamente <br> Minimo de 3 caracteres', 'danger', 'back');
+
+                if(empty($this->__get('telefone')) || strlen($this->__get('telefone')) < 10) Message::setMessage('Preencha o Telefone corretamente. <br> Com seu DDD  <br> Minimo de 10 caracteres', 'danger', 'back');
+
+                if(empty($this->__get('repassword')) || strlen($this->__get('repassword')) < 8) Message::setMessage('Preencha a Confirmação de Senha corretamente', 'danger', 'back');
+
+                $this->__set('repassword', md5($this->__get('repassword')));
+            }
+
+            $this->__set('password', md5($this->__get('password')));
+            
         }
 
         private function cadastrarPerson():void

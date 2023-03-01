@@ -122,7 +122,7 @@
 
             $values = array(
                 'login' => $_POST['login'],
-                'password' => md5($_POST['password']),
+                'password' => $_POST['password'],
                 'remember' => isset($_POST['rememberme']) ? $_POST['rememberme'] : false
             );
 
@@ -135,12 +135,14 @@
         {
 
             $this->needPOST($_POST);
-            $_POST['password'] = md5($_POST['password']);
-            $_POST['repassword'] = md5($_POST['repassword']);
+            $_POST['password'] = $_POST['password'];
+            $_POST['repassword'] = $_POST['repassword'];
             $_POST['inAdmin'] = (isset($_POST['inAdmin']) && $_POST['inAdmin'] == 'on') ? 'true' : 'false';
 
             $user = Container::getModel('user');
             $user = $this->setValueObject($user, $_POST);
+
+            $user->validarDados();
 
             if($user->__get('password') == $user->__get('repassword')){
 
@@ -160,7 +162,9 @@
 
         private function testLogin($object)
         {
+            $object->validarDados('login');
             $authLogin = $object->login();
+
             if(empty($authLogin)){
                 Message::setMessage('Usuario e/ou Senha invalidos', 'danger', 'back');
                 exit;

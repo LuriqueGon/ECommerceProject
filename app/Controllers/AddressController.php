@@ -2,8 +2,8 @@
 
     namespace App\Controllers;
 
-use App\Models\Cart;
-use App\Models\Message;
+    use App\Models\Cart;
+    use App\Models\Message;
     use MF\Controller\Action;
     use MF\Model\Container;
     use App\Models\Mailer;
