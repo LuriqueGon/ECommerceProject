@@ -158,6 +158,49 @@ use MF\Model\Container;
 
             Message::setMessage('Alterações feitas com sucesso', 'success', '/profile');
         }
+
+        public function profileChangePhoto()
+        {
+            $this->restrict();
+            $this->needPOST($_POST);
+
+            $user = Container::getModel('user');
+            $user->__set('idPerson', $_POST['personId']);
+
+
+            $file = $_FILES['photo'];
+            $userName = str_replace(' ', '-',$_SESSION['desperson']);
+            $path = "./img/perfil";
+            $fileName = bin2hex(random_bytes(20)). '.jpg';
+            $perfil = $path."/$userName/".$fileName;
+            
+
+            if(!empty($file)){
+                $file['type'] = explode('/',$file['type'])[1];
+                if(in_array($file['type'], ["jpeg","jpg","JPEG","JPG", "png", "PNG"])){
+
+                    if($file['error'])Message::setMessage($file['error'], 'danger', 'back');
+
+                    if(!is_dir($path))mkdir($path);
+
+                    if(!is_dir($path.'/'.$userName ))mkdir($path.'/'. $userName);
+
+                    if(move_uploaded_file($file['tmp_name'], $perfil)){
+
+                        $user->__set('perfil', "$userName/".$fileName);
+
+                    }else Message::setMessage("Uploud do arquivo falhou", 'danger', 'back');
+
+                }else Message::setMessage("Tipo do arquivo invalido, só aceitamos JPG e PNG", 'danger', 'back');
+
+            }
+
+            $user->savePhoto();
+
+            $_SESSION['perfil'] = $user->__get('perfil');
+
+            Message::setMessage('foto alterada com sucesso', 'success', 'back');
+        }
         
         
     }

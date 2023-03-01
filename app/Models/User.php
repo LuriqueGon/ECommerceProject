@@ -188,7 +188,13 @@ use App\Models\Mailer;
 
         }
 
-        
+        public function savePhoto()
+        {
+            $this->query('UPDATE tb_persons SET perfil = ? WHERE idperson = ?', array(
+                $this->__get('perfil'),
+                $this->__get('idPerson')
+            ));
+        }
 
         public function edit()
         {

@@ -270,6 +270,13 @@ use MF\Init\Bootstrap;
                 'action' => 'profileUpdate'
             ); 
             
+            $routes['profileChangePhoto'] = array(
+                'route' => '/profile/changePhoto',
+                'controller' => 'UserController',
+                'action' => 'profileChangePhoto'
+            ); 
+            
+            
             
             
             
