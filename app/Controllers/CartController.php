@@ -63,9 +63,28 @@
         {
             $this->needPOST($_POST);
 
+            if(strlen($_POST['cep']) < 8)
+            {
+                Message::setMessage('Insira um cep válido', 'danger', 'back');
+                exit;
+            }
+
             $cart = Cart::getFromSession();
             $cart->__set('zipCode', $_POST['cep']);
             $result = $cart->setFreight();
+
+            $address = Container::getModel('address');
+            $_POST['deszipcode'] = $_POST['cep']; 
+            $_POST['idPerson'] = $_SESSION['idperson'];
+
+            unset($_POST['cep']);
+            
+            $address = $this->setValueObject($address, $_POST);
+            $address->__set('id', $address->getIdByPerson());
+            $values = $address->loadFromCep($address->__get('deszipcode'));
+            $address= $this->setValueObject($address, $values);
+            
+            $address->save();
             
             Message::setMessage('Frete calculado com sucesso', 'success', isset($_GET['redirect'])? '/'.$_GET['redirect']:'/cart');
         }

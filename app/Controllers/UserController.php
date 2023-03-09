@@ -131,6 +131,7 @@ use MF\Model\Container;
         public function profile()
         {
             $this->restrict();
+            
 
             $this->view->title = 'Minha Conta';
             $this->render('profile');
@@ -144,13 +145,16 @@ use MF\Model\Container;
             $params = array(
                 'nome'=> $_POST['desperson'],
                 'email'=> $_POST['desemail'],
-                'telefone'=> $_POST['nrphone']
+                'telefone'=> $_POST['nrphone'],
+                'id' => $_SESSION['iduser']
             );
 
             $user = Container::getModel('user');
             $user = $this->setValueObject($user, $params);
-            $user->__set('idPerson', $user->getIdPersonByEmail());
+            $user->__set('idPerson', $user->getIdPersonById());
             $user->__set('id', $user->getIdByIdPerson());
+            var_dump($user);
+
             $user->edit();
 
             $result = $user->findById();

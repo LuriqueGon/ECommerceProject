@@ -14,6 +14,7 @@
         public function index()
         {
             $this->dontRestrict();
+
             $this->view->title = "Autenticação";
             $this->render('login');
             
@@ -111,6 +112,8 @@
                 $_SESSION = $this->unsetValueArray($_SESSION['Cart']);
             }
 
+            session_regenerate_id();
+
             Message::setMessage('Logout com sucesso', 'success', '/');
         }
        
@@ -174,13 +177,6 @@
                 Message::setMessage('Logado', 'success', !empty($_GET['redirect'])? $_GET['redirect']:'/');
             }
         }
-
-        public function checkout()
-        {
-            $this->view->title = 'Pagamento';
-            $this->render('checkout');
-        }
-
         
     }
 

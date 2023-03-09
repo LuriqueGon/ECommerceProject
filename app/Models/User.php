@@ -52,6 +52,13 @@ use App\Models\Mailer;
         {
             return $this->select("SELECT * FROM tb_persons WHERE nrphone = ?", array($this->__get('telefone')));
         }
+        public function getEmailByIdPerson()
+        {
+            return $this->select('SELECT * FROM tb_persons WHERE idperson = ?', array(
+                $this->__get('idPerson')
+            ))['desemail'];
+        }
+        
         public function getIdByIdPerson()
         {
             return $this->select('SELECT a.iduser FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.idperson = ?', array(
@@ -198,6 +205,10 @@ use App\Models\Mailer;
 
         public function edit()
         {
+            if(!empty($this->__get('email'))){
+                $this->changeEmail();
+                
+            }
             if(!empty($this->__get('password'))){
                 $this->query("UPDATE tb_users SET despassword = ? WHERE iduser = ?", array(md5($this->__get('password')), $this->__get('id')));
             }
@@ -216,10 +227,6 @@ use App\Models\Mailer;
                 $this->query("UPDATE tb_persons SET desperson = ? WHERE idperson = ?",array($this->__get('nome'),$this->__get('idPerson')));
             }
 
-            if(!empty($this->__get('email'))){
-                $this->query("UPDATE tb_persons SET desemail = ? WHERE idperson = ?",array($this->__get('email'),$this->__get('idPerson')));
-            }
-
             if(!empty($this->__get('telefone'))){
                 $this->query("UPDATE tb_persons SET nrphone = ? WHERE idperson = ?",array($this->__get('telefone'),$this->__get('idPerson')));
             }
@@ -227,6 +234,19 @@ use App\Models\Mailer;
             if(!empty($this->__get('perfil'))){
                 $this->query("UPDATE tb_persons SET perfil = ? WHERE idperson = ?",array($this->__get('perfil'),$this->__get('idPerson')));
             }
+
+           
+        }
+
+        private function changeEmail()
+        {
+            $newEmail = $this->getEmailByIdPerson();
+            if($newEmail != $this->__get('email')){
+                if(empty($this->findByEmail())){
+                    $this->query("UPDATE tb_persons SET desemail = ? WHERE idperson = ?",array($this->__get('email'),$this->__get('idPerson')));
+                }
+            }
+            
         }
 
         public function forgot():bool

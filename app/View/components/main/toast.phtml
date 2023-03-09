@@ -10,6 +10,7 @@ if (isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
     $this->view->message = $message['msg'];
     $this->view->time = $message['time'];
 
+
     Message::cleanMessage();
 
     unset($message);

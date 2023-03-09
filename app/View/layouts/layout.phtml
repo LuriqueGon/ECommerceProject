@@ -27,10 +27,10 @@
 	<title><?php echo $this->view->title ?> | ECommerce | </title>
 </head>
 <body>
-	<?php $this->loadComponent('toast')?>
 	<?php $this->loadComponent('categoryMenu')?>
 	<?php $this->loadComponent('header')?>
 	
+	<?php $this->loadComponent('toast')?>
 	<?php $this->content() ?>
 
 	<?php $this->loadComponent('footer')?>

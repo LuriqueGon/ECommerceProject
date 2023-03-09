@@ -1,5 +1,6 @@
 <?php $this->view->subtotal = []?>
 <?php $this->view->valor = 0?>
+<?php $this->view->product = 0?>
 <form method="post" action="#">
     <table cellspacing="0" class="shop_table cart">
         <thead>
@@ -13,9 +14,15 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->view->productsCart as $key => $produto) { ?>
-                <?php $this->view->valor += $produto['total'];
-                array_push($this->view->subtotal, $this->view->valor) ?>
+            <?php foreach ($this->view->productsCart as $key => $produto){ ?>
+                <?php 
+                    $this->view->valor += $produto['total'];
+                    $this->view->product += $produto['quantity'];
+                    array_push($this->view->subtotal, $this->view->valor);
+
+                    $_SESSION['Cart']['total'] = $this->view->subtotal[count($this->view->subtotal)-1];
+                    $_SESSION['Cart']['quantity'] = $this->view->product;
+                ?>;
 
                 <tr class="cart_item">
                     <td class="product-remove">
@@ -48,7 +55,7 @@
                         <span class="amount">R$ <?php echo number_format($produto['total'], 2, ',', '.') ?></span>
                     </td>
                 </tr>
-            <?php } ?>
+            <?php }?>
 
             <tr>
                 <td class="actions" colspan="6">

@@ -161,6 +161,7 @@ use MF\Model\Container;
         public function setFreight()
         {
             if(!empty($this->getAllProducts())){
+
             
                 $zipCode = str_replace('-','',$this->__get('zipCode'));
 
@@ -169,6 +170,7 @@ use MF\Model\Container;
                 if ($totals['vlheight'] < 2) $totals['vlheight'] = 2;
                 if ($totals['vllength'] < 16) $totals['vllength'] = 16;
                 if ($totals['vlwidth'] < 11) $totals['vlwidth'] = 11;
+                if ($totals['vlprice'] > 10000) $totals['vlprice'] = 10000;
 
                 
                 if(!empty($totals)){
@@ -197,20 +199,26 @@ use MF\Model\Container;
                         exit;
                     }
 
-                    $this->__set('nrdays', $result->PrazoEntrega[0]);
+                    $this->__set('nrdays', (string)$result->PrazoEntrega[0]);
                     $this->__set('freight', number_format((float)$result->Valor,2,'.',''));
+                    
+                    $_SESSION['Cart']['freight'] =  number_format((float)$result->Valor,2,'.','');
+                    $_SESSION['Cart']['nrdays'] = (string)$result->PrazoEntrega[0];
+                    $_SESSION['Cart']['zipCode'] = (string)$zipCode;
+
                     $this->save();
                     
                     return $result;
 
-                }else{}
+                }
             }
         }
-        private function updateFreight()
+        
+        public function updateFreight()
         {
             if(!empty($this->__get('zipCode'))){
                 if(!empty($this->getAllProducts())){
-                    $this->setFreight($this->__get('zipCode'));
+                    $this->setFreight();
                 }
             }
         }

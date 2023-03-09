@@ -303,3 +303,95 @@ CREATE TABLE tb_comentsfeedback(
 
 ALTER TABLE tb_comentsfeedback ADD CONSTRAINT idUser FOREIGN KEY ( idUser ) REFERENCES tb_user(idUser);
 ALTER TABLE tb_comentsfeedback ADD CONSTRAINT idcoment FOREIGN KEY ( idcoment ) REFERENCES tb_coments(idcoment);
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+DROP TABLE IF EXISTS tb_addresses;
+
+CREATE TABLE `tb_addresses` (
+  `idaddress` int(11) NOT NULL AUTO_INCREMENT,
+  `idperson` int(11) NOT NULL,
+  `desaddress` varchar(128) NOT NULL,
+  `descomplement` varchar(32) DEFAULT NULL,
+  `descity` varchar(32) NOT NULL,
+  `desstate` varchar(32) NOT NULL,
+  `descountry` varchar(32) NOT NULL,
+  `deszipcode` char(10) NOT NULL,
+  `desdistrict` varchar(32) NOT NULL,
+  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idaddress`),
+  KEY `fk_addresses_persons_idx` (`idperson`),
+  CONSTRAINT `fk_addresses_persons` FOREIGN KEY (`idperson`) REFERENCES `tb_persons` (`idperson`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+LOCK TABLES `tb_addresses` WRITE;
+/*!40000 ALTER TABLE `tb_addresses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_addresses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+ALTER TABLE `tb_addresses` ADD `desnumber` VARCHAR(15) NULL AFTER `desstate`;
+
+
+DELIMITER $$
+CREATE PROCEDURE `sp_addresses_save`(
+pidaddress int(11), 
+pidperson int(11),
+pdesaddress varchar(128),
+pdescomplement varchar(32),
+pdescity varchar(32),
+pdesstate varchar(32),
+pdesnumber varchar(15),
+pdescountry varchar(32),
+pdeszipcode char(10),
+pdesdistrict varchar(32)
+)
+BEGIN
+
+	IF pidaddress > 0 THEN
+		
+		UPDATE tb_addresses
+        SET
+			idperson = pidperson,
+            desaddress = pdesaddress,
+            descomplement = pdescomplement,
+            descity = pdescity,
+            desstate = pdesstate,
+            desnumber = pdesnumber,
+            descountry = pdescountry,
+            deszipcode = pdeszipcode, 
+            desdistrict = pdesdistrict
+		WHERE idaddress = pidaddress;
+        
+    ELSE
+		
+		INSERT INTO tb_addresses (idperson, desaddress, descomplement, descity, desstate, desnumber, descountry, deszipcode, desdistrict)
+        VALUES(pidperson, pdesaddress, pdescomplement, pdescity, pdesstate, pdesnumber, pdescountry, pdeszipcode, pdesdistrict);
+        
+        SET pidaddress = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_addresses WHERE idaddress = pidaddress;
+
+END$$
+DELIMITER ;
+
+ALTER TABLE `tb_addresses` CHANGE `descomplement` `descomplement` VARCHAR(200) NULL DEFAULT NULL;

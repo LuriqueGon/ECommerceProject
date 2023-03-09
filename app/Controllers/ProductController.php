@@ -10,7 +10,8 @@
     {
         public function index()
         {
-            
+            $this->view->total = isset($_SESSION['Cart']['total']) ? $_SESSION['Cart']['total'] : "0";
+            $this->view->quantity = isset($_SESSION['Cart']['quantity']) ? $_SESSION['Cart']['quantity'] : "0";
 
             if(isset($_GET['categoria']) && !empty($_GET['categoria'])){
                 $categoria = Container::getModel('categorie');
@@ -52,6 +53,7 @@
 
         public function details()
         {
+
             if(!isset($_GET['url']) || empty($_GET['url']))Message::setMessage('Informe um url, para acessar os detalhes do produto', 'danger', '/produtos');
 
             $produto = Container::getModel('product');
@@ -69,6 +71,9 @@
             $coment = Container::getModel('coment');
             $coment->__set('idProd', $this->view->produto['idproduct']);
             $this->view->coments = $coment->getComent();
+
+            $this->view->total = isset($_SESSION['Cart']['total']) ? $_SESSION['Cart']['total'] : "0";
+            $this->view->quantity = isset($_SESSION['Cart']['quantity']) ? $_SESSION['Cart']['quantity'] : "0";
             
 
             $this->view->title = "Detalhes dos Produtos";
@@ -186,7 +191,7 @@
             $produto->__set('photo', $this->setPhoto($_FILES, $produto));
             $produto->create();
 
-            // Message::setMessage('Produto Adicionado com sucesso', 'success', '/admin/produtos');
+            Message::setMessage('Produto Adicionado com sucesso', 'success', '/admin/produtos');
         }
 
         private function setPhoto($files, $produto)

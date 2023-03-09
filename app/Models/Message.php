@@ -19,7 +19,7 @@
                     header('location: '. $_SERVER['HTTP_REFERER']. $hash);
                 }else
                 {
-                    header('location: '. $redirect);
+                    header('location: '. $redirect. $hash);
                 }
             }
         }
@@ -28,6 +28,7 @@
         {
             if(!empty($_SESSION['msg']))
             {
+
                 return [
                     
                     "type" => $_SESSION['type'],
