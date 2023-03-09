@@ -1,0 +1,63 @@
+<?php
+
+$routesRoutes['allUsers'] = array(
+    'route' => '/admin/users',
+    'controller' => 'UserController',
+    'action' => 'allUsers'
+);  
+
+$routesRoutes['cadastrarUser'] = array(
+    'route' => '/admin/users/create',
+    'controller' => 'UserController',
+    'action' => 'cadastrarUser'
+);  
+
+$routesRoutes['ativarUser'] = array(
+    'route' => '/admin/users/ativar',
+    'controller' => 'UserController',
+    'action' => 'ativarUser'
+);  
+
+$routesRoutes['desativarUser'] = array(
+    'route' => '/admin/users/desative',
+    'controller' => 'UserController',
+    'action' => 'desativarUser'
+);  
+
+$routesRoutes['deletarUser'] = array(
+    'route' => '/admin/user/delete',
+    'controller' => 'UserController',
+    'action' => 'deletarUser'
+);  
+
+$routesRoutes['editarUser'] = array(
+    'route' => '/admin/users/edit',
+    'controller' => 'UserController',
+    'action' => 'editarUser'
+);  
+
+$routesRoutes['salvarEdition'] = array(
+    'route' => '/admin/users/edit/session',
+    'controller' => 'UserController',
+    'action' => 'salvarEdition'
+); 
+
+$routesRoutes['profile'] = array(
+    'route' => '/profile',
+    'controller' => 'UserController',
+    'action' => 'profile'
+); 
+
+$routesRoutes['profileUpdate'] = array(
+    'route' => '/profile/edit',
+    'controller' => 'UserController',
+    'action' => 'profileUpdate'
+); 
+
+$routesRoutes['profileChangePhoto'] = array(
+    'route' => '/profile/changePhoto',
+    'controller' => 'UserController',
+    'action' => 'profileChangePhoto'
+); 
+
+?>

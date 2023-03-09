@@ -1,0 +1,44 @@
+<?php
+
+$routesRoutes['page'] = array(
+    'route' => '/login',
+    'controller' => 'AuthController',
+    'action' => 'index'
+);  
+
+$routesRoutes['login'] = array(
+    'route' => '/auth/login',
+    'controller' => 'AuthController',
+    'action' => 'login'
+);  
+
+$routesRoutes['register'] = array(
+    'route' => '/auth/register',
+    'controller' => 'AuthController',
+    'action' => 'register'
+);  
+
+$routesRoutes['forgotPassword'] = array(
+    'route' => '/login/forgotPassword',
+    'controller' => 'AuthController',
+    'action' => 'forgotPasswordPages'
+); 
+
+$routesRoutes['forgotReset'] = array(
+    'route' => '/login/forgotPassword/reset',
+    'controller' => 'AuthController',
+    'action' => 'forgotReset'
+); 
+
+$routesRoutes['resetPassword'] = array(
+    'route' => '/login/forgotPassword/resetPassword',
+    'controller' => 'AuthController',
+    'action' => 'resetPassword'
+); 
+
+$routesRoutes['logout'] = array(
+    'route' => '/logout',
+    'controller' => 'AuthController',
+    'action' => 'logout'
+);  
+?>

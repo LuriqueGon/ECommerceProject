@@ -1,0 +1,56 @@
+<?php
+
+$routesRoutes['allCategorie'] = array(
+    'route' => '/admin/categorias',
+    'controller' => 'CategorieController',
+    'action' => 'index'
+); 
+
+$routesRoutes['categoriaCreate'] = array(
+    'route' => '/admin/categoria/create',
+    'controller' => 'CategorieController',
+    'action' => 'loadCreate'
+);  
+
+$routesRoutes['categoriaProdutos'] = array(
+    'route' => '/admin/categoria/produtos',
+    'controller' => 'CategorieController',
+    'action' => 'loadProdutos'
+);  
+
+$routesRoutes['addProdInCate'] = array(
+    'route' => '/admin/categories/add',
+    'controller' => 'CategorieController',
+    'action' => 'addProdInCate'
+);  
+
+$routesRoutes['removeProdInCate'] = array(
+    'route' => '/admin/categories/remove',
+    'controller' => 'CategorieController',
+    'action' => 'removeProdInCate'
+);  
+
+$routesRoutes['criarCategoria'] = array(
+    'route' => '/admin/categoria/criar',
+    'controller' => 'CategorieController',
+    'action' => 'create'
+);  
+
+$routesRoutes['editarCategoriaPage'] = array(
+    'route' => '/admin/categoria/edit',
+    'controller' => 'CategorieController',
+    'action' => 'loadUpdate'
+);  
+
+$routesRoutes['editarCategoria'] = array(
+    'route' => '/admin/categoria/editar',
+    'controller' => 'CategorieController',
+    'action' => 'update'
+);  
+
+$routesRoutes['deletarCategoria'] = array(
+    'route' => '/admin/categoria/delete',
+    'controller' => 'CategorieController',
+    'action' => 'delete'
+);  
+?>

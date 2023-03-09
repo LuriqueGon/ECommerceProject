@@ -1,0 +1,27 @@
+<?php
+
+$routesRoutes['cart'] = array(
+    'route' => '/cart',
+    'controller' => 'CartController',
+    'action' => 'index'
+);  
+
+$routesRoutes['addProduct'] = array(
+    'route' => '/cart/add',
+    'controller' => 'CartController',
+    'action' => 'addProduct'
+);  
+
+$routesRoutes['removeProduct'] = array(
+    'route' => '/cart/remove',
+    'controller' => 'CartController',
+    'action' => 'removeProduct'
+);  
+
+$routesRoutes['calcularFrete'] = array(
+    'route' => '/cart/freight',
+    'controller' => 'CartController',
+    'action' => 'calcularFrete'
+);  
+
+?>

@@ -31,7 +31,7 @@
 
         protected function run($url)
         {
-            foreach($this->getRoutes() as $path => $route)
+            foreach($this->getRoutes() as $route)
             {
                 if($url == $route['route'])
                 {
@@ -40,11 +40,29 @@
                     $controller = new $class();
                     $action = $route['action'];
                     $controller->$action();
-
+                    exit;
                     
                 }
             }
+
+            require "../app/View/Configs/404Error.phtml";
         }
+
+        protected function loadRoutes($routePath, $routes)
+        {
+            $routePath = strtolower($routePath);
+            
+            if(file_exists("../app/Routes/$routePath.routes.phtml"))return $this->loadRoute($routePath, $routes);
+        }
+
+        protected function loadRoute($routePath, $routes)
+        {
+            require "../app/Routes/$routePath.routes.phtml";
+            foreach ($routesRoutes as $key => $route)$routes[$key] = $route;
+            return $routes;
+        }
+
     }
+    
 
 ?>

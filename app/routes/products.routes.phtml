@@ -1,0 +1,74 @@
+<?php
+
+$routesRoutes['products'] = array(
+    'route' => '/produtos',
+    'controller' => 'ProductController',
+    'action' => 'index'
+);  
+
+$routesRoutes['loadProductsIndex'] = array(
+    'route' => '/produtos',
+    'controller' => 'ProductController',
+    'action' => 'index'
+);  
+
+$routesRoutes['productsDetails'] = array(
+    'route' => '/productsDetails',
+    'controller' => 'ProductController',
+    'action' => 'details'
+);  
+
+$routesRoutes['createProducts'] = array(
+    'route' => '/admin/produto/create',
+    'controller' => 'ProductController',
+    'action' => 'loadCreate'
+);  
+
+$routesRoutes['cadastrarProduto'] = array(
+    'route' => '/admin/product/create',
+    'controller' => 'ProductController',
+    'action' => 'create'
+);  
+
+$routesRoutes['listarProdutos'] = array(
+    'route' => '/admin/produtos',
+    'controller' => 'ProductController',
+    'action' => 'listar'
+); 
+
+$routesRoutes['deletarProduto'] = array(
+    'route' => '/admin/produto/delete',
+    'controller' => 'ProductController',
+    'action' => 'delete'
+);  
+
+$routesRoutes['editProduct'] = array(
+    'route' => '/admin/produto/edit',
+    'controller' => 'ProductController',
+    'action' => 'loadUpdate'
+);  
+
+$routesRoutes['updateProduct'] = array(
+    'route' => '/admin/product/editar',
+    'controller' => 'ProductController',
+    'action' => 'update'
+);  
+
+$routesRoutes['produtoCategoria'] = array(
+    'route' => '/admin/produto/categorias',
+    'controller' => 'ProductController',
+    'action' => 'loadCategoria'
+); 
+
+$routesRoutes['addCateInProd'] = array(
+    'route' => '/admin/products/add',
+    'controller' => 'ProductController',
+    'action' => 'addCateInProd'
+); 
+
+$routesRoutes['removeCateInProd'] = array(
+    'route' => '/admin/products/remove',
+    'controller' => 'ProductController',
+    'action' => 'removeCateInProd'
+); 
+?>
