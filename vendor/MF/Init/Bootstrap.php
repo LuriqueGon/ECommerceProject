@@ -5,17 +5,23 @@
     abstract class Bootstrap
     {
         private $routes;
+        private $diretorio;
 
         abstract protected function initRoutes();
 
         public function __construct()
         {
+            $this->diretorio = dir('../app/Routes/');
             $this->initRoutes();
             $this->run($this->getUrl());
         }
 
-        public function setRoutes(array $routes)
+        public function __destruct()
         {
+            $this->diretorio->close();
+        }
+
+        public function setRoutes(array $routes){
             $this->routes = $routes;
         }
 
@@ -24,8 +30,7 @@
             return $this->routes;
         }
 
-        protected function getUrl()
-        {
+        protected function getUrl(){
             return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         }
 
@@ -35,17 +40,16 @@
             {
                 if($url == $route['route'])
                 {
-
                     $class = "App\\Controllers\\" . $route['controller'];
                     $controller = new $class();
                     $action = $route['action'];
                     $controller->$action();
                     exit;
-                    
                 }
             }
 
             require "../app/View/Configs/404Error.phtml";
+            exit;
         }
 
         private function loadRoutes($routePath, $routes)
@@ -62,10 +66,10 @@
             return $routes;
         }
 
-        private function loadPath($diretorio, $routes)
+        private function loadPath($routes)
         {
             $allRoutes = [];
-            while(($arquivo = $diretorio->read()) !== false) 
+            while(($arquivo = $this->diretorio->read())) 
             {
                 if($arquivo != '.' && $arquivo != '..'){
                      array_push($allRoutes,$this->loadRoutes($this->getRouteName($arquivo), $routes));
@@ -75,19 +79,13 @@
             return $allRoutes;
         }
 
-        private function getRouteName($route):String
-        {
+        private function getRouteName($route):String{
             return str_replace('.routes.phtml','',$route);
         }
 
         protected function loadAllRoutes($routes)
         {
-            $diretorio = dir('../app/Routes/');
-            
-
-            $allRoutes = $this->loadPath($diretorio, $routes);
-            
-            $diretorio -> close();
+            $allRoutes = $this->loadPath($routes);
             
             foreach($allRoutes as $formRoutes)foreach ($formRoutes as $key => $route) $routes[$key] = $route;
             return $routes;
