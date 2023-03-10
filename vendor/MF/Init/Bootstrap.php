@@ -48,18 +48,51 @@
             require "../app/View/Configs/404Error.phtml";
         }
 
-        protected function loadRoutes($routePath, $routes)
+        private function loadRoutes($routePath, $routes)
         {
             $routePath = strtolower($routePath);
             
             if(file_exists("../app/Routes/$routePath.routes.phtml"))return $this->loadRoute($routePath, $routes);
         }
 
-        protected function loadRoute($routePath, $routes)
+        private function loadRoute($routePath, $routes)
         {
             require "../app/Routes/$routePath.routes.phtml";
             foreach ($routesRoutes as $key => $route)$routes[$key] = $route;
             return $routes;
+        }
+
+        private function loadPath($diretorio, $routes)
+        {
+            $allRoutes = [];
+            while(($arquivo = $diretorio->read()) !== false) 
+            {
+                if($arquivo != '.' && $arquivo != '..'){
+                     array_push($allRoutes,$this->loadRoutes($this->getRouteName($arquivo), $routes));
+                }
+            }
+
+            return $allRoutes;
+        }
+
+        private function getRouteName($route):String
+        {
+            return str_replace('.routes.phtml','',$route);
+        }
+
+        protected function loadAllRoutes($routes)
+        {
+            $diretorio = dir('../app/Routes/');
+            
+
+            $allRoutes = $this->loadPath($diretorio, $routes);
+            
+            $diretorio -> close();
+            
+            foreach($allRoutes as $formRoutes)foreach ($formRoutes as $key => $route) $routes[$key] = $route;
+            return $routes;
+
+
         }
 
     }

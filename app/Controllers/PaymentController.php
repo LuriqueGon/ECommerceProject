@@ -5,11 +5,11 @@
 
     class PayController extends Action
     {
-        public function index()
+        public function pagamento()
         {
             $this->restrict();
             $this->view->title = "Pagamento";
-            $this->render('pagamento');
+            $this->render('payment');
         }
     }
 
