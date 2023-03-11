@@ -7,7 +7,6 @@
                         <li id="categorias" onclick="openCategoryMenu()"><a href="#"><i class="fa-solid fa-ellipsis-vertical"></i> Categorias</a></li>
                         <?php if(isset($_SESSION['User']['auth']) && $_SESSION['User']['auth']){ ?>
                             <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['User']['desperson'] ?></a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <?php if(isset($_SESSION['User']['inadmin']) && $_SESSION['User']['inadmin'] == 1){ ?>
                                 <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
                             <?php } ?>
@@ -61,6 +60,8 @@
                     <li id="home"><a href="/">Home</a></li>
                     <li id="prod"><a href="/produtos">Produtos</a></li>
                     <li id="cart"><a href="/cart">Carrinho</a></li>
+                    <li id="pedidos"><a href="/pedidos">Pedidos</a></li>
+
                 </ul>
             </div>
         </div>

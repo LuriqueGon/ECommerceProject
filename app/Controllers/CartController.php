@@ -12,9 +12,7 @@
         public function index()
         {
             $cart = Cart::getFromSession();
-
             $this->view->cart = $cart;
-            
             $this->view->productsCart = $cart->getAllProducts();
 
             $this->view->title = "Carrinho";
@@ -72,6 +70,11 @@
             $cart = Cart::getFromSession();
             $cart->__set('zipCode', $_POST['cep']);
             $result = $cart->setFreight();
+
+            if(!empty($result->Erro)) {
+                Message::setMessage($result->MsgErro. "<br> Informe o seguinte código para o suporte : ".$result->Erro, 'danger', 'back');
+                exit;
+            }
 
             $address = Container::getModel('address');
             $_POST['deszipcode'] = $_POST['cep']; 

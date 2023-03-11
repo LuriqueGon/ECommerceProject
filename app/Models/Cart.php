@@ -54,6 +54,22 @@ use MF\Model\Container;
             
         }
 
+        public function resetCart()
+        {
+            session_regenerate_id();
+            $cart = Container::getModel('cart');
+            $data = array(
+                'idSession' => session_id()
+            );
+
+            if(User::checkLogin()) $data['idUser'] = $_SESSION['User']['iduser'];
+            $cart->setData($data);
+            $cart->save();
+            $cart->__set('idCart', $cart->getIdCart());
+            $cart->setToSession($cart);
+            return $cart;
+        }
+
         public function getIdCart()
         {
             return $this->select('SELECT idcart FROM tb_carts WHERE dessessionid = ?', array(session_id()))['idcart'];
@@ -106,6 +122,7 @@ use MF\Model\Container;
                 $this->__get('idCart'),
                 $produto->__get('id')
             ));
+            
             $this->updateFreight();
 
         }
@@ -125,8 +142,13 @@ use MF\Model\Container;
             }
             $this->updateFreight();
             
+        }
 
-            
+        public function sellItens()
+        {
+            $this->query('UPDATE tb_cartsproducts SET dtremoved = NOW() WHERE idcart = ? AND dtremoved IS NULL', array(
+                $this->__get('idCart')
+            ));
         }
 
         public function getAllProducts()
@@ -141,6 +163,21 @@ use MF\Model\Container;
                 $this->__get('idCart')
             ));
         }
+
+        public function getAllProductsOrder()
+        {
+            return $this->selectAll(
+                'SELECT *, count(a.idproduct) as quantity, sum(b.vlprice) as total
+                FROM tb_cartsproducts a
+                LEFT JOIN tb_products b ON a.idproduct = b.idproduct
+                WHERE a.idcart = ? 
+                GROUP BY a.idproduct, b.vlprice',
+            array(
+                $this->__get('idCart')
+            ));
+        }
+
+        
 
         public function getProductsTotals()
         {
@@ -167,12 +204,23 @@ use MF\Model\Container;
 
                 $totals = $this->getProductsTotals();
 
-                if ($totals['vlheight'] < 2) $totals['vlheight'] = 2;
-                if ($totals['vllength'] < 16) $totals['vllength'] = 16;
-                if ($totals['vlwidth'] < 11) $totals['vlwidth'] = 11;
-                if ($totals['vlprice'] > 10000) $totals['vlprice'] = 10000;
+                if ($totals['vlheight'] < 2) $totals['vlheight'] = 2.00;
+                if ($totals['vlheight'] > 100) $totals['vlheight'] = 100.00;
 
-                
+                if ($totals['vllength'] < 16) $totals['vllength'] = 16.00;
+                if ($totals['vllength'] > 100) $totals['vllength'] = 100.00;
+
+                if ($totals['vlwidth'] < 11) $totals['vlwidth'] = 11.00;
+                if ($totals['vlwidth'] > 100) $totals['vlwidth'] = 100.00;
+
+                while ($totals['vllength'] + $totals['vlheight'] + $totals['vlwidth'] > 200)
+                {
+                    $totals['vllength']--;
+                    $totals['vlheight']--;
+                    $totals['vlwidth']--;
+                }
+
+                if ($totals['vlprice'] > 10000) $totals['vlprice'] = 10000;
                 if(!empty($totals)){
                     $qs = http_build_query(array(
                         'nCdEmpresa'=>'',
@@ -190,14 +238,9 @@ use MF\Model\Container;
                         'nVlValorDeclarado'=>$totals['vlprice'],
                         'sCdAvisoRecebimento'=>'S'
                     ));
-
+                    
                     $xml = simplexml_load_file('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?'.$qs);
                     $result = $xml->Servicos->cServico;
-
-                    if(!empty($result['MsgErro'])){
-                        Message::setMessage($result->MsgErro, 'danger', '/cart'); 
-                        exit;
-                    }
 
                     $this->__set('nrdays', (string)$result->PrazoEntrega[0]);
                     $this->__set('freight', number_format((float)$result->Valor,2,'.',''));

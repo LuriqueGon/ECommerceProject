@@ -29,7 +29,15 @@ use MF\Model\DAO;
             }
         }
 
-        public function get()
+        public function setStatus()
+        {
+            $this->query('UPDATE tb_orders SET idstatus = ? WHERE idorder = ?', array(
+                $this->__get('idstatus'),
+                $this->__get('idorder')
+            ));
+        }
+
+        public function getOrder()
         {
             $results = $this->select("
                 SELECT * 
@@ -39,7 +47,7 @@ use MF\Model\DAO;
                 INNER JOIN tb_users d ON d.iduser = a.iduser
                 INNER JOIN tb_addresses e USING(idaddress)
                 INNER JOIN tb_persons f ON f.idperson = d.idperson
-                WHERE a.idorder = ?
+                WHERE a.idorder = ? 
 		    ", array(
                 $this->__get('idorder')
             ));
@@ -49,6 +57,29 @@ use MF\Model\DAO;
                 return $results;
             }
         }
+
+        public function getOrders()
+        {
+            $results = $this->selectAll("
+                SELECT *, a.dtregister as dataRegistro
+                FROM tb_orders a 
+                INNER JOIN tb_ordersstatus b USING(idstatus) 
+                INNER JOIN tb_carts c USING(idcart)
+                INNER JOIN tb_users d ON d.iduser = a.iduser
+                INNER JOIN tb_addresses e USING(idaddress)
+                INNER JOIN tb_persons f ON f.idperson = d.idperson
+                WHERE a.iduser = ? ORDER BY a.dtregister DESC
+		    ", array(
+                $this->__get('iduser')
+            ));
+
+            if(!empty($results))
+            {
+                return $results;
+            }
+        }
+
+        
     }
 
 

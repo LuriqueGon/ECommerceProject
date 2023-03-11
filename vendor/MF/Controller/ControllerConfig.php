@@ -15,6 +15,8 @@ use MF\Model\Container;
             $this->fixUrls();
             $this->getAll();
             session_start();
+            $this->view->total = isset($_SESSION['Cart']['total']) ? $_SESSION['Cart']['total'] : "0";
+            $this->view->quantity = isset($_SESSION['Cart']['quantity']) ? $_SESSION['Cart']['quantity'] : "0";
         }
 
         protected function getAll()

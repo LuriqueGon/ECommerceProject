@@ -71,9 +71,6 @@
             $coment = Container::getModel('coment');
             $coment->__set('idProd', $this->view->produto['idproduct']);
             $this->view->coments = $coment->getComent();
-
-            $this->view->total = isset($_SESSION['Cart']['total']) ? $_SESSION['Cart']['total'] : "0";
-            $this->view->quantity = isset($_SESSION['Cart']['quantity']) ? $_SESSION['Cart']['quantity'] : "0";
             
 
             $this->view->title = "Detalhes dos Produtos";

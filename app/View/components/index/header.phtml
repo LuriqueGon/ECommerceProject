@@ -8,7 +8,6 @@
                         
                         <?php if(isset($_SESSION['User']['auth']) && $_SESSION['User']['auth']){ ?>
                             <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['User']['desperson'] ?></a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <li><a href="/cart"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
                             <?php if(isset($_SESSION['User']['inadmin']) && $_SESSION['User']['inadmin'] == 1){ ?>
                                 <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
@@ -52,7 +51,6 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="logo">
-                    <h1><a href="/">Home<img src=""></a></h1>
                 </div>
             </div>
 
@@ -81,6 +79,8 @@
                     <li class="active" id="home"><a href="#">Home</a></li>
                     <li id="prod"><a href="/produtos">Produtos</a></li>
                     <li id="cart"><a href="/cart">Carrinho</a></li>
+                    <li id="pedidos"><a href="/pedidos">Pedidos</a></li>
+
                 </ul>
             </div>
         </div>
