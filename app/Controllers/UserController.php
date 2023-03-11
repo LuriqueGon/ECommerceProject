@@ -205,6 +205,51 @@ use MF\Model\Container;
 
             Message::setMessage('foto alterada com sucesso', 'success', 'back');
         }
+
+        public function changePass()
+        {
+            $this->restrict();
+
+            $this->view->title = "Alterar Senha";
+            $this->render('changePass');
+        }
+
+        public function updatePassword()
+        {
+            $this->restrict();
+            $this->needPOST($_POST);
+
+            $user = Container::getModel('user');
+
+            $user->__set('oldPass', md5($_POST['current_pass']));
+            $user->__set('password', md5($_POST['new_pass']));
+            $user->__set('repassword', md5($_POST['new_pass_confirm']));
+            $user->__set('id', $_SESSION['User']['iduser']);
+
+            if($user->__get('password') != $user->__get('repassword')){
+                Message::setMessage('As senhas não coincidem', 'danger', 'back');
+                exit;
+            } 
+
+            if(empty($user->testPassword()))
+            {
+                Message::setMessage('A senha está incorreta', 'danger', 'back');
+                exit;
+            } 
+
+            if(strlen($_POST['new_pass']) < 8)
+            {
+                Message::setMessage('A senha deve conter 8 caracteres', 'danger', 'back');
+                exit;
+            } 
+
+            $user->updatePassword();
+            Message::setMessage('Senha Alterada com sucesso', 'success', '/profile');
+
+
+
+            var_dump($user);
+        }
         
         
     }

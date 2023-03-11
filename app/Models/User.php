@@ -17,6 +17,7 @@ use App\Models\Mailer;
         protected $idPerson;
         protected $perfil;
         protected $idDecrypt;
+        protected $oldPass;
         protected $remember = false;
 
         const SECRET = "ECOMMERCEPHP7TXT";
@@ -266,6 +267,22 @@ use App\Models\Mailer;
             $msg = $this->getmsg($link, $user['desperson']);
             Mailer::sendMail($user['desemail'], $user['desperson'],"Redefinição de Senha", $msg);
             return true;
+        }
+
+        public function testPassword()
+        {
+            return $this->select('SELECT * FROM tb_users WHERE iduser = ? AND despassword = ?', array(
+                $this->__get('id'),
+                $this->__get('oldPass')
+            ));
+        }
+
+        public function updatePassword()
+        {
+            $this->query('UPDATE tb_users SET despassword = ? WHERE iduser = ?', array(
+                $this->__get('password'),
+                $this->__get('id')
+            ));
         }
 
         public function decryptCode($code):String
