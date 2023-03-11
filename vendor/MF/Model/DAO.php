@@ -6,8 +6,7 @@
     abstract class DAO extends Model
     {
         
-        // QUERY {
-        
+       
         public function query(String $rawQuery, Array $params = array())
         {
             $stmt = $this->db->prepare($rawQuery);
@@ -22,8 +21,6 @@
             $this->setParams($stmt, $params);
             return $stmt->execute();
         }
-
-        
 
         private function setParams($stmt, Array $params = array()):void
         {

@@ -11,10 +11,10 @@ use MF\Model\Container; ?>
             $data = new DateTime($coment['dtregister']);
             $data = str_replace('-', '/', $data->format('d-m-Y H:i'));
 
-            if (isset($_SESSION['iduser'])) {
+            if (isset($_SESSION['User']['iduser'])) {
                 $comentModel = Container::getModel('coment');
                 $comentModel->__set('id', $coment['idcoment']);
-                $comentModel->__set('idUser', $_SESSION['iduser']);
+                $comentModel->__set('idUser', $_SESSION['User']['iduser']);
                 $ifLike = $comentModel->getIfComent();
                 $coment['like'] = $comentModel->getLike();
                 $coment['unlike'] = $comentModel->getUnlike();
@@ -46,28 +46,28 @@ use MF\Model\Container; ?>
                     <p><?php echo $coment['coment'] ?></p>
                 </div>
                 <div class="coment-footer-top">
-                    <?php if (isset($_SESSION['iduser'])) { ?>
+                    <?php if (isset($_SESSION['User']['iduser'])) { ?>
                         <!-- SE TIVER LOGADO -->
                         <?php if ($ifLike[0] == true) { ?>
                             <!-- SE DEU VOTOU NESSE COMENT -->
                             <?php if ($ifLike[1] == 1) { ?>
                                 <span class="ico">
-                                    <a href="/desfazerLike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: blue;"></i></a>
+                                    <a href="/desfazerLike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: blue;"></i></a>
                                     <?php echo (empty($coment['like'])) ? 0 : $coment['like'] ?>
                                 </span>
                                 <span class="ico">
-                                    <a href="/unlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
+                                    <a href="/unlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
                                     <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike'] ?>
                                 </span>
                                 <!-- LIKE -->
                             <?php } else { ?>
                                 <!-- DESLIKE -->
                                 <span class="ico">
-                                    <a href="/like?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
+                                    <a href="/like?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
                                     <?php echo (empty($coment['like'])) ? 0 : $coment['like'] ?>
                                 </span>
                                 <span class="ico">
-                                    <a href="/desfazerUnlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: red;"></i></a>
+                                    <a href="/desfazerUnlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: red;"></i></a>
                                     <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike'] ?>
                                 </span>
 
@@ -75,11 +75,11 @@ use MF\Model\Container; ?>
 
                         <?php } else { ?>
                             <span class="ico">
-                                <a href="/like?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
+                                <a href="/like?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-up" style="color: black;"></i></a>
                                 <?php echo (empty($coment['like'])) ? 0 : $coment['like'] ?>
                             </span>
                             <span class="ico">
-                                <a href="/unlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
+                                <a href="/unlike?idComent=<?php echo $coment['idcoment'] ?>&iduser=<?php echo $_SESSION['User']['iduser'] ?>"><i class="fa-solid fa-thumbs-down" style="color: black;"></i></a>
                                 <?php echo (empty($coment['unlike'])) ? 0 : $coment['unlike'] ?>
                             </span>
                         <?php } ?>

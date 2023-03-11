@@ -4,6 +4,7 @@
 
     use App\Models\Cart;
     use App\Models\Message;
+    use App\Models\OrderStatus;
     use MF\Controller\Action;
     use MF\Model\Container;
 
@@ -21,7 +22,7 @@
                 exit;
             }
 
-            $address->__set('idPerson', $_SESSION['idperson']);
+            $address->__set('idPerson', $_SESSION['User']['idperson']);
             $this->view->address = $address->getAddress();
 
             $this->view->cart = $cart;
@@ -65,8 +66,6 @@
                 $cart->setFreight();
             }
 
-            var_dump($this->view->address);
-
             $this->view->title = 'Pagamento';
             $this->render('checkout');
         }
@@ -74,11 +73,43 @@
 
         public function checkoutInfo()
         {
+            $this->restrict('/checkout');
             $this->needPOST($_POST);
             $this->validCheckout($_POST);
-            $this->saveAddress($_POST);
+            $address = $this->saveAddress($_POST);
 
-            echo 1;
+            $order = Container::getModel('order');
+            $order->setdata(array(
+                'iduser' => $_SESSION['User']['iduser'],
+                'idcart' => $_SESSION['Cart']['idCart'],
+                'idaddress' => $address->__get('id'),
+                'idstatus' => OrderStatus::EM_ABERTO, 
+                'vltotal' => $_SESSION['Cart']['total'] + (float) $_SESSION['Cart']['freight']
+            ));
+            $result = $order->save();
+
+            $orderNeed = array(
+                'idaddress' => $result['idaddress'],
+                'idstatus' => $result['idstatus'],
+                'idorder' => $result['idorder'],
+                'dtregister' => $result['dtregister'],
+                'desstatus' => $result['desstatus'],
+                'desaddress' => $result['desaddress'],
+                'descomplement' => $result['descomplement'],
+                'descity' => $result['descity'],
+                'desstate' => $result['desstate'],
+                'desnumber' => $result['desnumber'],
+                'descountry' => $result['descountry'],
+                'desdistrict' => $result['desdistrict'],
+                'deszipcode' => $result['deszipcode']
+            );
+            $_SESSION['OrderInfo'] = [];
+            $_SESSION['OrderInfo'][$result['idorder']] = [];
+            $_SESSION['OrderInfo'][$result['idorder']] = $this->setValueArray(
+                $_SESSION['OrderInfo'][$result['idorder']],
+                $orderNeed);
+
+            header('location: /payment?idorder='.$result['idorder']);
         }
 
         private function saveAddress($POST)
@@ -90,15 +121,14 @@
             $_POST['cep'] = $zipcode;
 
             $address = Container::getModel('address');
-            $address->__set('idPerson', $_SESSION['idperson']);
+            $address->__set('idPerson', $_SESSION['User']['idperson']);
             $_POST['deszipcode'] = $_POST['cep'];
             unset($_POST['cep']);
             $address = $this->setValueObject($address, $_POST);
             $address->__set('id',$address->getIdByPersonAndCEP());
 
             $address->save();
-
-            var_dump($address);
+            return $address;
         }
 
         private function validCheckout($POST):void

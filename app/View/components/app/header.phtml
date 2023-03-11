@@ -5,11 +5,11 @@
                 <div class="user-menu">
                     <ul>
                         <li id="categorias" onclick="openCategoryMenu()"><a href="#"><i class="fa-solid fa-ellipsis-vertical"></i> Categorias</a></li>  
-                        <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
-                            <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['desperson'] ?></a></li>
+                        <?php if(isset($_SESSION['User']['auth']) && $_SESSION['User']['auth']){ ?>
+                            <li><a href="/profile"><i class="fa fa-user"></i> <?php echo $_SESSION['User']['desperson'] ?></a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Lista de Desejos</a></li>
                             <li><a href="/cart"><i class="fa fa-shopping-cart"></i> Meu Carrinho</a></li>
-                            <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
+                            <?php if(isset($_SESSION['User']['inadmin']) && $_SESSION['User']['inadmin'] == 1){ ?>
                                 <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
                             <?php } ?>
                             <li><a href="/logout"><i class="fa fa-close"></i> Sair</a></li>

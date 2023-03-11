@@ -75,7 +75,7 @@
 
             $address = Container::getModel('address');
             $_POST['deszipcode'] = $_POST['cep']; 
-            $_POST['idPerson'] = $_SESSION['idperson'];
+            $_POST['idPerson'] = $_SESSION['User']['idperson'];
 
             unset($_POST['cep']);
             

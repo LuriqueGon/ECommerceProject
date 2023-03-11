@@ -6,7 +6,7 @@
                     Descrição
                 </a>
             </li>
-            <?php if (isset($_SESSION['iduser'])) { ?>
+            <?php if (isset($_SESSION['User']['iduser'])) { ?>
                 <li role="presentation" class="profile" onclick="ativarItem('profile')">
                     <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
                         Comentar
@@ -41,18 +41,18 @@
             </div>
             <div role="tabpane2" class="tab-pane fade" id="profile">
                 <h2>Comentar</h2>
-                <?php if (isset($_SESSION['auth'])) { ?>
+                <?php if (isset($_SESSION['User']['auth'])) { ?>
                     <form class="submit-review" method="POST" action="/setComents">
                         <input type="hidden" name="idProduct" value="<?php echo $this->view->produto['idproduct'] ?>">
-                        <input type="hidden" name="idUser" value="<?php echo $_SESSION['iduser'] ?>">
+                        <input type="hidden" name="idUser" value="<?php echo $_SESSION['User']['iduser'] ?>">
                         <p>
                             <label for="name">Name</label>
-                            <input name="name" value="<?php echo $_SESSION['desperson'] ?>" readonly type="text">
+                            <input name="name" value="<?php echo $_SESSION['User']['desperson'] ?>" readonly type="text">
                         </p>
                         <p>
                             <label for="email">Email</label>
 
-                            <input name="email" value="<?php echo $_SESSION['desemail'] ?>" readonly type="email">
+                            <input name="email" value="<?php echo $_SESSION['User']['desemail'] ?>" readonly type="email">
                         </p>
                         <p>
                             <label for="subject">Titulo</label>

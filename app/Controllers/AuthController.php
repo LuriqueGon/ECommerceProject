@@ -106,7 +106,7 @@
         public function logout()
         {
             $this->restrict();
-            $_SESSION = $this->unsetValueArray($_SESSION);
+            $_SESSION = $this->unsetValueArray($_SESSION['User']);
 
             if(isset($_SESSION['Cart'])){
                 $_SESSION = $this->unsetValueArray($_SESSION['Cart']);
@@ -151,7 +151,7 @@
 
                 if($user->register()){
 
-                    if(!isset($_SESSION['auth']) || !$_SESSION['auth']) $this->testLogin($user);
+                    if(!isset($_SESSION['User']['auth']) || !$_SESSION['User']['auth']) $this->testLogin($user);
                     
                     else{
                         Message::setMessage('Conta Criada com sucesso!! <br> Por favor! Efetue login', 'success', 'back');
@@ -173,7 +173,8 @@
                 exit;
             }else{
                 $authLogin['auth'] = true;
-                $_SESSION = $this->setValueArray($_SESSION, $authLogin, array("despassword"));
+                $_SESSION['User'] = [];
+                $_SESSION['User'] = $this->setValueArray($_SESSION['User'], $authLogin, array("despassword"));
                 Message::setMessage('Logado', 'success', !empty($_GET['redirect'])? $_GET['redirect']:'/');
             }
         }

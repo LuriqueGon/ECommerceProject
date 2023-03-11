@@ -24,7 +24,7 @@ use App\Models\Mailer;
 
         public static function checkLogin():bool
         {
-            if(isset($_SESSION['iduser']) && (int) $_SESSION['iduser'] > 0) return true;
+            if(isset($_SESSION['User']['iduser']) && (int) $_SESSION['User']['iduser'] > 0) return true;
             else return false;
         }
 

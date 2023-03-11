@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
+                        <?php if(isset($_SESSION['User']['inadmin']) && $_SESSION['User']['inadmin'] == 1){ ?>
                             <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
                         <?php } ?>
                         <li><a href="/logout"><i class="fa fa-close"></i> Sair</a></li>

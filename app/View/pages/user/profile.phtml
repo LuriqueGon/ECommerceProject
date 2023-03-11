@@ -6,23 +6,23 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="img-wrapper" action="/profile/changePhoto" name="formulario" enctype="multipart/form-data" method="POST">
-                    <img src="<?php echo !empty($_SESSION['perfil']) ? '/img/perfil/' . $_SESSION['perfil'] : '/img/perfil/noperfil.jpg' ?>" id="avatar">
+                    <img src="<?php echo !empty($_SESSION['User']['perfil']) ? '/img/perfil/' . $_SESSION['User']['perfil'] : '/img/perfil/noperfil.jpg' ?>" id="avatar">
                     <div class="alterPhoto" >Alterar foto do perfil</div>
                     <input type="file" id="perfil" name="photo">
-                    <input type="hidden" name="personId" value="<?php echo $_SESSION['idperson'] ?>">
+                    <input type="hidden" name="personId" value="<?php echo $_SESSION['User']['idperson'] ?>">
                 </form>
                 <form method="post" action="/profile/edit">
                     <div class="form-group">
                         <label for="desperson">Nome completo</label>
-                        <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome aqui" value="<?php echo $_SESSION['desperson'] ?>">
+                        <input type="text" class="form-control" id="desperson" name="desperson" placeholder="Digite o nome aqui" value="<?php echo $_SESSION['User']['desperson'] ?>">
                     </div>
                     <div class="form-group">
                         <label for="desemail">E-mail</label>
-                        <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail aqui" value="<?php echo $_SESSION['desemail'] ?>">
+                        <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail aqui" value="<?php echo $_SESSION['User']['desemail'] ?>">
                     </div>
                     <div class="form-group">
                         <label for="nrphone">Telefone</label>
-                        <input type="tel" class="form-control" id="nrphone" name="nrphone" placeholder="Digite o telefone aqui" value="<?php echo $_SESSION['nrphone'] ?>">
+                        <input type="tel" class="form-control" id="nrphone" name="nrphone" placeholder="Digite o telefone aqui" value="<?php echo $_SESSION['User']['nrphone'] ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>

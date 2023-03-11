@@ -41,7 +41,7 @@ use MF\Model\Container;
                         'idSession' => session_id()
                     );
 
-                    if(User::checkLogin()) $data['idUser'] = $_SESSION['iduser'];
+                    if(User::checkLogin()) $data['idUser'] = $_SESSION['User']['iduser'];
                     $cart->setData($data);
                     $cart->save();
                     $cart->__set('idCart', $cart->getIdCart());

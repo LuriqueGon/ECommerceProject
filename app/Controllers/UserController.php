@@ -146,7 +146,7 @@ use MF\Model\Container;
                 'nome'=> $_POST['desperson'],
                 'email'=> $_POST['desemail'],
                 'telefone'=> $_POST['nrphone'],
-                'id' => $_SESSION['iduser']
+                'id' => $_SESSION['User']['iduser']
             );
 
             $user = Container::getModel('user');
@@ -158,7 +158,7 @@ use MF\Model\Container;
             $user->edit();
 
             $result = $user->findById();
-            $_SESSION = $this->setValueArray($_SESSION,$result);
+            $_SESSION['User'] = $this->setValueArray($_SESSION['User'],$result);
 
             Message::setMessage('Alterações feitas com sucesso', 'success', '/profile');
         }
@@ -173,7 +173,7 @@ use MF\Model\Container;
 
 
             $file = $_FILES['photo'];
-            $userName = str_replace(' ', '-',$_SESSION['desperson']);
+            $userName = str_replace(' ', '-',$_SESSION['User']['desperson']);
             $path = "./img/perfil";
             $fileName = bin2hex(random_bytes(20)). '.jpg';
             $perfil = $path."/$userName/".$fileName;
@@ -201,7 +201,7 @@ use MF\Model\Container;
 
             $user->savePhoto();
 
-            $_SESSION['perfil'] = $user->__get('perfil');
+            $_SESSION['User']['perfil'] = $user->__get('perfil');
 
             Message::setMessage('foto alterada com sucesso', 'success', 'back');
         }

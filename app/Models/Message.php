@@ -10,9 +10,9 @@
         {
             if(isset($message) && !empty($message))
             {
-                $_SESSION['type'] = $type;
-                $_SESSION['msg'] = $message;
-                $_SESSION['time'] = 1;
+                $_SESSION['Message']['type'] = $type;
+                $_SESSION['Message']['msg'] = $message;
+                $_SESSION['Message']['time'] = 1;
 
                 if($redirect == "back")
                 {
@@ -26,14 +26,14 @@
         
         public static function getMessage()
         {
-            if(!empty($_SESSION['msg']))
+            if(!empty($_SESSION['Message']['msg']))
             {
 
                 return [
                     
-                    "type" => $_SESSION['type'],
-                    "msg" => $_SESSION['msg'],
-                    "time" => $_SESSION['time']
+                    "type" => $_SESSION['Message']['type'],
+                    "msg" => $_SESSION['Message']['msg'],
+                    "time" => $_SESSION['Message']['time']
                 ];
             }else
             {
@@ -43,12 +43,12 @@
 
         public static function cleanMessage()
         {
-            $_SESSION['msg'] = "";
-            $_SESSION['type'] = "";
-            $_SESSION['time'] = "";
-            unset($_SESSION['msg']);
-            unset($_SESSION['type']);
-            unset($_SESSION['time']);
+            $_SESSION['Message']['msg'] = "";
+            $_SESSION['Message']['type'] = "";
+            $_SESSION['Message']['time'] = "";
+            unset($_SESSION['Message']['msg']);
+            unset($_SESSION['Message']['type']);
+            unset($_SESSION['Message']['time']);
         }
        
     }

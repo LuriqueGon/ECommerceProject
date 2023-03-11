@@ -71,23 +71,23 @@ use MF\Controller\ControllerConfig;
         }
 
         protected function restrict($red = ''){
-            if(!isset($_SESSION['auth'])){
+            if(!isset($_SESSION['User']['auth'])){
                 Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/login?redirect='.$red);
             }
-            if(!$_SESSION['auth']){
+            if(!$_SESSION['User']['auth']){
                 Message::setMessage('Você precisa está logado para ter acesso a página restrita','danger','/login?redirect='.$red);
             }
         }
     
         protected function dontRestrict(){
-            if(isset($_SESSION['auth']) && $_SESSION['auth']){
+            if(isset($_SESSION['User']['auth']) && $_SESSION['User']['auth']){
                 Message::setMessage('Você já está logado, caso queira trocar de conta. Clique em sair','danger','/');
                 exit;
             }
         }
 
         protected function inAdmin(){
-            if(!isset($_SESSION['inadmin']) || $_SESSION['inadmin'] == 0){
+            if(!isset($_SESSION['User']['inadmin']) || $_SESSION['User']['inadmin'] == 0){
                 Message::setMessage('Você não tem permissão para acessar essa página.', 'dunger');
                 exit;
             }
