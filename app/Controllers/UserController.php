@@ -243,6 +243,14 @@ use MF\Model\Container;
                 exit;
             } 
 
+            if(($_POST['new_pass']) != ($_POST['current_pass']))
+            {
+                Message::setMessage('A senha atual deve ser diferente da senha anterior', 'danger', 'back');
+                exit;
+            } 
+
+            
+
             $user->updatePassword();
             Message::setMessage('Senha Alterada com sucesso', 'success', '/profile');
 
