@@ -203,6 +203,12 @@ use App\Models\Mailer;
                 $this->__get('idPerson')
             ));
         }
+        private function haveLogin()
+        {
+            return $this->select('SELECT * FROM tb_users WHERE deslogin = ?', array(
+                $this->__get('login')
+            ));
+        }
 
         public function edit()
         {
@@ -215,7 +221,10 @@ use App\Models\Mailer;
             }
 
             if(!empty($this->__get('login'))){
-                $this->query("UPDATE tb_users SET deslogin = ? WHERE iduser = ?",array($this->__get('login'),$this->__get('id')));
+                if(empty($this->haveLogin()))
+                {
+                    $this->query("UPDATE tb_users SET deslogin = ? WHERE iduser = ?",array($this->__get('login'),$this->__get('id')));
+                }
             }
             
             if($this->__get('inAdmin') == "on"){
@@ -274,14 +283,6 @@ use App\Models\Mailer;
             return $this->select('SELECT * FROM tb_users WHERE iduser = ? AND despassword = ?', array(
                 $this->__get('id'),
                 $this->__get('oldPass')
-            ));
-        }
-
-        public function updatePassword()
-        {
-            $this->query('UPDATE tb_users SET despassword = ? WHERE iduser = ?', array(
-                $this->__get('password'),
-                $this->__get('id')
             ));
         }
 

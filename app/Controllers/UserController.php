@@ -144,6 +144,7 @@ use MF\Model\Container;
 
             $params = array(
                 'nome'=> $_POST['desperson'],
+                'login'=> $_POST['deslogin'],
                 'email'=> $_POST['desemail'],
                 'telefone'=> $_POST['nrphone'],
                 'id' => $_SESSION['User']['iduser']
@@ -243,15 +244,13 @@ use MF\Model\Container;
                 exit;
             } 
 
-            if(($_POST['new_pass']) != ($_POST['current_pass']))
+            if(($_POST['new_pass']) == ($_POST['current_pass']))
             {
                 Message::setMessage('A senha atual deve ser diferente da senha anterior', 'danger', 'back');
                 exit;
             } 
 
-            
-
-            $user->updatePassword();
+            $user->edit();
             Message::setMessage('Senha Alterada com sucesso', 'success', '/profile');
 
 
