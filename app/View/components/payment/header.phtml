@@ -4,9 +4,9 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <?php if(isset($_SESSION['auth']) && $_SESSION['auth']){ ?>
+                        <?php if(isset($_SESSION['User']['auth']) && $_SESSION['User']['auth']){ ?>
                             <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-                            <?php if(isset($_SESSION['inadmin']) && $_SESSION['inadmin'] == 1){ ?>
+                            <?php if(isset($_SESSION['User']['inadmin']) && $_SESSION['User']['inadmin'] == 1){ ?>
                                 <li><a href="/admin"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a></li>
                             <?php } ?>
                         <?php }else{ ?>

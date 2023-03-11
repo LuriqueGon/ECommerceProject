@@ -1,0 +1,26 @@
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <h1>Pedido Cód N°<?php echo $_SESSION['OrderInfo'][$_GET['idorder']]['idorder'] ?></h1>
+
+                <button type="submit" id="btn-print" class="button alt" style="margin-bottom:10px">Imprimir</button>
+
+                <iframe src="/boleto?idorder=<?php echo $_GET['idorder'] ?>" name="boleto" frameborder="0" style="width:100%; min-height:1000px; border:1px solid #CCC; padding:20px;"></iframe>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelector("#btn-print").addEventListener("click", function(event){
+
+        event.preventDefault();
+
+        window.frames["boleto"].focus();
+        window.frames["boleto"].print();
+
+    });                
+</script>
