@@ -12,6 +12,17 @@ use MF\Model\DAO;
         protected $idaddress;
         protected $vltotal;
 
+        public function getAll()
+        {
+            return $this->selectAll('SELECT * , a.dtregister as dataRegistro
+            FROM tb_orders a 
+            INNER JOIN tb_ordersstatus b USING(idstatus) 
+            INNER JOIN tb_carts c USING(idcart)
+            INNER JOIN tb_users d ON d.iduser = a.iduser
+            INNER JOIN tb_addresses e USING(idaddress)
+            INNER JOIN tb_persons f ON f.idperson = d.idperson ORDER BY a.dtregister DESC');
+        }
+
         public function save()
         {
             $results = $this->select("CALL sp_orders_save(?,?,?,?,?,?)", array(
@@ -40,7 +51,7 @@ use MF\Model\DAO;
         public function getOrder()
         {
             $results = $this->select("
-                SELECT * 
+                SELECT * , a.dtregister as dataRegistro
                 FROM tb_orders a 
                 INNER JOIN tb_ordersstatus b USING(idstatus) 
                 INNER JOIN tb_carts c USING(idcart)
@@ -79,6 +90,12 @@ use MF\Model\DAO;
             }
         }
 
+        public function delete()
+        {
+            $this->query('DELETE FROM tb_orders WHERE idorder = ?', array(
+                $this->__get('idorder')
+            ));
+        }
         
     }
 

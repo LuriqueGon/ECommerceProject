@@ -10,4 +10,37 @@ $routesRoutes['pedidoDetails'] = array(
     'controller' => 'OrderController',
     'action' => 'details'
 ); 
+
+$routesRoutes['adminPedidos'] = array(
+    'route' => '/admin/orders',
+    'controller' => 'OrderController',
+    'action' => 'adminPedidos'
+); 
+
+$routesRoutes['adminPedidoDetails'] = array(
+    'route' => '/admin/order',
+    'controller' => 'OrderController',
+    'action' => 'adminPedidoDetails'
+); 
+
+$routesRoutes['adminPedidoStatus'] = array(
+    'route' => '/admin/order/status',
+    'controller' => 'OrderController',
+    'action' => 'adminPedidoStatus'
+); 
+
+$routesRoutes['adminPedidoStatusSalvar'] = array(
+    'route' => '/admin/order/status/salvar',
+    'controller' => 'OrderController',
+    'action' => 'adminPedidoStatusSalvar'
+); 
+
+$routesRoutes['orderDelete'] = array(
+    'route' => '/admin/order/delete',
+    'controller' => 'OrderController',
+    'action' => 'orderDelete'
+); 
+
+
+
 ?>

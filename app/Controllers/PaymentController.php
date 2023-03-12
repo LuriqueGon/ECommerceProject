@@ -18,18 +18,14 @@ use MF\Model\Container;
                 Message::setMessage('Dados incorretos ou invalidos', 'danger');
                 exit;
             }
-
-            $order = Container::getModel('order');
-            $order->__set('idorder', $_GET['idorder']);
-            $order->__set('idstatus', OrderStatus::AGUARDANDO_PAGAMENTO);
-            $order->setStatus();
-
+            
             $cart = Cart::getFromSession();
             $cart->resetCart();
             $cart = Cart::getFromSession();
             
             $this->view->title = "Pagamento";
             $this->render('payment'); 
+
 
         }
         

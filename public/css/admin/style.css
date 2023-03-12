@@ -1,3 +1,17 @@
+@media print {
+    @page {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    body {
+        padding-top: 72px;
+        padding-bottom: 72px ;
+    }
+}
+
+li.boderLiTreeviewMenu.disabled a{
+    color: black!important;
+}
 input[type=number]::-webkit-inner-spin-button { 
     -webkit-appearance: none;
     
@@ -24,6 +38,10 @@ li.boderLiTreeviewMenu {
     padding: .7rem 0;
     font-size: 1rem;
 }
+li.boderLiTreeviewMenu.active a{
+    color: white!important;
+}
+
 
 .treeview {
     margin: 1rem 0 !important;

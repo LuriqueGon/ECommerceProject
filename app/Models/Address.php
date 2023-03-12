@@ -32,6 +32,7 @@ use MF\Model\DAO;
                     'desstate' => '',
                     'descountry' => '',
                     'deszipcode' => '',
+                    'desdistrict' => '',
                     'desnumber' => ''
                 );
             }

@@ -1,0 +1,53 @@
+<section class="content-header">
+    <h1> Status do pedido Nº <?php echo $this->view->order['idorder'] ?></h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/orders">Pedidos</a></li>
+        <li><a href="/admin/order?idorder=<?php echo $this->view->order['idorder'] ?>">Pedido Nº <?php echo $this->view->order['idorder'] ?></a></li>
+        <li class="active"><a href="/admin/order/status?idorder=<?php echo $this->view->order['idorder'] ?>">Editar Status</a></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Editar Status do Pedido</h3>
+                </div>
+                <form role="form" action="/admin/order/status/salvar?idorder=<?php echo $this->view->order['idorder'] ?>" method="POST">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="desproduct">Status do Pedido</label>
+                            <select class="form-control" name="idstatus">
+                                <?php foreach ($this->view->orderStatus as $key => $status) {?>
+                                    <?php if($status['idstatus'] == $this->view->order['idstatus']){ ?>
+                                        <option selected="selected" value="<?php echo $status['idstatus'] ?>">
+                                            <?php echo $status['desstatus'] ?>
+                                        </option>
+                                    <?php }else{?>
+                                        <option value="<?php echo $status['idstatus'] ?>">
+                                            <?php echo $status['desstatus'] ?>
+                                        </option>
+                                    <?php }?>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- /.content -->
+
+<div class="clearfix"></div>
+<script>$('.treeview#order').addClass('active');</script>
+<script>$('.treeview#order li.3').addClass('active');</script>

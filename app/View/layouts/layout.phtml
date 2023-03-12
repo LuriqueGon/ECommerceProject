@@ -24,6 +24,19 @@
 	<script src="/js/openCategoryMenu.js" defer></script>
 	<script src="/js/product.js" defer></script>
 
+	<style>
+		@media print {
+			@page {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			body {
+				padding-top: 72px;
+				padding-bottom: 72px ;
+			}
+		}
+	</style>
+
 	<title><?php echo $this->view->title ?> | ECommerce | </title>
 </head>
 <body>

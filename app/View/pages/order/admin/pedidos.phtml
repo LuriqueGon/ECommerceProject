@@ -1,0 +1,70 @@
+<!-- Content Wrapper. Contains page content -->
+<section class="content-header">
+    <h1> Todos os Pedidos</h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/admin/orders">Pedidos</a></li>
+        <li class="active"><a href="/admin/orders">Todos</a></li>
+    </ol>
+</section>
+
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-primary">
+
+            <div class="box-body no-padding">
+              <table class="table table-striped" id="example1">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Cliente</th>
+                    <th>Valor Total</th>
+                    <th>Valor do Frete</th>
+                    <th>Status</th>
+                    <th style="width: 220px">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->view->orders as $key => $order) {?>
+                    <tr>
+                        <td><?php echo $key+1 ?></td>
+                        <td><?php echo $order['desperson'] ?></td>
+                        <td>R$<?php echo $order['vltotal'] ?></td>
+                        <td>R$<?php echo $order['vlfreight'] ?></td>
+                        <td><?php echo $order['desstatus'] ?></td>
+                        <td>
+                        <a href="/admin/order?idorder=<?php echo $order['idorder'] ?>" class="btn btn-default btn-xs"><i class="fa fa-search"></i> Detalhes</a>
+                        <a href="/admin/order/status?idorder=<?php echo $order['idorder'] ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Status</a>
+                        <a href="/admin/order/delete?idorder=<?php echo $order['idorder'] ?>" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                  <?php }?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+  	</div>
+  </div>
+
+</section>
+
+
+<script>
+    $(function() {
+        $('#example1').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true
+        });
+    });
+
+</script>
+</section>
+<script>$('.treeview#order').addClass('active');</script>
+<script>$('.treeview#order li.1').addClass('active');</script>

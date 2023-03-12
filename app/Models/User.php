@@ -229,7 +229,8 @@ use App\Models\Mailer;
             
             if($this->__get('inAdmin') == "on"){
                 $this->query("UPDATE tb_users SET inAdmin = 1 WHERE iduser = ?", array($this->__get('id')));
-            }else{
+            }
+            if($this->__get('inAdmin') == "off"){
                 $this->query("UPDATE tb_users SET inAdmin = 0 WHERE iduser = ?", array($this->__get('id')));
             }
 

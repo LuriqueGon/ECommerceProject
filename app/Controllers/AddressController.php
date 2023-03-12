@@ -52,6 +52,7 @@
                 $cart->setFreight();
             }
 
+
             if(isset($_GET['complement']) || !empty($_GET['complement'])) {
                 echo 1;
                 $this->view->address['descomplement'] = $_GET['complement'];
@@ -65,6 +66,22 @@
                 $cart->__set('zipCode', $_SESSION['Cart']['zipCode']);
                 $cart->setFreight();
             }
+
+            if(empty($this->view->address))
+            {
+                $this->view->address = array(
+                    'deszipcode' => '',
+                    'desaddress' => '',
+                    'descomplement' => '',
+                    'desdistrict' => '',
+                    'descity' => '',
+                    'desstate' => '',
+                    'desnumber' => '',
+                    'descountry' => ''
+                );
+            }
+
+            var_dump($this->view->address);
 
             $this->view->title = 'Pagamento';
             $this->render('checkout');

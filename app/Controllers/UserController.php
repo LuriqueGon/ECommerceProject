@@ -88,6 +88,8 @@ use MF\Model\Container;
             $this->restrict();
             $this->inAdmin();
 
+            if(!isset($_POST['inAdmin'])) $_POST['inAdmin'] = "off";
+
             $user = Container::getModel('user');
             $user = $this->setValueObject($user, $_POST);
             $user->__set('idPerson', $user->getIdPerson());
@@ -99,7 +101,7 @@ use MF\Model\Container;
             $perfil = $path."/$userName/".$fileName;
             
 
-            if(!empty($file)){
+            if(!empty($file['name'])){
                 $file['type'] = explode('/',$file['type'])[1];
                 if(in_array($file['type'], ["jpeg","jpg","JPEG","JPG", "png", "PNG"])){
 
@@ -122,10 +124,6 @@ use MF\Model\Container;
             $user->edit();
             Message::setMessage('Edição realizada com sucesso', 'success', '/admin/users');
 
-
-            echo "<pre>";
-            var_dump($user);
-            echo "</pre>";
         }
         
         public function profile()
