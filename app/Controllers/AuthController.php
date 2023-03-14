@@ -150,8 +150,9 @@
             if($user->__get('password') == $user->__get('repassword')){
 
                 if($user->register()){
-
-                    if(!isset($_SESSION['User']['auth']) || !$_SESSION['User']['auth']) $this->testLogin($user);
+                    if(!isset($_SESSION['User']['auth']) || !$_SESSION['User']['auth']) {
+                        $this->testLogin($user, 'register');
+                    }
                     
                     else{
                         Message::setMessage('Conta Criada com sucesso!! <br> Por favor! Efetue login', 'success', 'back');
@@ -163,9 +164,12 @@
             }else Message::setMessage('Senhas não coincidem', 'danger', 'back');
         }
 
-        private function testLogin($object)
+        private function testLogin($object, $type = "login")
         {
-            $object->validarDados('login');
+            if($type != 'register') {
+                $object->validarDados('login');
+            }
+
             $authLogin = $object->login();
 
             if(empty($authLogin)){
@@ -174,7 +178,17 @@
             }else{
                 $authLogin['auth'] = true;
                 $_SESSION['User'] = [];
-                $_SESSION['User'] = $this->setValueArray($_SESSION['User'], $authLogin, array("despassword"));
+                $_SESSION['User'] = $this->setValueArray($_SESSION['User'], $authLogin, array(
+                    "despassword",
+                    "desaddress",
+                    "descomplement",
+                    "descity",
+                    "desstate",
+                    "desnumber",
+                    "descountry",
+                    "desdistrict",
+                    "idaddress"
+                ));
                 Message::setMessage('Logado', 'success', !empty($_GET['redirect'])? $_GET['redirect']:'/');
             }
         }

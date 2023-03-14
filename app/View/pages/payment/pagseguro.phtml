@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<?php var_dump($this->view->order) ?>
+<?php var_dump($this->view->produtos) ?>
+<form method="post" action="https://pagseguro.uol.com.br/v2/checkout/payment.html">  
+          
+        <!-- Campos obrigatórios -->  
+        <input name="receiverEmail" type="hidden" value="luiz.prog.henri@gmail.com">  
+        <input name="currency" type="hidden" value="BRL">  
+
+        <?php foreach ($this->view->produtos as $key => $produto) {?>
+            <input name="itemId<?php echo $key+1 ?>" type="hidden" value="<?php echo $produto['idproduct'] ?>">  
+            <input name="itemDescription<?php echo $key+1 ?>" type="hidden" value="<?php echo $produto['desproduct'] ?>">  
+            <input name="itemAmount<?php echo $key+1 ?>" type="hidden" value="<?php echo number_format($produto['vlprice'],2,'.','') ?>">  
+            <input name="itemQuantity<?php echo $key+1 ?>" type="hidden" value="<?php echo $produto['quantity'] ?>">  
+            <input name="itemWeight<?php echo $key+1 ?>" type="hidden" value="<?php echo (float) number_format($produto['vlweight'],0,',','.') * 1000 ?>">  
+        <?php }?>
+        
+  
+        <!-- Código de referência do pagamento no seu sistema (opcional) -->  
+        <input name="reference" type="hidden" value="<?php echo $this->view->order['idorder'] ?>">  
+          
+        <!-- Informações de frete (opcionais) -->  
+        <input name="shippingType" type="hidden" value="1">  
+        <input name="shippingAddressPostalCode" type="hidden" value="<?php echo $this->view->order['deszipcode'] ?>">  
+        <input name="shippingAddressStreet" type="hidden" value="<?php echo $this->view->order['desaddress'] ?>">  
+        <input name="shippingAddressNumber" type="hidden" value="<?php echo $this->view->order['desnumber'] ?>">  
+        <input name="shippingAddressComplement" type="hidden" value="<?php echo $this->view->order['descomplement'] ?>">  
+        <input name="shippingAddressDistrict" type="hidden" value="<?php echo $this->view->order['desdistrict'] ?>">  
+        <input name="shippingAddressCity" type="hidden" value="<?php echo $this->view->order['descity'] ?>">  
+        <input name="shippingAddressState" type="hidden" value="<?php echo $this->view->order['desstate'] ?>">  
+        <input name="shippingAddressCountry" type="hidden" value="<?php echo $this->view->order['descountry'] ?>">  
+  
+        <!-- Dados do comprador (opcionais) -->  
+        <input name="senderName" type="hidden" value="<?php echo $this->view->order['desperson'] ?>">  
+        <input name="senderAreaCode" type="hidden" value="<?php echo substr($this->view->order['nrphone'],0,2) ?>">  
+        <input name="senderPhone" type="hidden" value="<?php echo substr($this->view->order['nrphone'],2,strlen($this->view->order['nrphone'])) ?>">  
+        <input name="senderEmail" type="hidden" value="<?php echo $this->view->order['desemail'] ?>">  
+          
+</form>  
+</body>
+</html>
+<!-- 
+<script>
+    document.forms[0].submit()
+</script> -->

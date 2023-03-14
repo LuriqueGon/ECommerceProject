@@ -41,6 +41,18 @@ $routesRoutes['orderDelete'] = array(
     'action' => 'orderDelete'
 ); 
 
+$routesRoutes['orderPaymentChange'] = array(
+    'route' => '/pedido/changePayment',
+    'controller' => 'OrderController',
+    'action' => 'orderPaymentChange'
+); 
+
+$routesRoutes['orderPaymentChangeSalvar'] = array(
+    'route' => '/pedido/changePayment/salvar',
+    'controller' => 'OrderController',
+    'action' => 'orderPaymentChangeSalvar'
+); 
+
 
 
 ?>

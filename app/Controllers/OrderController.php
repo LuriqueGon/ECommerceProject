@@ -63,8 +63,6 @@ use MF\Model\Container;
             $cart = Container::getModel('cart');
             $cart->__set('idCart', $this->view->order['idcart']);
             $this->view->products = $cart->getAllProductsOrder();
-
-            // var_dump($this->view->order);
             
             $this->view->title = "Todos os pedidos";
             $this->render('/admin/pedido', 'adminLayout');
@@ -123,8 +121,32 @@ use MF\Model\Container;
         }
 
         
+        public function orderPaymentChange()
+        {
+            $this->restrict();
+            if(!isset($_GET['idorder']) || $_GET['idorder']<1) Message::setMessage('Ocorreu um erro inesperado', 'danger', '/admin/orders');
+            $payment = Container::getMOdel('payment');
 
+            $this->view->payments = $payment->getAll();
+            $this->view->title = "Trocar Metodo de Pagamento";
+            $this->render('changePayment', 'orderLayout');
+        }
         
+        public function orderPaymentChangeSalvar()
+        {
+            $this->restrict();
+            $this->inAdmin();
+            $this->needPOST($_POST);
+
+            if(!isset($_POST['idorder']) || $_POST['idorder']<1) Message::setMessage('Ocorreu um erro inesperado', 'danger', '/pedidos');
+            
+            $order = Container::getModel('order');
+            $order->__set('idorder', $_POST['idorder']);
+            $order->__set('idpayment', $_POST['idpayment']);
+            $order->setPayment();
+
+            Message::setMessage('Método de pagamento alterado com sucesso', 'success','/pedidos');
+        }
 
         
         

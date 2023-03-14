@@ -125,7 +125,15 @@ use App\Models\Mailer;
 
         public function login ()
         {
-            return $this->select('SELECT * FROM tb_users INNER JOIN tb_persons b USING(idperson) WHERE deslogin = ? AND despassword = ? AND ativo = 1', array($this->__get('login'),$this->__get('password')));
+            return $this->select(
+                'SELECT * FROM tb_users a 
+                INNER JOIN tb_persons b USING(idperson) 
+                INNER JOIN tb_addresses c USING(idperson) 
+                WHERE a.deslogin = ? AND a.despassword = ? AND a.ativo = 1', array(
+                    $this->__get('login'),
+                    $this->__get('password')
+                )
+            );
         }
 
         public function register():bool
@@ -135,11 +143,8 @@ use App\Models\Mailer;
                     if(!$this->findByTel()){
                         $this->cadastrarPerson();
                         $this->__set('idPerson', $this->getIdPersonByEmail());
-                        $this->cadastrarUser();
-
-                        return true;
-                        exit;
-
+                        if($this->cadastrarUser())return true;
+                        else return false;
                     }
 
                 }
@@ -183,7 +188,7 @@ use App\Models\Mailer;
 
         }
 
-        private function cadastrarUser():void
+        private function cadastrarUser():bool
         {
             $query = "INSERT INTO tb_users (idperson, deslogin, despassword, inadmin) VALUES (?,?,?,?)";
             $params = array(
@@ -192,8 +197,8 @@ use App\Models\Mailer;
                 $this->__get('password'),
                 $this->__get('inAdmin')
             );
-            $this->query($query, $params);
-
+            if($this->rawQuery($query, $params)) return true;
+            else return false;
         }
 
         public function savePhoto()

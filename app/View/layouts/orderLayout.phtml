@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<?php $this->loadComponent('default') ?>
+	<?php $this->loadComponent('bootstrap') ?>
+	<?php $this->loadComponent('jquery') ?>
+	<?php $this->loadComponent('fontAwesome') ?>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+
+	<script src="/js/activeItemMenu.js"></script>
+
+
+	<title><?php echo $this->view->title ?> | ECommerce | </title>
+</head>
+<body>
+	<?php $this->loadComponent('header')?>
+	
+	<?php $this->content() ?>
+
+</body>
+
+
+</html>

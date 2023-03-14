@@ -93,11 +93,15 @@
                 <tbody>
                 <tr>
                     <th style="width:180px;">Método de Pagamento:</th>
-                    <td>Boleto</td>
+                    <td><?php echo $this->view->order['despayment']?></td>
                 </tr>
                 <tr>
                     <th>Parcelas:</th>
-                    <td>1x</td>
+                    <?php if($this->view->order['idpayment'] == 1){ ?>
+                        <td>1x</td>
+                    <?php }else { ?>
+                        <td><?php echo $this->view->order['desparcelas'] ?>x</td>
+                    <?php } ?>
                 </tr>
                 <tr>
                     <th>Valor da Parcela:</th>

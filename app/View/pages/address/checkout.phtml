@@ -52,11 +52,47 @@
 											</label>
 											<input type="text" id="billing_state" name="desnumber" placeholder="Número" value="<?php echo $address['desnumber'] ?>"" class="input-text">
 										</p>
-										<p id="billing_state_field" class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
-											<label class="" for="billing_state">País
+										<p id="billing_country_field" class="form-row form-row-first address-field validate-country" data-o_class="form-row form-row-first address-field validate-country">
+											<label class="" for="billing_country">País
 												<abbr title="required" class="required">*</abbr>
 											</label>
 											<input type="text" id="billing_state" name="descountry" placeholder="País" value="<?php echo $address['descountry'] ?>"" class="input-text" readonly required>
+										</p>
+										<p>
+											<label class="" for="billing_Payment">Metodo de pagamento
+												<abbr title="required" class="required">*</abbr>
+											</label>
+											<select name="despayment" class="select-control" id="billing_Payment" required onchange="changeParcelas(this)">
+												<option value="">-- Escolha um Método de Pagamento --</option>
+												<?php foreach ($this->view->payments as $key => $payment) {?>
+													<option value="<?php echo $payment['idpayment'] ?>">
+														<?php echo $payment['despayment'] ?>
+													</option>
+												<?php }?>
+											</select>
+
+											
+											
+										</p>
+										<p id="parcelas" style="display: none;">
+											<label class="" for="billing_parcelas">Parcelas
+												<abbr title="required" class="required">*</abbr>
+											</label>
+											<select name="desparcelas" class="select-control parcelas" id="billing_parcelas" required onchange="changeParcelas()" >
+												<option value="">-- Escolha uma Parcela --</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+											</select>
 										</p>
 										
 										
@@ -132,3 +168,35 @@
 	</div>
 </div>
 <script>activeItem('check')</script>
+
+<script>
+	const changeParcelas = () => {
+		let mtd = document.querySelector('#billing_Payment').value
+
+		switch (mtd) {
+			case '1':
+				disableParcelas()
+				break;
+			case '2':
+				disableParcelas()
+				break;
+			case '3':
+				enableParcelas()
+				console.log(mtd)
+
+				break;
+			
+			default:
+				disableParcelas()
+				break;
+		}
+	}
+
+	const disableParcelas = () => {
+		document.querySelector('#parcelas').style.display='none'
+	}
+	const enableParcelas = () => {
+		document.querySelector('#parcelas').style.display='block'
+	}
+	
+</script>

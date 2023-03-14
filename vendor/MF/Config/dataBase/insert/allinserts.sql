@@ -1,0 +1,5 @@
+INSERT INTO `db_ecommerce`.`tb_ordersstatus` VALUES (1,'Em Aberto','2017-03-13 03:00:00'),(2,'Aguardando Pagamento','2017-03-13 03:00:00'),(3,'Pago','2017-03-13 03:00:00'),(4,'Entregue','2017-03-13 03:00:00');
+
+INSERT INTO `tb_orderspayment` (`idpayment`, `despayment`, `dtregister`, `ativo`) VALUES (NULL, 'Boleto', CURRENT_TIMESTAMP, '1'), (NULL, 'PagSeguro', CURRENT_TIMESTAMP, '1'), (NULL, 'PayPal', CURRENT_TIMESTAMP, '1');
+
+INSERT INTO `tb_products` (`idproduct`, `desproduct`, `vlprice`, `vlwidth`, `vlheight`, `vllength`, `vlweight`, `desurl`, `descricao`, `photo`, `dtregister`) VALUES (NULL, 'Computador Fácil Intel Core i5 11400F (11ª Geração) 16GB DDR4 Geforce Nvidia 1GB SSD 480GB', '3100.000', '39.000', '21.000', '36.000', '4.000', 'computador-inteli5-11400f-16gbRAMDDR4-GeforceNvidia-1gb-480GBSDD', 'Processador Intel Core i5 11400F\r\nMemoria RAM 16GB\r\nSSD 480GB\r\nSistema Operacional Windows 10 TRIAL', '/img/produtos/4/db7b9efa5ada56b35f9f6d5fa7c4c138cdf33e91.jpg', '12' , '2023-03-13 12:54:31');

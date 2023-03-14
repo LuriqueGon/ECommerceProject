@@ -1,6 +1,13 @@
 
 <?php $this->loadComponent('title') ?>
-
+<style>
+    .container{
+        width: 96%;
+    }
+    td a{
+        font-size: 1.2rem!important;
+    }
+</style>
 <div class="single-product-area">
     <div class="zigzag-bottom"></div>
     <div class="container">
@@ -15,12 +22,15 @@
                         <tr>
                             <th>#</th>
                             <th>Valor Total</th>
+                            <th>MDP</th>
                             <th>Status</th>
                             <th>Endereço</th>
                             <th>Data</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
+
+                    <!-- <?php var_dump($this->view->orders) ?> -->
                     <tbody>
                         <?php if(!empty($this->view->orders)){ ?>
                             <?php foreach ($this->view->orders as $key => $order) {?>
@@ -28,22 +38,38 @@
                                     $data = new DateTime($order['dataRegistro']);
                                     $data = str_replace('-','/',$data->format('d-m-Y H:i'));
                                 ?>
-                                <tr>
+                                <?php if($order['idstatus'] <= 2){ ?>
+                                    <tr style="color:red;">
+                                <?php }else{ ?>
+                                    <tr>
+                                <?php } ?>
                                     <th scope="row"><?php echo $key+1 ?></th>
-                                    <td>R$ <?php echo number_format($order['vltotal'],2,',','.')?></td>
-                                    <td><?php echo $order['desstatus'] ?></td>
-                                    <td>
+                                    <td style="width: 130px;">R$ <?php echo number_format($order['vltotal'],2,',','.')?></td>
+                                    <td style="width: 80px;"><?php echo $order['despayment'] ?></td>
+                                    <td style="width: 100px;"><?php echo $order['desstatus'] ?></td>
+                                    <td style="width: 500px;">
                                         <?php echo $order['desaddress'] ?>,
                                         <?php echo $order['desdistrict'] ?>, 
                                         <?php echo $order['descity'] ?> - , 
                                         <?php echo $order['desstate'] ?>
                                         CEP: <?php echo $order['deszipcode'] ?>
                                     </td>
-                                    <td><?php echo $data ?></td>
-                                    <td style="width:222px;">
-                                        <a class="btn btn-success" href="/payment?idorder=<?php echo $order['idorder'] ?>" role="button">Imprimir Boleto</a>
-                                        <a class="btn btn-default" href="/pedidoDetails?idorder=<?php echo $order['idorder'] ?>" role="button">Detalhes</a>
-                                    </td>
+                                    <td style="width: 150px;"><?php echo $data ?></td>
+                                    <td style="width:400px;">
+                                        <?php if($order['idstatus'] <= 3){ ?>
+                                            <?php if($order['idpayment'] == 1){ ?>
+                                                <a class="btn btn-info" href="/payment?idorder=<?php echo $order['idorder'] ?>&idpayment=1" role="button" target="_blank">Pagar Boleto</a>
+                                            <?php }else if($order['idpayment'] == 2){?>
+                                                <a class="btn btn-success" href="/payment?idorder=<?php echo $order['idorder'] ?>&idpayment=2" role="button" target="_blank">PagSeguro</a>
+                                            <?php }else if($order['idpayment'] == 3){?>
+                                                <a class="btn btn-primary" href="/payment?idorder=<?php echo $order['idorder'] ?>&idpayment=3" role="button" target="_blank">Paypal</a>
+                                            <?php }?>
+                                            <?php if($order['idstatus'] >= 3){ ?>
+                                                <a class="btn btn-warning" href="/pedidoDetails?idorder=<?php echo $order['idorder'] ?>" role="button">Nota Fiscal</a>
+                                            <?php }?>
+                                            <a class="btn btn-default" href="/pedido/changePayment?idorder=<?php echo $order['idorder'] ?>&idpayment=<?php echo $order['idpayment'] ?>" role="button"> <i class="fa fa-edit"></i> Metodo de Pagamento</a>
+                                        </td>
+                                    <?php }?>
                                 </tr>
                             <?php }?>
                         <?php }else{?>

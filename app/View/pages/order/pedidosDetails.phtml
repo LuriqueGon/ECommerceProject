@@ -7,11 +7,17 @@
     .footer-bottom-area,
     .single-product-area .col-md-3,
     .button.alt,
-    .product-big-title-area {
+    .product-big-title-area,
+    #order_review_heading,
+    .item-big-title-area {
         display:none!important;
     }
     .single-product-area .col-md-9 {
         width: 100%!important;
+    }
+    h2#title{
+        display: block!important;
+        text-align: center;
     }
 }
 </style>
@@ -22,9 +28,11 @@
     <div class="container">
         <div class="row">                
             <div class="col-md-12">
-                
-                <h3 id="order_review_heading" style="margin-top:30px;">Detalhes do Pedido N°<?php $_GET['idorder'] ?></h3>
+                <h2 id="title" style="display: none;">Nota fiscal do Pedido N: <?php echo $_GET['idorder'] ?></h2>
+                <h3 id="order_review_heading" style="margin-top:30px;">Detalhes do Pedido N°<?php echo $_GET['idorder'] ?></h3>
                 <div id="order_review" style="position: relative;">
+                
+
                     <table class="shop_table">
                         <thead>
                             <tr>
@@ -54,27 +62,47 @@
                                 <th>Frete</th>
                                 <td>
                                     R$ <?php echo number_format($this->view->order['vlfreight'],2,',','.') ?>
-                                    <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
                                 </td>
                             </tr>
+                            <tr class="order-payment">
+                                <th>Método de pagamento</th>
+                                <td>
+                                    <span><?php echo $this->view->order['despayment'] ?></span>
+                                </td>
+                            </tr>
+                            <tr class="order-parcelas">
+                                <th>Parcelas</th>
+                                <td>
+                                    <span><?php echo $this->view->order['desparcelas'] ?></span>
+                                </td>
+                            </tr>
+                            
                             <tr class="order-total">
                                 <th>Total do Pedido</th>
                                 <td><strong><span class="amount">R$<?php echo number_format($this->view->order['vltotal'],2,',','.') ?></span></strong> </td>
                             </tr>
+                            <br><br><br>
+                            <tr class="order-total">
+                                <th>Status</th>
+                                <td><strong><span class="amount"><?php echo $this->view->order['desstatus'] ?></span></strong> </td>
+                            </tr>
+                            
+                            
+                            
                         </tfoot>
                     </table>
                     <div class="row">
                         <div class="col-md-2">
                             <div id="payment">
                                 <div class="form-row place-order">
-                                    <input type="submit" value="Imprimir" class="button alt" onclick="window.print()">
+                                    <input type="submit" value="Imprimir Nota Fiscal" class="button alt" onclick="window.print()">
                                 </div>
                                 <div class="clear"></div>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="boleto">
-                                <?php if($this->view->order['desstatus'] == 'Aguardando Pagamento'){?>
+                                <?php if($this->view->order['idpayment'] == 1){?>
                                     <a class="btn btn-success" href="/payment?idorder=<?php echo $this->view->order['idorder'] ?>" role="button">Imprimir Boleto</a>
                                 <?php }?>
                             </div>
@@ -88,3 +116,4 @@
         </div>
     </div>
 </div>
+<script>activeItem('pedidos')</script>

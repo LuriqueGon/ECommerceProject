@@ -15,6 +15,8 @@
             $this->view->cart = $cart;
             $this->view->productsCart = $cart->getAllProducts();
 
+            $this->view->cep = isset($_SESSION['User']['deszipcode']) ?$_SESSION['User']['deszipcode'] :""; 
+            
             $this->view->title = "Carrinho";
             $this->render('cart');
             
@@ -59,16 +61,16 @@
 
         public function calcularFrete()
         {
-            $this->needPOST($_POST);
+            $this->needPOST($_GET);
 
-            if(strlen($_POST['cep']) < 8)
+            if(strlen($_GET['cep']) < 8)
             {
                 Message::setMessage('Insira um cep válido', 'danger', 'back');
                 exit;
             }
 
             $cart = Cart::getFromSession();
-            $cart->__set('zipCode', $_POST['cep']);
+            $cart->__set('zipCode', $_GET['cep']);
             $result = $cart->setFreight();
 
             if(!empty($result->Erro)) {
@@ -77,18 +79,17 @@
             }
 
             $address = Container::getModel('address');
-            $_POST['deszipcode'] = $_POST['cep']; 
-            $_POST['idPerson'] = $_SESSION['User']['idperson'];
+            $_GET['deszipcode'] = $_GET['cep']; 
+            $_GET['idPerson'] = $_SESSION['User']['idperson'];
 
-            unset($_POST['cep']);
+            unset($_GET['cep']);
             
-            $address = $this->setValueObject($address, $_POST);
+            $address = $this->setValueObject($address, $_GET);
             $address->__set('id', $address->getIdByPerson());
             $values = $address->loadFromCep($address->__get('deszipcode'));
             $address= $this->setValueObject($address, $values);
             
             $address->save();
-            
             Message::setMessage('Frete calculado com sucesso', 'success', isset($_GET['redirect'])? '/'.$_GET['redirect']:'/cart');
         }
 

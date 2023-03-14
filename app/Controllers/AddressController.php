@@ -39,7 +39,6 @@
                     $address = $this->setValueObject($address, $this->view->address);
                     $address = $address->save();
                     header('location: /checkout');
-                    var_dump($address);
                 }
             }
 
@@ -81,7 +80,8 @@
                 );
             }
 
-            var_dump($this->view->address);
+            $payment = Container::getModel('payment');
+            $this->view->payments = $payment->getAll();
 
             $this->view->title = 'Pagamento';
             $this->render('checkout');
@@ -101,6 +101,8 @@
                 'idcart' => $_SESSION['Cart']['idCart'],
                 'idaddress' => $address->__get('id'),
                 'idstatus' => OrderStatus::EM_ABERTO, 
+                'idpayment' => $_POST['despayment'], 
+                'desparcelas' => isset($_POST['desparcelas']) ? $_POST['desparcelas']:1, 
                 'vltotal' => $_SESSION['Cart']['total'] + (float) $_SESSION['Cart']['freight']
             ));
             $result = $order->save();
@@ -118,7 +120,9 @@
                 'desnumber' => $result['desnumber'],
                 'descountry' => $result['descountry'],
                 'desdistrict' => $result['desdistrict'],
-                'deszipcode' => $result['deszipcode']
+                'deszipcode' => $result['deszipcode'],
+                'idpayment' => $result['idpayment'],
+                'desparcelas' => $result['desparcelas']
             );
             $_SESSION['OrderInfo'] = [];
             $_SESSION['OrderInfo'][$result['idorder']] = [];
@@ -126,7 +130,7 @@
                 $_SESSION['OrderInfo'][$result['idorder']],
                 $orderNeed);
 
-            header('location: /payment?idorder='.$result['idorder']);
+            header('location: /payment?idpayment='.$_POST['despayment'].'&idorder='.$result['idorder']);
         }
 
         private function saveAddress($POST)
@@ -203,6 +207,14 @@
                 Message::setMessage('Insira os dados corretos do campo de PAÍS ', 'danger','/checkout', $returnValues);
                 exit;
             }
+
+            if(!isset($_POST['despayment']) || empty($_POST['despayment']))
+            {
+                Message::setMessage('Insira os dados corretos do campo de MÉTODO DE PAGAMENTO ', 'danger','/checkout', $returnValues);
+                exit;
+            }
+
+            
         }
         
     }

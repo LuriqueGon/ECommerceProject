@@ -1,0 +1,42 @@
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Editar Status do Pedido</h3>
+                    </div>
+                    <form role="form" action="/pedido/changePayment/salvar" method="POST">
+                    <input type="hidden" name="idorder" value="<?php echo $_GET['idorder'] ?>">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="desproduct">Status do Pedido</label>
+                                <select class="form-control" name="idpayment">
+                                    <?php foreach ($this->view->payments as $key => $payment) {?>
+                                        <?php if($payment['idpayment'] == $_GET['idpayment']){ ?>
+                                            <option selected="selected" value="<?php echo $payment['idpayment'] ?>">
+                                                <?php echo $payment['despayment'] ?>
+                                            </option>
+                                        <?php }else{?>
+                                            <option value="<?php echo $payment['idpayment'] ?>">
+                                                <?php echo $payment['despayment'] ?>
+                                            </option>
+                                        <?php }?>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
+<script>activeItem('pedidos')</script>

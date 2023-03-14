@@ -15,10 +15,10 @@
                             <div class="cross-sells">
 
                                 <h2>Cálculo de Frete</h2>
-                                <form method="POST" action="/cart/freight">
+                                <form action="/cart/freight">
                                     <div class="coupon">
                                         <label for="cep">CEP:</label>
-                                        <input type="text" placeholder="00000-000" id="cep" class="input-text" name="cep">
+                                        <input type="text" placeholder="00000-000" id="cep" value="<?php echo $this->view->cep ?>" class="input-text" name="cep">
                                         <input type="submit" value="CALCULAR" class="button">
                                     </div>
                                 </form>

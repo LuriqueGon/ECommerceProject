@@ -83,8 +83,13 @@
 
         public function adminBoleto()
         {
-            $this->restrict();
             $this->inAdmin();
+            $this->boletoOnePage();
+        }
+
+        public function boletoOnePage()
+        {
+            $this->restrict();
 
             if(!isset($_GET['idorder']) || $_GET['idorder']<1) Message::setMessage('Ocorreu um erro inesperado', 'danger', '/admin/orders');
 
@@ -110,6 +115,5 @@
             
             $this->view->title = "Boleto do pedido Nº: ".$_GET['idorder'];
             $this->render('Boleto', 'noLayout');
-
         }
     }
